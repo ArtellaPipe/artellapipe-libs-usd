@@ -1,0 +1,1 @@
+# artellapipe-libs-usd
