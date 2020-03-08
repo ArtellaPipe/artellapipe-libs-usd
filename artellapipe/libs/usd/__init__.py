@@ -21,8 +21,8 @@ def get_usd_path():
     :return: str
     """
 
-    import tpDccLib as tp
-    from tpPyUtils import path, osplatform
+    import tpDcc as tp
+    from tpDcc.libs.python import path, osplatform
 
     externals_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'externals')
     if not externals_dir or not os.path.isdir(externals_dir):
@@ -209,7 +209,7 @@ def update_usd_environments(load_plugins=True):
     :param load_plugins: bool
     """
 
-    import tpDccLib as tp
+    import tpDcc as tp
 
     usd_root_path = get_usd_path()
     if not usd_root_path or not os.path.isdir(usd_root_path):
