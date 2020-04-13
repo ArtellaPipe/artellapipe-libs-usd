@@ -7,6 +7,6 @@ pytest-cov
 coveralls
 sphinx
 sphinx_rtd_theme
-tpPyUtils
-tpDccLib
-tpQtLib
+tpDcc-libs-python
+tpDcc-core
+tpDcc-libs-qt
