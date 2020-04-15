@@ -15,13 +15,12 @@ import logging
 LOGGER = logging.getLogger()
 
 
-def get_usd_path():
+def get_platform_path():
     """
-    Returns path where USD plugin is located for current DCC version
+    Returns externals path based on current platform
     :return: str
     """
 
-    import tpDcc as tp
     from tpDcc.libs.python import path, osplatform
 
     externals_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'externals')
@@ -31,16 +30,63 @@ def get_usd_path():
 
     platform_name = osplatform.get_platform().lower()
     os_architecture = osplatform.get_architecture()
+
+    platform_path = path.clean_path(
+        os.path.join(externals_dir, platform_name, os_architecture, 'usd'))
+    if not os.path.isdir(platform_path):
+        LOGGER.warning('No USD externals platform folder found: "{}"'.format(platform_path))
+        return None
+
+    return platform_path
+
+
+def get_usd_path():
+    """
+    Returns path where USD plugin is located
+    :return: str
+    """
+
+    from tpDcc.libs.python import path
+
+    platform_dir = get_platform_path()
+    if not platform_dir or not os.path.isdir(platform_dir):
+        LOGGER.warning('No USD platform directory found: "{}"'.format(platform_dir))
+        return
+
+    pixar_usd_path = path.clean_path(
+        os.path.join(platform_dir, 'pixar')
+    )
+    if not os.path.isdir(pixar_usd_path):
+        LOGGER.warning('No Pixar USD folder found: "{}"'.format(pixar_usd_path))
+        return None
+
+    return pixar_usd_path
+
+
+def get_usd_dcc_path():
+    """
+    Returns path where USD plugin is located for current DCC version
+    :return: str
+    """
+
+    import tpDcc as tp
+    from tpDcc.libs.python import path
+
+    platform_dir = get_platform_path()
+    if not platform_dir or not os.path.isdir(platform_dir):
+        LOGGER.warning('No USD platform directory found: "{}"'.format(platform_dir))
+        return
+
     dcc_name = tp.Dcc.get_name()
     dcc_version = tp.Dcc.get_version_name()
 
-    usd_path = path.clean_path(
-        os.path.join(externals_dir, platform_name, os_architecture, 'usd', dcc_name, dcc_version))
-    if not os.path.isdir(usd_path):
-        LOGGER.warning('No USD executable folder found: "{}"'.format(usd_path))
+    usd_dcc_path = path.clean_path(
+        os.path.join(platform_dir, dcc_name, dcc_version))
+    if not os.path.isdir(platform_dir):
+        LOGGER.warning('No USD executable folder found: "{}"'.format(usd_dcc_path))
         return None
 
-    return usd_path
+    return usd_dcc_path
 
 
 def add_to_env(env_name, env_value):
@@ -53,12 +99,12 @@ def add_to_env(env_name, env_value):
     if env_name == 'PYTHONPATH':
         if env_value not in sys.path:
             sys.path.append(env_value)
+
+    if not os.environ.get(env_name):
+        os.environ[env_name] = str(env_value)
     else:
-        if not os.environ.get(env_name):
-            os.environ[env_name] = env_value
-        else:
-            if env_value not in os.environ[env_name]:
-                os.environ[env_name] = '{};{}'.format(os.environ[env_name], env_value)
+        if env_value not in os.environ[env_name]:
+            os.environ[env_name] = '{};{}'.format(os.environ[env_name], env_value)
 
 
 def set_env(env_name, env_value):
@@ -71,69 +117,33 @@ def set_env(env_name, env_value):
     os.environ[env_name] = env_value
 
 
-def update_pixar_usd_maya_environment():
-    """
-    Updates current Python Maya environment to setup Pixar USD plugin
-    :param load_plugin: bool
-    """
-
-    usd_root_path = get_usd_path()
-    if not usd_root_path or not os.path.isdir(usd_root_path):
-        LOGGER.warning('Impossible to setup Pixar USD Maya environment. Pixar USD Maya is not available!')
-        return
-
-    pxr_root_path = os.path.join(usd_root_path, 'plugin', 'pxr')
-    pxr_python_path = os.path.join(pxr_root_path, 'lib', 'python')
-    pxr_maya_path = os.path.join(pxr_root_path, 'maya', 'lib')
-    pxr_maya_resources = os.path.join(pxr_maya_path, 'usd', 'usdMaya', 'resources')
-    pxr_plugin_path = os.path.join(pxr_root_path, 'maya', 'plugin')
-    pxr_usd_lib = os.path.join(pxr_root_path, 'lib', 'usd')
-    add_to_env('PYTHONPATH', pxr_python_path)
-    add_to_env('PATH', pxr_maya_path)
-    add_to_env('XBMLANGPATH', pxr_maya_resources)
-    add_to_env('MAYA_SCRIPT_PATH', pxr_maya_resources)
-    add_to_env('MAYA_PLUG_IN_PATH', pxr_plugin_path)
-    add_to_env('PXR_PLUGINPATH_NAME', pxr_usd_lib)
-
-    return True
-
-
-def update_usd_maya_environment():
+def update_maya_usd_environment():
     """
     Updates current Python Maya environment to setup Maya USD plugin
-    :param load_plugin: bool
     """
 
-    usd_root_path = get_usd_path()
-    if not usd_root_path or not os.path.isdir(usd_root_path):
-        LOGGER.warning('Impossible to setup USD Maya environment. USD Maya is not available!')
+    from tpDcc.libs.python import path
+
+    usd_dcc_root_path = get_usd_dcc_path()
+    if not usd_dcc_root_path or not os.path.isdir(usd_dcc_root_path):
+        LOGGER.warning('Impossible to setup Maya USD environment. Maya USD is not available!')
         return
 
-    maya_usd_lib = os.path.join(usd_root_path, 'lib')
-    maya_usd_python = os.path.join(maya_usd_lib, 'python')
-    maya_usd_plugin_name = os.path.join(maya_usd_lib, 'usd')
+    maya_usd_lib = path.clean_path(os.path.join(usd_dcc_root_path, 'lib'))
+    maya_usd_python = path.clean_path(os.path.join(maya_usd_lib, 'python'))
+    maya_usd_plugins = path.clean_path(os.path.join(usd_dcc_root_path, 'plugin'))
+
+    maya_usd_plugin_name = path.clean_path(os.path.join(maya_usd_lib, 'usd'))
+    maya_adsk_plugin_path = path.clean_path(os.path.join(maya_usd_plugins, 'adsk'))
+    maya_adsk_scripts_path = path.clean_path(os.path.join(maya_adsk_plugin_path, 'scripts'))
+    maya_adsk_usd_plugin_name = path.clean_path(os.path.join(maya_adsk_plugin_path, 'plugin'))
+
     add_to_env('PATH', maya_usd_lib)
     add_to_env('PYTHONPATH', maya_usd_python)
     add_to_env('PXR_PLUGINPATH_NAME', maya_usd_plugin_name)
+    add_to_env('MAYA_SCRIPT_PATH', maya_adsk_scripts_path)
+    add_to_env('MAYA_PLUG_IN_PATH', maya_adsk_usd_plugin_name)
     set_env('VP2_RENDER_DELEGATE_PROXY', '1')
-
-    return True
-
-
-def update_usd_autodesk_maya_environment():
-    """
-    Updates current Python Maya environment to setup Maya USD plugin
-    :param load_plugin: bool
-    """
-
-    usd_root_path = get_usd_path()
-    if not usd_root_path or not os.path.isdir(usd_root_path):
-        LOGGER.warning('Impossible to setup Autodesk USD Maya environment. Autodesk USD is not available!')
-        return
-
-    adsk_usd_plugin_root = os.path.join(usd_root_path, 'plugin', 'adsk')
-    adsk_usd_plugin_path = os.path.join(adsk_usd_plugin_root, 'plugin')
-    add_to_env('MAYA_PLUG_IN_PATH', adsk_usd_plugin_path)
 
     return True
 
@@ -141,17 +151,18 @@ def update_usd_autodesk_maya_environment():
 def update_pixar_usd_environment():
     """
     Updates current Python Maya environment to setup Pixar USD plugin
-    :param load_plugin: bool
     """
 
-    usd_root_path = get_usd_path()
-    if not usd_root_path or not os.path.isdir(usd_root_path):
+    from tpDcc.libs.python import path
+
+    usd_pixar_path = get_usd_path()
+    if not usd_pixar_path or not os.path.isdir(usd_pixar_path):
         LOGGER.warning('Impossible to setup Pixar USD environment. USD is not available!')
         return
 
-    usd_bin = os.path.join(usd_root_path, 'pixar', 'bin')
-    usd_lib = os.path.join(usd_root_path, 'pixar', 'lib')
-    usd_lib_python = os.path.join(usd_lib, 'python')
+    usd_bin = path.clean_path(os.path.join(usd_pixar_path, 'bin'))
+    usd_lib = path.clean_path(os.path.join(usd_pixar_path, 'lib'))
+    usd_lib_python = path.clean_path(os.path.join(usd_lib, 'python'))
     add_to_env('PYTHONPATH', usd_lib_python)
     add_to_env('PATH', usd_bin)
     add_to_env('PATH', usd_lib)
@@ -159,44 +170,17 @@ def update_pixar_usd_environment():
     return True
 
 
-def update_animal_logic_usd_environment():
-    """
-    Updates current Python Maya environment to setup Animal Logic USD plugin
-    :param load_plugin: bool
-    """
-
-    usd_root_path = get_usd_path()
-    if not usd_root_path or not os.path.isdir(usd_root_path):
-        LOGGER.warning('Impossible to setup Animal Logic USD environment. Animal Logic USD is not available!')
-        return
-
-    al_usd_plugin_root = os.path.join(usd_root_path, 'plugin', 'al')
-    al_usd_plugin_lib = os.path.join(al_usd_plugin_root, 'lib')
-    al_usd_plugin_python = os.path.join(al_usd_plugin_lib, 'python')
-    al_usd_plugin_usd = os.path.join(al_usd_plugin_lib, 'usd')
-    al_usd_plugin_name = os.path.join(al_usd_plugin_root, 'plugin')
-    add_to_env('PYTHONPATH', al_usd_plugin_python)
-    add_to_env('PATH', al_usd_plugin_lib)
-    add_to_env('MAYA_PLUG_IN_PATH', al_usd_plugin_name)
-    add_to_env('PXR_PLUGINPATH_NAME', al_usd_plugin_usd)
-    add_to_env('PXR_PLUGINPATH_NAME', al_usd_plugin_name)
-    set_env('MAYA_WANT_UFE_SELECTION', '1')
-
-    return True
-
-
 def update_hydra_usd_environment():
     """
     Updates current Python Maya environment to setup Animal Logic USD plugin
-    :param load_plugin: bool
     """
 
-    usd_root_path = get_usd_path()
-    if not usd_root_path or not os.path.isdir(usd_root_path):
+    usd_dcc_root_path = get_usd_dcc_path()
+    if not usd_dcc_root_path or not os.path.isdir(usd_dcc_root_path):
         LOGGER.warning('Impossible to setup Hydra USD environment. Hydra USD is not available!')
         return
 
-    mtoah_root_path = os.path.join(usd_root_path, 'lib')
+    mtoah_root_path = os.path.join(usd_dcc_root_path, 'lib')
     mtoah_maya_plugin = os.path.join(mtoah_root_path, 'maya')
     add_to_env('MAYA_PLUG_IN_PATH', mtoah_maya_plugin)
 
@@ -216,23 +200,20 @@ def update_usd_environments(load_plugins=True):
         LOGGER.warning('Impossible to setup USD Maya environment. USD is not available!')
         return
 
-    valid_pixar_usd_maya = update_pixar_usd_maya_environment()
-    valid_usd_maya = update_usd_maya_environment()
-    valid_usd_autodesk_maya = update_usd_autodesk_maya_environment()
+    usd_bin_path = os.path.join(usd_root_path, 'bin')
+    usd_lib_path = os.path.join(usd_root_path, 'lib')
+    usd_python_lib_path = os.path.join(usd_lib_path, 'python')
+    add_to_env('PYTHONPATH', usd_python_lib_path)
+    add_to_env('PATH', usd_bin_path)
+    add_to_env('PATH', usd_lib_path)
+
+    valid_usd_maya = update_maya_usd_environment()
     # We must import pixar usd the last, otherwise we will have problems due to Python import orders
     valid_pixar_usd = update_pixar_usd_environment()
-    valid_animal_logic_usd = update_animal_logic_usd_environment()
     valid_hydra = update_hydra_usd_environment()
 
     if load_plugins:
-        if valid_pixar_usd and valid_usd_maya:
-            tp.Dcc.load_plugin('pxrUsd.mll')
-            tp.Dcc.load_plugin('pxrUsdPreviewSurface.mll')
-            # tp.Dcc.load_plugin('mayaUsdPlugin.mll')
-        if valid_usd_autodesk_maya:
+        if valid_usd_maya and valid_pixar_usd:
             tp.Dcc.load_plugin('mayaUsdPlugin.mll')
-        if valid_animal_logic_usd:
-            tp.Dcc.load_plugin('AL_USDMayaPlugin.mll')
-            tp.Dcc.load_plugin('AL_USDMayaPxrTranslators.mll')
         if valid_hydra:
             tp.Dcc.load_plugin('mtoh.mll')
