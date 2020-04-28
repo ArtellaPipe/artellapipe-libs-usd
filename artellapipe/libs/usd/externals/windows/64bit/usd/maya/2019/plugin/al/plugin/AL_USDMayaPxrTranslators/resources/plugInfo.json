@@ -1,0 +1,21 @@
+{
+    "Plugins": [
+        {
+            "Info": {
+                "UsdMaya": {
+                    "PrimWriter": {
+                        "mayaPlugin": "AL_USDMayaPxrTranslators",
+                        "providesTranslator": [
+                            "AL_usdmaya_ProxyShape"
+                        ]
+                    }
+                }
+            },
+            "LibraryPath": "../../plugin/AL_USDMayaPxrTranslators.dll",
+            "Name": "AL_USDMayaPxrTranslators",
+            "ResourcePath": "resources",
+            "Root": "..",
+            "Type": "library"
+        }
+    ]
+}
