@@ -27,6 +27,12 @@ class UsdReferenceAssemblyRepresentations(object):
 
 
 def import_usd_file(file_path):
+    """
+    Imports a new USD file using Pixar USD Maya Importer (pxrUsdImport)
+    :param file_path: str, file path of the USD to import
+    :return:
+    """
+
     if not file_path or not os.path.isfile(file_path):
         return False
 
@@ -40,6 +46,13 @@ def import_usd_file(file_path):
 
 
 def create_usd_reference_assembly(file_path, active_representation=UsdReferenceAssemblyRepresentations.FULL):
+    """
+    Creates a new Pixar USD Maya Reference Assembly node (pxrUsdReferenceAssembly) pointing to the given USD file path
+    :param file_path: str
+    :param active_representation: str, UsdReferenceAssemblyRepresentations
+    :return:
+    """
+
     if not file_path or not os.path.isfile(file_path):
         return False
 
@@ -53,4 +66,11 @@ def create_usd_reference_assembly(file_path, active_representation=UsdReferenceA
 
 
 def set_usd_reference_assembly_representation(usd_reference_assembly_node, representation):
-    maya.cmds.assembly(usd_reference_assembly_node, active=representation, edit=True)
+    """
+    Sets the representation type used by given Pixar USD Maya Reference Assembly node (pxrUsdReferenceAssembly)
+    :param usd_reference_assembly_node: str, UsdReferenceAssemblyRepresentations
+    :param representation:
+    :return:
+    """
+
+    return maya.cmds.assembly(usd_reference_assembly_node, active=representation, edit=True)
