@@ -50,7 +50,7 @@ def import_usd_file(file_path):
         pr=True, importFrameRate=True, importTimeRange='override')
 
 
-def create_usd_reference_assembly(file_path, active_representation=UsdReferenceAssemblyRepresentations.FULL):
+def create_usd_reference_assembly(file_path, active_representation=UsdReferenceAssemblyRepresentations.COLLAPSED):
     """
     Creates a new Pixar USD Maya Reference Assembly node (pxrUsdReferenceAssembly) pointing to the given USD file path
     :param file_path: str
