@@ -1,0 +1,2 @@
+PySide==1.2.4
+PyOpenGL==3.1.5
