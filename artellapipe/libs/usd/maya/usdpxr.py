@@ -13,9 +13,14 @@ __maintainer__ = "Tomas Poveda"
 __email__ = "tpovedatd@gmail.com"
 
 import os
+import logging
+
+import mayaUsd.lib as mayaUsdLib
 
 import tpDcc as tp
 import tpDcc.dccs.maya as maya
+
+LOGGER = logging.getLogger('artellapipe-libs-usd')
 
 
 class UsdReferenceAssemblyRepresentations(object):
@@ -62,6 +67,23 @@ def create_usd_reference_assembly(file_path, active_representation=UsdReferenceA
     tp.Dcc.set_attribute_value(assembly_node, 'filePath', file_path)
     maya.cmds.assembly(assembly_node, active=active_representation, edit=True)
 
+    usd_prim = mayaUsdLib.GetPrim(assembly_node)
+    variant_sets = usd_prim.GetVariantSets()
+    variant_set_names = variant_sets.GetNames()
+
+    for variant_set_name in variant_set_names:
+        usd_variant = usd_prim.GetVariantSet(variant_set_name)
+        if not usd_variant:
+            continue
+        usd_variant_choices = usd_variant.GetVariantNames()
+        variant_attr = 'usdVariantSet_%s' % variant_set_name
+        if not tp.Dcc.attribute_exists(assembly_node, variant_attr):
+            maya.cmds.addAttr(assembly_node, ln=variant_attr, dt='string', internalSet=True)
+        if not usd_variant_choices:
+            continue
+        usd_variant_value = usd_variant_choices[-1]
+        maya.cmds.setAttr('{}.{}'.format(assembly_node, variant_attr), usd_variant_value, type='string')
+
     return assembly_node
 
 
@@ -74,3 +96,32 @@ def set_usd_reference_assembly_representation(usd_reference_assembly_node, repre
     """
 
     return maya.cmds.assembly(usd_reference_assembly_node, active=representation, edit=True)
+
+
+def set_usd_reference_assembly_variant(usd_reference_assmebly_node, variant_name, variant_value):
+    """
+    Sets the value of the given variant for the given Pixar USD Maya Reference Assembly Node (pxrUsdReferenceAssembly)
+    :param usd_reference_assmebly_node: str
+    :param variant_name: str
+    :param variant_value: str
+    :return:
+    """
+
+    usd_prim = mayaUsdLib.GetPrim(usd_reference_assmebly_node)
+    variant_sets = usd_prim.GetVariantSets()
+    variant_set_names = variant_sets.GetNames()
+    if variant_name not in variant_set_names:
+        LOGGER.warning(
+            'Variant with name "{}" not found in Usd Prim "{}" ({})'.format(variant_name, usd_prim, variant_set_names))
+        return
+
+    usd_variant = usd_prim.GetVariantSet(variant_name)
+    usd_variant_choices = usd_variant.GetVariantNames()
+    if variant_value not in usd_variant_choices:
+        LOGGER.warning(
+            'Variant Value "{}" not found in Variant Set Name "{}" for Usd Prim "{}" ({})'.format(
+                variant_value, variant_name, usd_prim, usd_variant_choices))
+        return
+
+    variant_attr_name = 'usdVariantSet_{}'.format(variant_name)
+    return tp.Dcc.set_string_attribute_value(usd_reference_assmebly_node, variant_attr_name, str(variant_value))
