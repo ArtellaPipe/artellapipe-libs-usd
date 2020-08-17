@@ -13,9 +13,16 @@ __maintainer__ = "Tomas Poveda"
 __email__ = "tpovedatd@gmail.com"
 
 import inspect
+import logging
+import traceback
 from functools import partial
 
+from Qt.QtCore import *
 from Qt.QtWidgets import *
+
+from pxr import Sdf
+
+LOGGER = logging.getLogger('artellapipe-libs-usd')
 
 
 class MenuSeparator(object):
@@ -189,3 +196,53 @@ class MenuBarBuilder(object):
             action_data = action.data()
             if action_data and isinstance(action_data, MenuAction):
                 action_data.update(action, context)
+
+
+class SelectionEditTreeView(QTreeView, object):
+    """
+    Custom QTreeView implementation to add selection edit based functionality.
+    Selection edits allow editing of all selected attributes simultaneously.
+    """
+
+    SelectedEditOff = 0
+    SelectedEditColumnsOnly = 1
+
+    def __init__(self, parent=None):
+        super(SelectionEditTreeView, self).__init__(parent=parent)
+
+        self._selection_edit_mode = SelectionEditTreeView.SelectedEditColumnsOnly
+
+    def commitData(self, editor):
+        # TODO: Add an UndoBlock
+
+        editor_index = None
+        if self.indexWidget(self.currentIndex()) == editor:
+            editor_index = self.currentIndex()
+
+        if not editor_index:
+            super(SelectionEditTreeView, self).commitData(editor)
+            return
+
+        selection = None
+        if self._selection_edit_mode == SelectionEditTreeView.SelectedEditColumnsOnly:
+            selection = [i for i in self.selectionModel().selectedIndexes()
+                         if i.column() == editor_index.column() and i != editor_index]
+
+        # It's important to put all edits inside of an Sdf Change Block so they happen in a single pass and
+        # no signals are emitted that may change state
+        with Sdf.ChangeBlock():
+            super(SelectionEditTreeView, self).commitData(editor)
+            if selection:
+                value = editor.value
+                for index in selection:
+                    # This try / except is covering for a very ugly and hard to isolate bug.  It appears that when
+                    # commitData raises an exception, Qt holds onto some indices that should safely expire, triggering
+                    # a deferred but hard crash.  I haven't found a reliable repro case, but this seems to make it
+                    # go away.  A better solution likely involves better detection on the model side.
+                    try:
+                        self.model().setData(index, value, Qt.EditRole)
+                    except Exception:
+                        LOGGER.exception('Exception during multi-edit: {}'.format(traceback.format_exc()))
+
+    def set_selected_edit_mode(self, mode):
+        self._selection_edit_mode = mode
