@@ -278,3 +278,14 @@ def update_usd_environments(load_plugins=True):
             tp.Dcc.load_plugin('AL_USDMayaPlugin.mll')
         if valid_hydra:
             tp.Dcc.load_plugin('mtoh.mll')
+
+
+def init(*args, **kwargs):
+    LOGGER.info('Initializing USD libraries ...')
+    try:
+        update_usd_environments()
+    except Exception as exc:
+        LOGGER.warning('Error while initializing USD libraries: {}!'.format(exc))
+        return
+
+    LOGGER.info('USD libraries initialized succesfully!')
