@@ -15,6 +15,12 @@ __email__ = "tpovedatd@gmail.com"
 from pxr import Pcp, Sdf
 
 
+class UsdFormats(object):
+    Generic = '.usd'
+    Binary = '.usdc'
+    Text = '.usda'
+
+
 def get_prim_variants(prim):
     """
     Returns a list of tuples representing a prim's variant set names and active values

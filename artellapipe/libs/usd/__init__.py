@@ -16,6 +16,9 @@ import os
 import sys
 import logging
 
+import tpDcc as tp
+
+import artellapipe.register
 from artellapipe.libs.usd.core import usdpaths
 
 LOGGER = logging.getLogger('artellapipe-libs-usd')
@@ -284,6 +287,14 @@ def init(*args, **kwargs):
     LOGGER.info('Initializing USD libraries ...')
     try:
         update_usd_environments()
+
+        from artellapipe.libs.usd.core import usdpxr
+        artellapipe.register.register_class('UsdPixar', usdpxr.AbstractUsdPixar)
+
+        if tp.is_maya():
+            from artellapipe.libs.usd.maya import usdpxr as maya_usdpxr
+            artellapipe.register.register_class('UsdPixar', maya_usdpxr.MayaUsdPixar)
+
     except Exception as exc:
         LOGGER.warning('Error while initializing USD libraries: {}!'.format(exc))
         return

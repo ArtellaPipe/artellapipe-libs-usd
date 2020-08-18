@@ -98,9 +98,9 @@ def open_usd_file(usd_file_path):
             usd_view_env['PYTHONPATH'] = r'{}'.format(usd_view_python_libs_path)
 
     p = subprocess.Popen(
-        ['python.exe', usd_view_path, usd_file_path], stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=usd_view_env)
-    output, error = p.communicate()
-    if error:
-        LOGGER.error('>>> usdview: {}'.format(error))
+        ['python.exe', usd_view_path, usd_file_path], env=usd_view_env)
+    # output, error = p.communicate()
+    # if error:
+    #     LOGGER.error('>>> usdview: {}'.format(error))
 
     return True
