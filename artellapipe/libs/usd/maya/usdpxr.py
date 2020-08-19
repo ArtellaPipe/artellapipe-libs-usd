@@ -78,7 +78,8 @@ class MayaUsdPixar(object):
             pr=True, importFrameRate=True, importTimeRange='override')
 
     @classmethod
-    def export_usd_file(cls, file_directory, file_name, extension=usdutils.UsdFormats.Text, export_selection=False):
+    def export_usd_file(
+            cls, file_directory, file_name, extension=usdutils.UsdFormats.Text, export_selection=False, **kwargs):
         """
         Exports a USD file using Pixar USD Maya Importer (pxrUsdExport)
         :param file_directory:
@@ -87,6 +88,14 @@ class MayaUsdPixar(object):
         :param export_selection:
         :return:
         """
+
+        export_uvs = int(kwargs.get('export_uvs', True))
+        export_color_sets = int(kwargs.get('export_color_sets', True))
+        renderable_only = int(kwargs.get('renderable_only', True))
+        export_visibility = int(kwargs.get('export_visibility', True))
+        animation = int(kwargs.get('animation', False))
+        start_time = int(kwargs.get('start_time', 1))
+        end_time = int(kwargs.get('start_time', 1))
 
         if not file_directory or not os.path.isdir(file_directory):
             LOGGER.warning(
@@ -105,14 +114,15 @@ class MayaUsdPixar(object):
             return False
 
         return maya.cmds.file(
-            file_path, typ='pxrUsdExport', pr=True, es=export_selection, ea=not export_selection, force=True,
+            file_path, typ='pxrUsdExport', pr=True, de=False, es=export_selection, ea=not export_selection, force=True,
             options=';shadingMode=none;materialsScopeName=Looks;exportDisplayColor=0;exportRefsAsInstanceable=0;'
-                    'exportUVs=1;exportMaterialCollections=0;materialCollectionsPath=;exportCollectionBasedBindings=0;'
-                    'exportColorSets=1;exportReferenceObjects=0;renderableOnly=1;filterTypes=;defaultCameras=0;'
+                    'exportUVs={};exportMaterialCollections=0;materialCollectionsPath=;exportCollectionBasedBindings=0;'
+                    'exportColorSets={};exportReferenceObjects=0;renderableOnly={};filterTypes=;defaultCameras=0;'
                     'renderLayerMode=defaultLayer;mergeTransformAndShape=1;exportInstances=1;'
-                    'defaultMeshScheme=catmullClark;exportSkels=none;exportSkin=none;exportVisibility=1;'
-                    'stripNamespaces=0;animation=0;eulerFilter=0;startTime=1;endTime=1;frameStride=1;'
-                    'parentScope=;compatibility=none', de=False
+                    'defaultMeshScheme=catmullClark;exportSkels=none;exportSkin=none;exportVisibility={};'
+                    'stripNamespaces=0;animation={};eulerFilter=0;startTime={};endTime={};frameStride=1;'
+                    'parentScope=;compatibility=none'.format(export_uvs, export_color_sets, renderable_only,
+                                                             export_visibility, animation, start_time, end_time)
         )
 
     @staticmethod

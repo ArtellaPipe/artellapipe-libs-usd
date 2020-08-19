@@ -41,7 +41,8 @@ class AbstractUsdPixar(object):
 
     @classmethod
     @decorators.abstractmethod
-    def export_usd_file(cls, file_directory, file_name, extension=usdutils.UsdFormats.Text, export_selection=False):
+    def export_usd_file(
+            cls, file_directory, file_name, extension=usdutils.UsdFormats.Text, export_selection=False, **kwargs):
         """
         Exports a USD file using Pixar USD Maya Importer (pxrUsdExport)
         :param file_directory:
