@@ -1,5 +1,8 @@
 [run]
+branch = True
+source = artellapipe
 omit = */externals/*
 
 [report]
+ignore_errors = True
 omit = */externals/*
