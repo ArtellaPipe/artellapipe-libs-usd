@@ -1,3 +1,4 @@
 include artellapipe/libs/usd/__logging__.ini
+recursive-include artellapipe/libs/usd/externals/* *.*
 include versioneer.py
 include artellapipe/libs/usd/_version.py
