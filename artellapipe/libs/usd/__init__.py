@@ -299,4 +299,4 @@ def init(*args, **kwargs):
         LOGGER.warning('Error while initializing USD libraries: {}!'.format(exc))
         return
 
-    LOGGER.info('USD libraries initialized succesfully!')
+    LOGGER.info('USD libraries initialized successfully!')
