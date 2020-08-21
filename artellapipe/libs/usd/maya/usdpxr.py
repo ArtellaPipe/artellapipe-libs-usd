@@ -126,6 +126,26 @@ class MayaUsdPixar(object):
         )
 
     @staticmethod
+    def create_empty_stage(stage_name='stageShape1'):
+        """
+        Crates a new empty stage. This command produces the following USD data:
+            - ProxyShape
+            - Stage
+            - Session Layer
+            - Anonymous Root Layer (this is set as the target layer)
+        :param stage_name: str
+        :return: str
+        """
+
+        # We just simply create a proxy shape without defining its filePath attribute. The proxy shape will create
+        # an empty stage in memory. This will create the session and root layer as well.
+
+        new_stage = maya.cmds.createNode('mayaUsdProxyShape', name=stage_name)
+        shape_node = tp.Dcc.node_long_name(new_stage)
+
+        return shape_node
+
+    @staticmethod
     def create_usd_reference_assembly(file_path, active_representation=UsdReferenceAssemblyRepresentations.COLLAPSED):
         """
         Creates a new Pixar USD Maya Reference Assembly node (pxrUsdReferenceAssembly)
