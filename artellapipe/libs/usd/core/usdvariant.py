@@ -86,6 +86,14 @@ def add_payload_to_variant(prim, variant_set_name, variant_name, payload_file):
     return True
 
 
+def set_variant(prim, variant_set_name, variant_name):
+    variant_set = get_variant_set(prim, variant_set_name)
+    if not variant_set:
+        return False
+
+    variant_set.SetVariantSelection(variant_name)
+
+
 # def set_variant_value(prim, variant_set_name, variant_name, value):
 #     variant_set = get_variant_set(prim, variant_set_name)
 #     if not variant_set:

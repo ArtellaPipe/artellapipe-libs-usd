@@ -37,7 +37,7 @@ def get_usd_view_path():
 
 def get_usd_view_python_libs_path():
 
-    externals_path = usdpaths.get_usd_externals()
+    externals_path = usdpaths.get_usd_externals_path()
 
     if sys.version[0] == '2':
         usd_view_py_libs_path = os.path.join(externals_path, 'python', '2')
@@ -45,6 +45,13 @@ def get_usd_view_python_libs_path():
         usd_view_py_libs_path = os.path.join(externals_path, 'python', '3')
 
     return usd_view_py_libs_path
+
+
+def get_usd_view_plugins_path():
+
+    plugins_path = usdpaths.get_usd_plugins_path()
+
+    return os.path.join(plugins_path, 'usdview')
 
 
 def open_usd_file(usd_file_path):
@@ -85,17 +92,30 @@ def open_usd_file(usd_file_path):
     # Dictionary that contains the environment configuration that will be used by usdview instance
     usd_view_env = dict()
 
-    usd_view_env['PATH'] = r'{};{}'.format(pixar_usd_binaries_path, pixar_usd_libraries_path)
+    usd_view_env['PATH'] = r'{}{}{}'.format(pixar_usd_binaries_path, os.pathsep, pixar_usd_libraries_path)
 
     pixar_usd_python_libs_path = usdpaths.get_pixar_usd_python_libs_path()
     if pixar_usd_python_libs_path and os.path.isdir(pixar_usd_python_libs_path):
         if usd_view_python_libs_path and os.path.isdir(usd_view_python_libs_path):
-            usd_view_env['PYTHONPATH'] = r'{};{}'.format(pixar_usd_python_libs_path, usd_view_python_libs_path)
+            usd_view_env['PYTHONPATH'] = r'{}{}{}'.format(
+                pixar_usd_python_libs_path, os.pathsep, usd_view_python_libs_path)
         else:
             usd_view_env['PYTHONPATH'] = r'{}'.format(pixar_usd_python_libs_path)
     else:
         if usd_view_python_libs_path and os.path.isdir(usd_view_python_libs_path):
             usd_view_env['PYTHONPATH'] = r'{}'.format(usd_view_python_libs_path)
+
+    usd_view_plugins_path = get_usd_view_plugins_path()
+    if usd_view_plugins_path and os.path.isdir(usd_view_python_libs_path):
+        usd_view_env['PYTHONPATH'] += r'{}{}'.format(os.pathsep, usd_view_plugins_path)
+        for name in os.listdir(usd_view_plugins_path):
+            plugin_path = os.path.join(usd_view_plugins_path, name)
+            if not os.path.isdir(plugin_path):
+                continue
+            if usd_view_env.get('PXR_PLUGINPATH_NAME', None):
+                usd_view_env['PXR_PLUGINPATH_NAME'] += r'{}{}'.format(os.pathsep, plugin_path)
+            else:
+                usd_view_env['PXR_PLUGINPATH_NAME'] = r'{}'.format(plugin_path)
 
     p = subprocess.Popen(
         ['python.exe', usd_view_path, usd_file_path], env=usd_view_env)
