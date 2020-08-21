@@ -102,5 +102,3 @@ def set_variant(prim, variant_set_name, variant_name):
 #     variant_set.SetVariantSelection(variant_name)
 #     with variant_set.GetVariantEditContext():
 #         pass
-
-

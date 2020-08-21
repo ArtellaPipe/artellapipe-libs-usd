@@ -14,7 +14,7 @@ def is_ufe_usd_path(ufe_object):
 def get_ufe_selection():
     try:
         return next(iter(ufe.GlobalSelection.get()))
-    except:
+    except Exception:
         return None
 
 
@@ -63,4 +63,3 @@ def parent_items(ufe_children, ufe_parent):
         return
 
     parent_dag_path, parent_usd_prim_path = get_dag_and_prim_from_ufe(ufe_parent)
-

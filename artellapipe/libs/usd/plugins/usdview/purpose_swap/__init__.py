@@ -153,4 +153,5 @@ def _toggle_purposes(action, adapter):
 
     action.setText(text)
 
+
 Tf.Type.Define(PurposeSwapContainer)

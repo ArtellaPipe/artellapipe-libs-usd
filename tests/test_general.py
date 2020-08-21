@@ -12,4 +12,3 @@ from artellapipe.libs.usd import __version__
 
 def test_version():
     assert __version__.get_version()
-

@@ -321,5 +321,3 @@ def get_arnold_path():
         return
 
     return arnold_version_path
-
-
