@@ -1,0 +1,18 @@
+artellapipe.libs.usd.tools.opinion package
+==========================================
+
+Submodules
+----------
+
+.. toctree::
+
+   artellapipe.libs.usd.tools.opinion.dialog
+   artellapipe.libs.usd.tools.opinion.editor
+
+Module contents
+---------------
+
+.. automodule:: artellapipe.libs.usd.tools.opinion
+    :members:
+    :undoc-members:
+    :show-inheritance:

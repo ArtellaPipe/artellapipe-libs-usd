@@ -1,0 +1,7 @@
+artellapipe.libs.usd.maya.usdufe module
+=======================================
+
+.. automodule:: artellapipe.libs.usd.maya.usdufe
+    :members:
+    :undoc-members:
+    :show-inheritance:

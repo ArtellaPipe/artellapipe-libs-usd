@@ -1,0 +1,7 @@
+artellapipe.libs.usd.tools.edittarget.dialog module
+===================================================
+
+.. automodule:: artellapipe.libs.usd.tools.edittarget.dialog
+    :members:
+    :undoc-members:
+    :show-inheritance:

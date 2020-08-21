@@ -1,0 +1,7 @@
+artellapipe.libs.usd.maya.usdpxr module
+=======================================
+
+.. automodule:: artellapipe.libs.usd.maya.usdpxr
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,18 @@
+artellapipe.libs.usd.tools.outliner.widgets package
+===================================================
+
+Submodules
+----------
+
+.. toctree::
+
+   artellapipe.libs.usd.tools.outliner.widgets.outliner
+   artellapipe.libs.usd.tools.outliner.widgets.treeview
+
+Module contents
+---------------
+
+.. automodule:: artellapipe.libs.usd.tools.outliner.widgets
+    :members:
+    :undoc-members:
+    :show-inheritance:

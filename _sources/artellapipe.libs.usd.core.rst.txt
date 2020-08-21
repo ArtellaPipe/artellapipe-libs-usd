@@ -1,0 +1,25 @@
+artellapipe.libs.usd.core package
+=================================
+
+Submodules
+----------
+
+.. toctree::
+
+   artellapipe.libs.usd.core.usdcat
+   artellapipe.libs.usd.core.usdlayer
+   artellapipe.libs.usd.core.usdpaths
+   artellapipe.libs.usd.core.usdpxr
+   artellapipe.libs.usd.core.usdqtutils
+   artellapipe.libs.usd.core.usdstage
+   artellapipe.libs.usd.core.usdutils
+   artellapipe.libs.usd.core.usdvariant
+   artellapipe.libs.usd.core.usdview
+
+Module contents
+---------------
+
+.. automodule:: artellapipe.libs.usd.core
+    :members:
+    :undoc-members:
+    :show-inheritance:

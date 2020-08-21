@@ -1,0 +1,19 @@
+artellapipe.libs.usd.tools.hierarchy package
+============================================
+
+Submodules
+----------
+
+.. toctree::
+
+   artellapipe.libs.usd.tools.hierarchy.actions
+   artellapipe.libs.usd.tools.hierarchy.dialog
+   artellapipe.libs.usd.tools.hierarchy.editor
+
+Module contents
+---------------
+
+.. automodule:: artellapipe.libs.usd.tools.hierarchy
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,7 @@
+artellapipe.libs.usd.tools.hierarchy.editor module
+==================================================
+
+.. automodule:: artellapipe.libs.usd.tools.hierarchy.editor
+    :members:
+    :undoc-members:
+    :show-inheritance:

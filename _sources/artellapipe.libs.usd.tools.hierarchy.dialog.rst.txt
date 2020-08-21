@@ -1,0 +1,7 @@
+artellapipe.libs.usd.tools.hierarchy.dialog module
+==================================================
+
+.. automodule:: artellapipe.libs.usd.tools.hierarchy.dialog
+    :members:
+    :undoc-members:
+    :show-inheritance:

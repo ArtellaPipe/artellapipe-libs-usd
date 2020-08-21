@@ -1,0 +1,7 @@
+artellapipe.libs.usd.core.usdpxr module
+=======================================
+
+.. automodule:: artellapipe.libs.usd.core.usdpxr
+    :members:
+    :undoc-members:
+    :show-inheritance:

@@ -1,0 +1,7 @@
+artellapipe.libs.usd.tools.edittarget.treeview module
+=====================================================
+
+.. automodule:: artellapipe.libs.usd.tools.edittarget.treeview
+    :members:
+    :undoc-members:
+    :show-inheritance:

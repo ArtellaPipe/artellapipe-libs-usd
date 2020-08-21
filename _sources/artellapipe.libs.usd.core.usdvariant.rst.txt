@@ -1,0 +1,7 @@
+artellapipe.libs.usd.core.usdvariant module
+===========================================
+
+.. automodule:: artellapipe.libs.usd.core.usdvariant
+    :members:
+    :undoc-members:
+    :show-inheritance:

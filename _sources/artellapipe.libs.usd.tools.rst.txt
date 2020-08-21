@@ -1,0 +1,21 @@
+artellapipe.libs.usd.tools package
+==================================
+
+Subpackages
+-----------
+
+.. toctree::
+
+    artellapipe.libs.usd.tools.edittarget
+    artellapipe.libs.usd.tools.hierarchy
+    artellapipe.libs.usd.tools.layertext
+    artellapipe.libs.usd.tools.opinion
+    artellapipe.libs.usd.tools.outliner
+
+Module contents
+---------------
+
+.. automodule:: artellapipe.libs.usd.tools
+    :members:
+    :undoc-members:
+    :show-inheritance:

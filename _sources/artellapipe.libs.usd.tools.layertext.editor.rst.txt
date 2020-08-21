@@ -1,0 +1,7 @@
+artellapipe.libs.usd.tools.layertext.editor module
+==================================================
+
+.. automodule:: artellapipe.libs.usd.tools.layertext.editor
+    :members:
+    :undoc-members:
+    :show-inheritance:

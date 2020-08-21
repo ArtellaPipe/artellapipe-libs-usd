@@ -1,0 +1,20 @@
+artellapipe.libs.usd.tools.edittarget package
+=============================================
+
+Submodules
+----------
+
+.. toctree::
+
+   artellapipe.libs.usd.tools.edittarget.actions
+   artellapipe.libs.usd.tools.edittarget.dialog
+   artellapipe.libs.usd.tools.edittarget.editor
+   artellapipe.libs.usd.tools.edittarget.treeview
+
+Module contents
+---------------
+
+.. automodule:: artellapipe.libs.usd.tools.edittarget
+    :members:
+    :undoc-members:
+    :show-inheritance:

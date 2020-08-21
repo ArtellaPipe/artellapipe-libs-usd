@@ -1,0 +1,7 @@
+artellapipe.libs.usd.tools.outliner.actions module
+==================================================
+
+.. automodule:: artellapipe.libs.usd.tools.outliner.actions
+    :members:
+    :undoc-members:
+    :show-inheritance:

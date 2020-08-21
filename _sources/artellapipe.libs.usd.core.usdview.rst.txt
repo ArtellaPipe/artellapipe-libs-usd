@@ -1,0 +1,7 @@
+artellapipe.libs.usd.core.usdview module
+========================================
+
+.. automodule:: artellapipe.libs.usd.core.usdview
+    :members:
+    :undoc-members:
+    :show-inheritance:

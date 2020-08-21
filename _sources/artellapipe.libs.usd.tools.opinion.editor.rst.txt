@@ -1,0 +1,7 @@
+artellapipe.libs.usd.tools.opinion.editor module
+================================================
+
+.. automodule:: artellapipe.libs.usd.tools.opinion.editor
+    :members:
+    :undoc-members:
+    :show-inheritance:

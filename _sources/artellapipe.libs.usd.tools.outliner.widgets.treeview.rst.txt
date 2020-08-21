@@ -1,0 +1,7 @@
+artellapipe.libs.usd.tools.outliner.widgets.treeview module
+===========================================================
+
+.. automodule:: artellapipe.libs.usd.tools.outliner.widgets.treeview
+    :members:
+    :undoc-members:
+    :show-inheritance:

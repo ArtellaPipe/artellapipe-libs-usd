@@ -1,0 +1,18 @@
+artellapipe.libs.usd.tools.layertext package
+============================================
+
+Submodules
+----------
+
+.. toctree::
+
+   artellapipe.libs.usd.tools.layertext.dialog
+   artellapipe.libs.usd.tools.layertext.editor
+
+Module contents
+---------------
+
+.. automodule:: artellapipe.libs.usd.tools.layertext
+    :members:
+    :undoc-members:
+    :show-inheritance:

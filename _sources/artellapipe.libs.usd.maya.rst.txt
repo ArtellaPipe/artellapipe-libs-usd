@@ -1,0 +1,18 @@
+artellapipe.libs.usd.maya package
+=================================
+
+Submodules
+----------
+
+.. toctree::
+
+   artellapipe.libs.usd.maya.usdpxr
+   artellapipe.libs.usd.maya.usdufe
+
+Module contents
+---------------
+
+.. automodule:: artellapipe.libs.usd.maya
+    :members:
+    :undoc-members:
+    :show-inheritance:

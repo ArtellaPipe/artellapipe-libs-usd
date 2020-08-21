@@ -1,10 +1,19 @@
 artellapipe.libs.usd package
 ============================
 
+Subpackages
+-----------
+
+.. toctree::
+
+    artellapipe.libs.usd.core
+    artellapipe.libs.usd.maya
+    artellapipe.libs.usd.tools
+
 Module contents
 ---------------
 
 .. automodule:: artellapipe.libs.usd
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:

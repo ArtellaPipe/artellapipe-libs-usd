@@ -6,12 +6,12 @@ Subpackages
 
 .. toctree::
 
-   artellapipe.libs
+    artellapipe.libs
 
 Module contents
 ---------------
 
 .. automodule:: artellapipe
-   :members:
-   :undoc-members:
-   :show-inheritance:
+    :members:
+    :undoc-members:
+    :show-inheritance:

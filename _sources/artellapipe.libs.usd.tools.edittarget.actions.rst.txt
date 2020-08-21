@@ -1,0 +1,7 @@
+artellapipe.libs.usd.tools.edittarget.actions module
+====================================================
+
+.. automodule:: artellapipe.libs.usd.tools.edittarget.actions
+    :members:
+    :undoc-members:
+    :show-inheritance:

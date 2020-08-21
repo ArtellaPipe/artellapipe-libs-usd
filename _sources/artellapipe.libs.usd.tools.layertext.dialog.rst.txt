@@ -1,0 +1,7 @@
+artellapipe.libs.usd.tools.layertext.dialog module
+==================================================
+
+.. automodule:: artellapipe.libs.usd.tools.layertext.dialog
+    :members:
+    :undoc-members:
+    :show-inheritance:

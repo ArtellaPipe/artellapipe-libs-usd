@@ -1,0 +1,7 @@
+artellapipe.libs.usd.tools.opinion.dialog module
+================================================
+
+.. automodule:: artellapipe.libs.usd.tools.opinion.dialog
+    :members:
+    :undoc-members:
+    :show-inheritance:

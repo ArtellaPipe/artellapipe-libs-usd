@@ -1,0 +1,7 @@
+artellapipe.libs.usd.tools.hierarchy.actions module
+===================================================
+
+.. automodule:: artellapipe.libs.usd.tools.hierarchy.actions
+    :members:
+    :undoc-members:
+    :show-inheritance:
