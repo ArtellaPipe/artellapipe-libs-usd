@@ -16,6 +16,8 @@ import os
 
 from pxr import Usd, UsdGeom, Sdf
 
+from tpDcc.libs.python import python
+
 from artellapipe.libs.usd.core import usdutils
 
 
@@ -55,6 +57,16 @@ def get_root_layer(stage):
     return stage.GetRootLayer()
 
 
+def open_stage(file_path):
+    """
+    Opens given USD files as an USD stage
+    :param file_path: str
+    :return: Usd.Stage
+    """
+
+    return Usd.Stage.Open(file_path)
+
+
 def save_stage(stage, file_path=None):
     """
     Saves given stage data into file path
@@ -92,10 +104,23 @@ def define_transform_prim(stage, prim_path, get_as_prim=False):
     xform = UsdGeom.Xform.Define(stage, prim_path)
 
     if get_as_prim:
-        xform_prim = stage.GetPrimAtPath(prim_path)
-        return xform_prim
+        return xform.GetPrim()
 
     return xform
+
+
+def get_prim_at_path(stage, prim_path):
+    """
+    Returns Usd Prim at given path
+    :param stage: Usd.Stage
+    :param prim_path: str
+    :return: Usd.Prim or None
+    """
+
+    if not prim_path.startswith('/'):
+        prim_path = '/{}'.format(prim_path)
+
+    return stage.GetPrimAtPath(Sdf.Path(prim_path))
 
 
 def set_default_prim(stage, prim):
@@ -104,6 +129,9 @@ def set_default_prim(stage, prim):
     :param stage: Usd.Stage
     :param prim: Usd.Prim
     """
+
+    if python.is_string(prim):
+        prim = get_prim_at_path(stage, prim)
 
     return stage.SetDefaultPrim(prim)
 
@@ -123,3 +151,26 @@ def add_layer(stage, layer_file=None):
 
     root_layer.subLayerPaths.append(layer_file)
 
+
+def add_reference(prim, file_path, update_default_prim=True):
+    """
+    Adds a new reference to the given prim
+    :param prim: Usd.Prim
+    :param file_path: str
+    :param update_default_prim: bool or None or str
+    :return:
+    """
+
+    if os.path.isfile(file_path):
+        referenced_stage = Usd.Stage.Open(file_path)
+    else:
+        referenced_stage = Usd.Stage.CreateNew(file_path)
+    reference_stage_prim = referenced_stage.DefinePrim(prim.GetPath())
+    if update_default_prim:
+        if isinstance(update_default_prim, Usd.Prim):
+            referenced_stage.SetDefaultPrim(update_default_prim)
+        else:
+            referenced_stage.SetDefaultPrim(reference_stage_prim)
+
+    referenced_stage.GetRootLayer().Save()
+    prim.GetReferences().AddReference(file_path)
