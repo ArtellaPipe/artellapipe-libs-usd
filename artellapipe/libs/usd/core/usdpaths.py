@@ -18,7 +18,7 @@ import logging
 LOGGER = logging.getLogger('artellapipe-libs-usd')
 
 
-def get_usd_externals():
+def get_usd_externals_path():
     """
     Returns artellapipe-libs-usd USD externals directory
     :return: str
@@ -29,6 +29,17 @@ def get_usd_externals():
     return externals_dir
 
 
+def get_usd_plugins_path():
+    """
+    Returns artellapipe-libs-usd USD plugins directory
+    :return: str
+    """
+
+    plugins_dir = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'plugins')
+
+    return plugins_dir
+
+
 def get_platform_path():
     """
     Returns externals path based on current platform
@@ -37,7 +48,7 @@ def get_platform_path():
 
     from tpDcc.libs.python import path, osplatform
 
-    externals_dir = get_usd_externals()
+    externals_dir = get_usd_externals_path()
     if not externals_dir or not os.path.isdir(externals_dir):
         LOGGER.warning('No externals directory found: "{}"'.format(externals_dir))
         return
