@@ -1,0 +1,12 @@
+[submodule "usd/USD"]
+	path = usd/USD
+	url = https://github.com/PixarAnimationStudios/USD.git
+[submodule "usd/maya-usd"]
+	path = usd/maya-usd
+	url = https://github.com/Autodesk/maya-usd.git
+[submodule "usd/arnold-usd"]
+	path = usd/arnold-usd
+	url = https://github.com/Autodesk/arnold-usd.git
+[submodule "usd/usd-qt"]
+	path = usd/usd-qt
+	url = https://github.com/LumaPictures/usd-qt.git
