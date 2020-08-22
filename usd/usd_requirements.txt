@@ -1,0 +1,9 @@
+# ===================================================================
+# Pixar USD/Autodesk Maya USD requirements file
+# ===================================================================
+
+PyOpenGL
+PySide			
+# PySide2
+PyYAML
+Jinja2			# NOTE: We need to add this requirement for Pixar USD build, otherwise schemas will not be generated properly
