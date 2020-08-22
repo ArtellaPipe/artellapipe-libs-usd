@@ -1,0 +1,47 @@
+# ==============================================================================
+# GENERAL
+# ==============================================================================
+
+# NOTE: For now, we are using Python 2.7.15 [MSC v.1500 64 bit (AMD64)]
+
+# 1. Launch VS2015 x64 Native Tools Command Prompt (this will come with vcvars already
+# setup. So, build_usd.py will be able to find the compiler to use for building.
+
+# ------------------------------------------------------------------------------
+
+# 2. Setup Virtual Environment
+
+cd D:/dev/artellapipe/artellapipe-libs-usd/usd
+D:
+virtualenv venv_usd
+cd venv_usd
+cd Scripts
+activate
+cd ..
+cd ..
+pip install -r usd_requirements.txt
+
+# ==============================================================================
+# Pixar USD
+# ==============================================================================
+
+# NOTE: We need to pass --build-args boost,"--with-date_time --with-thread --with-system --with-filesystem" 
+# because AL_Maya (which is build with Autodesk Maya USD) has those dependencies
+
+# ------------------------------------------------------------------------------
+
+python USD/build_scripts/build_usd.py --alembic --materialx ./build/USD --build-args boost,"--with-date_time --with-thread --with-system --with-filesystem"
+
+# ==============================================================================
+# Autodesk Maya USD
+# ==============================================================================
+
+python maya-usd/build.py --maya-location "C:\Program Files\Autodesk\Maya2019" --pxrusd-location "D:\dev\usd\build\USD" --devkit-location "D:\dev\sdks\maya\2019\devkitBase" .\build\maya-usd
+
+# ==============================================================================
+# Autodesk Arnold USD
+# ==============================================================================
+
+# ==============================================================================
+# Luma Qt USD
+# ==============================================================================
