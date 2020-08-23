@@ -1,4 +1,4 @@
-prefix=D:/dev/usd/build/USD
+prefix=D:/dev/artellapipe/artellapipe-libs-usd/usd/build/USD
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include

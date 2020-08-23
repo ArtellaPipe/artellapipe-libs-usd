@@ -29,6 +29,8 @@ This is mostly focused on dealing with OSL and Args files. This may need to be
 expanded/generalized to accommodate other types in the future.
 """
 
+from __future__ import print_function
+
 from pxr import Ndr
 from pxr import Sdr
 from pxr.Sdf import ValueTypeNames as SdfTypes
@@ -243,7 +245,7 @@ def TestShadingProperties(node):
         assert properties["vstruct1_bump"].IsVStructMember()
 
 
-def TestBasicNode(node, nodeSourceType, nodeURI, resolvedNodeURI):
+def TestBasicNode(node, nodeSourceType, nodeDefinitionURI, nodeImplementationURI):
     """
     Test basic, non-shader-specific correctness on the specified node.
     """
@@ -275,9 +277,6 @@ def TestBasicNode(node, nodeSourceType, nodeURI, resolvedNodeURI):
                     "$invalidPrimvarNamingProperty",
         "uncategorizedMetadata": "uncategorized"
     }
-    info = "TestNode%s (context: '%s', version: '<invalid version>', family: ''); URI: '%s'" % (
-        "OSL" if isOSL else "ARGS", nodeContext, nodeURI
-    )
 
     if not isOSL:
         metadata.pop("category")
@@ -298,10 +297,9 @@ def TestBasicNode(node, nodeSourceType, nodeURI, resolvedNodeURI):
     assert node.GetContext() == nodeContext
     assert node.GetSourceType() == nodeSourceType
     assert node.GetFamily() == ""
-    assert node.GetSourceURI() == nodeURI
-    assert node.GetResolvedSourceURI() == resolvedNodeURI
+    assert node.GetResolvedDefinitionURI() == nodeDefinitionURI
+    assert node.GetResolvedImplementationURI() == nodeImplementationURI
     assert node.IsValid()
-    assert node.GetInfoString().startswith(info)
     assert len(nodeInputs) == 17
     assert len(nodeOutputs) == numOutputs
     assert nodeInputs["inputA"] is not None
@@ -322,7 +320,7 @@ def TestBasicNode(node, nodeSourceType, nodeURI, resolvedNodeURI):
     assert nodeOutputs["outputNormal"] is not None
     assert nodeOutputs["outputColor"] is not None
     assert nodeOutputs["outputVector"] is not None
-    print set(node.GetInputNames())
+    print(set(node.GetInputNames()))
     assert set(node.GetInputNames()) == {
         "inputA", "inputB", "inputC", "inputD", "inputF2", "inputF3", "inputF4",
         "inputF5", "inputInterp", "inputOptions", "inputPoint", "inputNormal",
@@ -335,7 +333,7 @@ def TestBasicNode(node, nodeSourceType, nodeURI, resolvedNodeURI):
     # So, ensure that the bits we expect to see are there instead of doing 
     # an equality check.
     nodeMetadata = node.GetMetadata()
-    for i,j in metadata.iteritems():
+    for i,j in metadata.items():
         assert i in nodeMetadata
         assert nodeMetadata[i] == metadata[i]
 
@@ -604,5 +602,10 @@ def TestShaderPropertiesNode(node):
     property = nodeOutputs["outputSurface"]
     assert property.GetType() == Sdr.PropertyTypes.Terminal
     assert GetType(property) == Tf.Type.FindByName("TfToken")
+    assert Ndr._ValidateProperty(node, property)
+
+    # Specific test of implementationName feature, we can skip type-tests
+    property = nodeInputs["normal"]
+    assert property.GetImplementationName() == "aliasedNormalInput"
     assert Ndr._ValidateProperty(node, property)
 

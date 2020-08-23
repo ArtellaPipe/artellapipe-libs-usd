@@ -1,0 +1,19 @@
+{
+    "Plugins": [
+        {
+            "Info": {
+                "UsdMaya": {
+                    "PrimWriter": {
+                        "mayaPlugin": "pxrUsdPreviewSurface",
+                        "providesTranslator": [
+                            "pxrUsdPreviewSurface"
+                        ]
+                    }
+                }
+            },
+            "LibraryPath": "../../../basePxrUsdPreviewSurface.dll",
+            "Name": "basePxrUsdPreviewSurface",
+            "Type": "library"
+        }
+    ]
+}

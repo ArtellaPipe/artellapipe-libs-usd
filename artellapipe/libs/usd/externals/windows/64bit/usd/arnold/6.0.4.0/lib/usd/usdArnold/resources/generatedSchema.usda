@@ -1,0 +1,2183 @@
+#usda 1.0
+(
+    "WARNING: THIS FILE IS GENERATED.  DO NOT EDIT."
+    customLayerData = {
+        string[] appliedAPISchemas = ["ArnoldLightAPI", "ArnoldShapeAPI", "ArnoldCameraAPI", "ArnoldPerspCameraAPI", "ArnoldDistantLightAPI", "ArnoldQuadLightAPI", "ArnoldSkydomeLightAPI", "ArnoldDiskLightAPI", "ArnoldMeshLightAPI", "ArnoldSphereAPI", "ArnoldCylinderAPI", "ArnoldConeAPI", "ArnoldPolymeshAPI", "ArnoldBoxAPI", "ArnoldCurvesAPI", "ArnoldPointsAPI"]
+        dictionary multipleApplyAPISchemas = {
+        }
+    }
+)
+
+class "ArnoldColorManager"
+{
+    string color_space_linear = ""
+    string color_space_narrow = ""
+    string config = ""
+    float[] linear_chromaticities
+}
+
+class "ArnoldLight"
+{
+    string aov = "default"
+    bool cast_shadows = 1
+    bool cast_volumetric_shadows = 1
+    color3f color = (1, 1, 1)
+    float diffuse = 1
+    float exposure = 0
+    string[] filters
+    float indirect = 1
+    float intensity = 1
+    matrix4d[] matrix
+    int max_bounces = 999
+    float motion_end = 1
+    float motion_start = 0
+    bool normalize = 1
+    int samples = 1
+    color3f shadow_color = (0, 0, 0)
+    float shadow_density = 1
+    float specular = 1
+    float sss = 1
+    float volume = 1
+    int volume_samples = 2
+}
+
+class "ArnoldLightAPI"
+{
+    string primvars:arnold:aov = "default"
+    bool primvars:arnold:cast_shadows = 1
+    bool primvars:arnold:cast_volumetric_shadows = 1
+    string[] primvars:arnold:filters
+    float primvars:arnold:indirect = 1
+    int primvars:arnold:max_bounces = 999
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    int primvars:arnold:samples = 1
+    color3f primvars:arnold:shadow_color = (0, 0, 0)
+    float primvars:arnold:shadow_density = 1
+    float primvars:arnold:sss = 1
+    float primvars:arnold:volume = 1
+    int primvars:arnold:volume_samples = 2
+}
+
+class "ArnoldDriver"
+{
+}
+
+class "ArnoldFilter"
+{
+}
+
+class "ArnoldOperator"
+{
+    bool enable = 1
+    string[] inputs
+}
+
+class "ArnoldShape"
+{
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+}
+
+class "ArnoldShapeAPI"
+{
+    uint primvars:arnold:id = 0
+    bool primvars:arnold:invert_normals = 0
+    string[] primvars:arnold:light_group
+    bool primvars:arnold:matte = 0
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    bool primvars:arnold:opaque = 1
+    float primvars:arnold:ray_bias = 0.000001
+    bool primvars:arnold:receive_shadows = 1
+    bool primvars:arnold:self_shadows = 1
+    string[] primvars:arnold:shader
+    string[] primvars:arnold:shadow_group
+    uchar primvars:arnold:sidedness = 255
+    string[] primvars:arnold:trace_sets
+    token primvars:arnold:transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool primvars:arnold:use_light_group = 0
+    bool primvars:arnold:use_shadow_group = 0
+    uchar primvars:arnold:visibility = 255
+}
+
+class "ArnoldCamera"
+{
+    float exposure = 0
+    float far_clip = 1e30
+    string filtermap = ""
+    token handedness = "right" (
+        allowedTokens = ["right", "left"]
+    )
+    vector3f[] look_at
+    matrix4d[] matrix
+    float motion_end = 1
+    float motion_start = 0
+    float near_clip = 0.0001
+    vector3f[] position
+    token rolling_shutter = "off" (
+        allowedTokens = ["off", "top", "bottom", "left", "right"]
+    )
+    float rolling_shutter_duration = 0
+    float2[] screen_window_max
+    float2[] screen_window_min
+    float2[] shutter_curve
+    float shutter_end = 0
+    float shutter_start = 0
+    token shutter_type = "box" (
+        allowedTokens = ["box", "triangle", "curve"]
+    )
+    vector3f[] up
+}
+
+class "ArnoldCameraAPI"
+{
+    float primvars:arnold:exposure = 0
+    string primvars:arnold:filtermap = ""
+    token primvars:arnold:handedness = "right" (
+        allowedTokens = ["right", "left"]
+    )
+    vector3f[] primvars:arnold:look_at
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    vector3f[] primvars:arnold:position
+    token primvars:arnold:rolling_shutter = "off" (
+        allowedTokens = ["off", "top", "bottom", "left", "right"]
+    )
+    float primvars:arnold:rolling_shutter_duration = 0
+    float2[] primvars:arnold:screen_window_max
+    float2[] primvars:arnold:screen_window_min
+    float2[] primvars:arnold:shutter_curve
+    token primvars:arnold:shutter_type = "box" (
+        allowedTokens = ["box", "triangle", "curve"]
+    )
+    vector3f[] primvars:arnold:up
+}
+
+class "ArnoldOptions"
+{
+    float AA_adaptive_threshold = 0.015
+    float AA_sample_clamp = 1e30
+    bool AA_sample_clamp_affects_aovs = 0
+    int AA_samples = 1
+    int AA_samples_max = 20
+    int AA_seed = 1
+    bool abort_on_error = 1
+    bool abort_on_license_fail = 0
+    string[] aov_shaders
+    string arnold:operator = ""
+    string atmosphere = ""
+    int auto_transparency_depth = 10
+    string background = ""
+    uchar background_visibility = 255
+    token bucket_scanning = "spiral" (
+        allowedTokens = ["top", "left", "random", "spiral", "hilbert", "list"]
+    )
+    int bucket_size = 64
+    float2[] buckets
+    string camera = ""
+    string color_manager = ""
+    bool curves_rr_aggressive = 1
+    int curves_rr_start_depth = 0
+    bool enable_adaptive_sampling = 0
+    bool enable_dependency_graph = 0
+    bool enable_microfacet_multiscatter = 1
+    bool enable_new_point_light_sampler = 1
+    bool enable_new_quad_light_sampler = 1
+    bool enable_procedural_cache = 1
+    bool enable_progressive_render = 0
+    color3f error_color_bad_pixel = (0, 0, 1)
+    color3f error_color_bad_shader = (1, 0, 1)
+    color3f error_color_bad_texture = (1, 0, 0)
+    token fis_filter = "none" (
+        allowedTokens = ["none", "triangle", "blackman_harris", "gaussian"]
+    )
+    float fis_filter_width = 3
+    float fps = 24
+    float frame = 0
+    int GI_diffuse_depth = 0
+    int GI_diffuse_samples = 2
+    int GI_specular_depth = 0
+    int GI_specular_samples = 2
+    int GI_sss_samples = 2
+    int GI_total_depth = 10
+    int GI_transmission_depth = 2
+    int GI_transmission_samples = 2
+    int GI_volume_depth = 0
+    int GI_volume_samples = 2
+    int gpu_default_min_memory_MB = 512
+    string gpu_default_names = "*"
+    int gpu_max_texture_resolution = 0
+    token gpu_sparse_textures = "disabled" (
+        allowedTokens = ["disabled", "software", "native"]
+    )
+    bool ignore_atmosphere = 0
+    bool ignore_bump = 0
+    bool ignore_displacement = 0
+    bool ignore_dof = 0
+    bool ignore_lights = 0
+    string[] ignore_list
+    bool ignore_motion = 0
+    bool ignore_motion_blur = 0
+    bool ignore_operators = 0
+    bool ignore_shaders = 0
+    bool ignore_shadows = 0
+    bool ignore_smoothing = 0
+    bool ignore_sss = 0
+    bool ignore_subdivision = 0
+    bool ignore_textures = 0
+    float indirect_sample_clamp = 10
+    float indirect_specular_blur = 1
+    string[] light_path_expressions
+    float low_light_threshold = 0.001
+    float luminaire_bias = 0.000001
+    uchar max_subdivisions = 255
+    int min_optix_denoiser_sample = 0
+    string osl_includepath = ""
+    string[] outputs
+    bool parallel_node_init = 1
+    token pin_threads = "metric_auto" (
+        allowedTokens = ["off", "on", "metric_auto"]
+    )
+    float pixel_aspect_ratio = 1
+    string plugin_searchpath = ""
+    bool procedural_auto_instancing = 1
+    string procedural_searchpath = ""
+    float reference_time = 0
+    int region_max_x = -2147483648
+    int region_max_y = -2147483648
+    int region_min_x = -2147483648
+    int region_min_y = -2147483648
+    token render_device = "CPU" (
+        allowedTokens = ["CPU", "GPU"]
+    )
+    token render_device_fallback = "error" (
+        allowedTokens = ["error", "CPU"]
+    )
+    float scene_units_in_meters = 1
+    string scene_units_name = ""
+    string shader_override = ""
+    bool skip_background_atmosphere = 0
+    bool skip_license_check = 0
+    bool sss_use_autobump = 0
+    string subdiv_dicing_camera = ""
+    bool subdiv_frustum_culling = 0
+    float subdiv_frustum_padding = 0
+    bool texture_accept_unmipped = 1
+    bool texture_accept_untiled = 1
+    bool texture_automip = 1
+    int texture_autotile = 0
+    bool texture_conservative_lookups = 1
+    int texture_failure_retries = 0
+    float texture_max_memory_MB = 4096
+    int texture_max_open_files = 0
+    float texture_max_sharpen = 1.5
+    bool texture_per_file_stats = 0
+    string texture_searchpath = ""
+    token thread_priority = "normal" (
+        allowedTokens = ["lowest", "low", "normal", "high"]
+    )
+    int threads = 0
+    int xres = 320
+    int yres = 240
+}
+
+class ArnoldPerspCamera "ArnoldPerspCamera"
+{
+    float aperture_aspect_ratio = 1
+    float aperture_blade_curvature = 0
+    int aperture_blades = 0
+    float aperture_rotation = 0
+    float[] aperture_size
+    float exposure = 0
+    float far_clip = 1e30
+    string filtermap = ""
+    bool flat_field_focus = 1
+    float[] focus_distance
+    float[] fov
+    token handedness = "right" (
+        allowedTokens = ["right", "left"]
+    )
+    float2[] lens_shift
+    float2[] lens_tilt_angle
+    vector3f[] look_at
+    matrix4d[] matrix
+    float motion_end = 1
+    float motion_start = 0
+    float near_clip = 0.0001
+    bool plane_distance = 1
+    vector3f[] position
+    float radial_distortion = 0
+    token radial_distortion_type = "cubic" (
+        allowedTokens = ["cubic", "cubic_inverse"]
+    )
+    token rolling_shutter = "off" (
+        allowedTokens = ["off", "top", "bottom", "left", "right"]
+    )
+    float rolling_shutter_duration = 0
+    float2[] screen_window_max
+    float2[] screen_window_min
+    float2[] shutter_curve
+    float shutter_end = 0
+    float shutter_start = 0
+    token shutter_type = "box" (
+        allowedTokens = ["box", "triangle", "curve"]
+    )
+    vector3f[] up
+    color4f uv_remap = (0, 0, 0, 0)
+}
+
+class "ArnoldPerspCameraAPI"
+{
+    float primvars:arnold:aperture_aspect_ratio = 1
+    float primvars:arnold:aperture_blade_curvature = 0
+    int primvars:arnold:aperture_blades = 0
+    float primvars:arnold:aperture_rotation = 0
+    float[] primvars:arnold:aperture_size
+    float primvars:arnold:exposure = 0
+    string primvars:arnold:filtermap = ""
+    bool primvars:arnold:flat_field_focus = 1
+    float[] primvars:arnold:fov
+    token primvars:arnold:handedness = "right" (
+        allowedTokens = ["right", "left"]
+    )
+    float2[] primvars:arnold:lens_shift
+    float2[] primvars:arnold:lens_tilt_angle
+    vector3f[] primvars:arnold:look_at
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    bool primvars:arnold:plane_distance = 1
+    vector3f[] primvars:arnold:position
+    float primvars:arnold:radial_distortion = 0
+    token primvars:arnold:radial_distortion_type = "cubic" (
+        allowedTokens = ["cubic", "cubic_inverse"]
+    )
+    token primvars:arnold:rolling_shutter = "off" (
+        allowedTokens = ["off", "top", "bottom", "left", "right"]
+    )
+    float primvars:arnold:rolling_shutter_duration = 0
+    float2[] primvars:arnold:screen_window_max
+    float2[] primvars:arnold:screen_window_min
+    float2[] primvars:arnold:shutter_curve
+    token primvars:arnold:shutter_type = "box" (
+        allowedTokens = ["box", "triangle", "curve"]
+    )
+    vector3f[] primvars:arnold:up
+    color4f primvars:arnold:uv_remap = (0, 0, 0, 0)
+}
+
+class ArnoldOrthoCamera "ArnoldOrthoCamera"
+{
+    float exposure = 0
+    float far_clip = 1e30
+    string filtermap = ""
+    token handedness = "right" (
+        allowedTokens = ["right", "left"]
+    )
+    vector3f[] look_at
+    matrix4d[] matrix
+    float motion_end = 1
+    float motion_start = 0
+    float near_clip = 0.0001
+    vector3f[] position
+    token rolling_shutter = "off" (
+        allowedTokens = ["off", "top", "bottom", "left", "right"]
+    )
+    float rolling_shutter_duration = 0
+    float2[] screen_window_max
+    float2[] screen_window_min
+    float2[] shutter_curve
+    float shutter_end = 0
+    float shutter_start = 0
+    token shutter_type = "box" (
+        allowedTokens = ["box", "triangle", "curve"]
+    )
+    vector3f[] up
+}
+
+class ArnoldFisheyeCamera "ArnoldFisheyeCamera"
+{
+    float aperture_aspect_ratio = 1
+    float aperture_blade_curvature = 0
+    int aperture_blades = 0
+    float aperture_rotation = 0
+    float[] aperture_size
+    bool autocrop = 0
+    float exposure = 0
+    float far_clip = 1e30
+    string filtermap = ""
+    float[] focus_distance
+    float[] fov
+    token handedness = "right" (
+        allowedTokens = ["right", "left"]
+    )
+    vector3f[] look_at
+    matrix4d[] matrix
+    float motion_end = 1
+    float motion_start = 0
+    float near_clip = 0.0001
+    vector3f[] position
+    token rolling_shutter = "off" (
+        allowedTokens = ["off", "top", "bottom", "left", "right"]
+    )
+    float rolling_shutter_duration = 0
+    float2[] screen_window_max
+    float2[] screen_window_min
+    float2[] shutter_curve
+    float shutter_end = 0
+    float shutter_start = 0
+    token shutter_type = "box" (
+        allowedTokens = ["box", "triangle", "curve"]
+    )
+    vector3f[] up
+}
+
+class ArnoldCylCamera "ArnoldCylCamera"
+{
+    float exposure = 0
+    float far_clip = 1e30
+    string filtermap = ""
+    token handedness = "right" (
+        allowedTokens = ["right", "left"]
+    )
+    float[] horizontal_fov
+    vector3f[] look_at
+    matrix4d[] matrix
+    float motion_end = 1
+    float motion_start = 0
+    float near_clip = 0.0001
+    vector3f[] position
+    bool projective = 1
+    token rolling_shutter = "off" (
+        allowedTokens = ["off", "top", "bottom", "left", "right"]
+    )
+    float rolling_shutter_duration = 0
+    float2[] screen_window_max
+    float2[] screen_window_min
+    float2[] shutter_curve
+    float shutter_end = 0
+    float shutter_start = 0
+    token shutter_type = "box" (
+        allowedTokens = ["box", "triangle", "curve"]
+    )
+    vector3f[] up
+    float[] vertical_fov
+}
+
+class ArnoldSphericalCamera "ArnoldSphericalCamera"
+{
+    float exposure = 0
+    float far_clip = 1e30
+    string filtermap = ""
+    token handedness = "right" (
+        allowedTokens = ["right", "left"]
+    )
+    vector3f[] look_at
+    matrix4d[] matrix
+    float motion_end = 1
+    float motion_start = 0
+    float near_clip = 0.0001
+    vector3f[] position
+    token rolling_shutter = "off" (
+        allowedTokens = ["off", "top", "bottom", "left", "right"]
+    )
+    float rolling_shutter_duration = 0
+    float2[] screen_window_max
+    float2[] screen_window_min
+    float2[] shutter_curve
+    float shutter_end = 0
+    float shutter_start = 0
+    token shutter_type = "box" (
+        allowedTokens = ["box", "triangle", "curve"]
+    )
+    vector3f[] up
+}
+
+class ArnoldVrCamera "ArnoldVrCamera"
+{
+    float bottom_merge_angle = 90
+    token bottom_merge_mode = "cosine" (
+        allowedTokens = ["none", "cosine", "shader"]
+    )
+    float exposure = 0
+    float eye_separation = 0.65
+    float eye_to_neck = 0
+    float far_clip = 1e30
+    string filtermap = ""
+    token handedness = "right" (
+        allowedTokens = ["right", "left"]
+    )
+    vector3f[] look_at
+    matrix4d[] matrix
+    float merge_shader = 0
+    token mode = "side_by_side" (
+        allowedTokens = ["side_by_side", "over_under", "left_eye", "right_eye"]
+    )
+    float motion_end = 1
+    float motion_start = 0
+    float near_clip = 0.0001
+    vector3f[] position
+    token projection = "latlong" (
+        allowedTokens = ["latlong", "cubemap_6x1", "cubemap_3x2"]
+    )
+    token rolling_shutter = "off" (
+        allowedTokens = ["off", "top", "bottom", "left", "right"]
+    )
+    float rolling_shutter_duration = 0
+    float2[] screen_window_max
+    float2[] screen_window_min
+    float2[] shutter_curve
+    float shutter_end = 0
+    float shutter_start = 0
+    token shutter_type = "box" (
+        allowedTokens = ["box", "triangle", "curve"]
+    )
+    float top_merge_angle = 90
+    token top_merge_mode = "cosine" (
+        allowedTokens = ["none", "cosine", "shader"]
+    )
+    vector3f[] up
+}
+
+class ArnoldUvCamera "ArnoldUvCamera"
+{
+    float exposure = 0
+    bool extend_edges = 1
+    float far_clip = 1e30
+    string filtermap = ""
+    int grid_size = 16
+    token handedness = "right" (
+        allowedTokens = ["right", "left"]
+    )
+    vector3f[] look_at
+    matrix4d[] matrix
+    string mesh = ""
+    float motion_end = 1
+    float motion_start = 0
+    float near_clip = 0.0001
+    float offset = 0.1
+    vector3f[] position
+    string post_bake = ""
+    vector3f ray_direction = (0, 0, 0)
+    vector3f ray_origin = (0, 0, 0)
+    token rolling_shutter = "off" (
+        allowedTokens = ["off", "top", "bottom", "left", "right"]
+    )
+    float rolling_shutter_duration = 0
+    float2[] screen_window_max
+    float2[] screen_window_min
+    float2[] shutter_curve
+    float shutter_end = 0
+    float shutter_start = 0
+    token shutter_type = "box" (
+        allowedTokens = ["box", "triangle", "curve"]
+    )
+    float u_offset = 0
+    float u_scale = 1
+    vector3f[] up
+    string uv_set = ""
+    float v_offset = 0
+    float v_scale = 1
+}
+
+class ArnoldPointLight "ArnoldPointLight"
+{
+    string aov = "default"
+    float camera = 0
+    bool cast_shadows = 1
+    bool cast_volumetric_shadows = 1
+    color3f color = (1, 1, 1)
+    float diffuse = 1
+    float exposure = 0
+    string[] filters
+    float indirect = 1
+    float intensity = 1
+    matrix4d[] matrix
+    int max_bounces = 999
+    float motion_end = 1
+    float motion_start = 0
+    bool normalize = 1
+    vector3f[] position
+    float radius = 0
+    int samples = 1
+    color3f shadow_color = (0, 0, 0)
+    float shadow_density = 1
+    float specular = 1
+    float sss = 1
+    float transmission = 0
+    float volume = 1
+    int volume_samples = 2
+}
+
+class ArnoldDistantLight "ArnoldDistantLight"
+{
+    float angle = 0
+    string aov = "default"
+    bool cast_shadows = 1
+    bool cast_volumetric_shadows = 1
+    color3f color = (1, 1, 1)
+    float diffuse = 1
+    vector3f[] direction
+    float exposure = 0
+    string[] filters
+    float indirect = 1
+    float intensity = 1
+    matrix4d[] matrix
+    int max_bounces = 999
+    float motion_end = 1
+    float motion_start = 0
+    bool normalize = 1
+    int samples = 1
+    color3f shadow_color = (0, 0, 0)
+    float shadow_density = 1
+    float specular = 1
+    float sss = 1
+    float volume = 1
+    int volume_samples = 2
+}
+
+class "ArnoldDistantLightAPI"
+{
+    string primvars:arnold:aov = "default"
+    bool primvars:arnold:cast_shadows = 1
+    bool primvars:arnold:cast_volumetric_shadows = 1
+    vector3f[] primvars:arnold:direction
+    string[] primvars:arnold:filters
+    float primvars:arnold:indirect = 1
+    int primvars:arnold:max_bounces = 999
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    int primvars:arnold:samples = 1
+    color3f primvars:arnold:shadow_color = (0, 0, 0)
+    float primvars:arnold:shadow_density = 1
+    float primvars:arnold:sss = 1
+    float primvars:arnold:volume = 1
+    int primvars:arnold:volume_samples = 2
+}
+
+class ArnoldQuadLight "ArnoldQuadLight"
+{
+    string aov = "default"
+    float camera = 0
+    bool cast_shadows = 1
+    bool cast_volumetric_shadows = 1
+    color3f color = (1, 1, 1)
+    float diffuse = 1
+    float exposure = 0
+    string[] filters
+    float indirect = 1
+    float intensity = 1
+    matrix4d[] matrix
+    int max_bounces = 999
+    float motion_end = 1
+    float motion_start = 0
+    bool normalize = 1
+    bool portal = 0
+    int resolution = 512
+    float roundness = 0
+    int samples = 1
+    color3f shadow_color = (0, 0, 0)
+    float shadow_density = 1
+    float soft_edge = 0
+    float specular = 1
+    float spread = 1
+    float sss = 1
+    float transmission = 0
+    vector3f[] vertices
+    float volume = 1
+    int volume_samples = 2
+}
+
+class "ArnoldQuadLightAPI"
+{
+    string primvars:arnold:aov = "default"
+    float primvars:arnold:camera = 0
+    bool primvars:arnold:cast_shadows = 1
+    bool primvars:arnold:cast_volumetric_shadows = 1
+    string[] primvars:arnold:filters
+    float primvars:arnold:indirect = 1
+    int primvars:arnold:max_bounces = 999
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    bool primvars:arnold:portal = 0
+    int primvars:arnold:resolution = 512
+    float primvars:arnold:roundness = 0
+    int primvars:arnold:samples = 1
+    color3f primvars:arnold:shadow_color = (0, 0, 0)
+    float primvars:arnold:shadow_density = 1
+    float primvars:arnold:soft_edge = 0
+    float primvars:arnold:spread = 1
+    float primvars:arnold:sss = 1
+    float primvars:arnold:transmission = 0
+    float primvars:arnold:volume = 1
+    int primvars:arnold:volume_samples = 2
+}
+
+class ArnoldSpotLight "ArnoldSpotLight"
+{
+    string aov = "default"
+    float aspect_ratio = 1
+    bool cast_shadows = 1
+    bool cast_volumetric_shadows = 1
+    color3f color = (1, 1, 1)
+    float cone_angle = 65
+    float cosine_power = 0
+    float diffuse = 1
+    float exposure = 0
+    string[] filters
+    float indirect = 1
+    float intensity = 1
+    float lens_radius = 0
+    vector3f[] look_at
+    matrix4d[] matrix
+    int max_bounces = 999
+    float motion_end = 1
+    float motion_start = 0
+    bool normalize = 1
+    float penumbra_angle = 0
+    vector3f[] position
+    float radius = 0
+    float roundness = 1
+    int samples = 1
+    color3f shadow_color = (0, 0, 0)
+    float shadow_density = 1
+    float specular = 1
+    float sss = 1
+    vector3f[] up
+    float volume = 1
+    int volume_samples = 2
+}
+
+class ArnoldSkydomeLight "ArnoldSkydomeLight"
+{
+    string aov = "default"
+    bool aov_indirect = 0
+    float camera = 1
+    bool cast_shadows = 1
+    bool cast_volumetric_shadows = 1
+    color3f color = (1, 1, 1)
+    float diffuse = 1
+    float exposure = 0
+    string[] filters
+    token format = "angular" (
+        allowedTokens = ["mirrored_ball", "angular", "latlong"]
+    )
+    float indirect = 1
+    float intensity = 1
+    matrix4d[] matrix
+    int max_bounces = 999
+    float motion_end = 1
+    float motion_start = 0
+    bool normalize = 1
+    token portal_mode = "interior_only" (
+        allowedTokens = ["off", "interior_only", "interior_exterior"]
+    )
+    int resolution = 1000
+    int samples = 1
+    string shader = ""
+    color3f shadow_color = (0, 0, 0)
+    float shadow_density = 1
+    float specular = 1
+    float sss = 1
+    float transmission = 1
+    float volume = 1
+    int volume_samples = 2
+}
+
+class "ArnoldSkydomeLightAPI"
+{
+    string primvars:arnold:aov = "default"
+    bool primvars:arnold:aov_indirect = 0
+    float primvars:arnold:camera = 1
+    bool primvars:arnold:cast_shadows = 1
+    bool primvars:arnold:cast_volumetric_shadows = 1
+    string[] primvars:arnold:filters
+    float primvars:arnold:indirect = 1
+    int primvars:arnold:max_bounces = 999
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    token primvars:arnold:portal_mode = "interior_only" (
+        allowedTokens = ["off", "interior_only", "interior_exterior"]
+    )
+    int primvars:arnold:resolution = 1000
+    int primvars:arnold:samples = 1
+    string primvars:arnold:shader = ""
+    color3f primvars:arnold:shadow_color = (0, 0, 0)
+    float primvars:arnold:shadow_density = 1
+    float primvars:arnold:sss = 1
+    float primvars:arnold:transmission = 1
+    float primvars:arnold:volume = 1
+    int primvars:arnold:volume_samples = 2
+}
+
+class ArnoldCylinderLight "ArnoldCylinderLight"
+{
+    string aov = "default"
+    vector3f[] bottom
+    float camera = 0
+    bool cast_shadows = 1
+    bool cast_volumetric_shadows = 1
+    color3f color = (1, 1, 1)
+    float diffuse = 1
+    float exposure = 0
+    string[] filters
+    float indirect = 1
+    float intensity = 1
+    matrix4d[] matrix
+    int max_bounces = 999
+    float motion_end = 1
+    float motion_start = 0
+    bool normalize = 1
+    float radius = 1
+    int samples = 1
+    color3f shadow_color = (0, 0, 0)
+    float shadow_density = 1
+    float specular = 1
+    float sss = 1
+    vector3f[] top
+    float transmission = 0
+    float volume = 1
+    int volume_samples = 2
+}
+
+class ArnoldDiskLight "ArnoldDiskLight"
+{
+    string aov = "default"
+    float camera = 0
+    bool cast_shadows = 1
+    bool cast_volumetric_shadows = 1
+    color3f color = (1, 1, 1)
+    float diffuse = 1
+    vector3f[] direction
+    float exposure = 0
+    string[] filters
+    float indirect = 1
+    float intensity = 1
+    matrix4d[] matrix
+    int max_bounces = 999
+    float motion_end = 1
+    float motion_start = 0
+    bool normalize = 1
+    vector3f[] position
+    float radius = 0.5
+    int samples = 1
+    color3f shadow_color = (0, 0, 0)
+    float shadow_density = 1
+    float specular = 1
+    float spread = 1
+    float sss = 1
+    float transmission = 0
+    float volume = 1
+    int volume_samples = 2
+}
+
+class "ArnoldDiskLightAPI"
+{
+    string primvars:arnold:aov = "default"
+    float primvars:arnold:camera = 0
+    bool primvars:arnold:cast_shadows = 1
+    bool primvars:arnold:cast_volumetric_shadows = 1
+    vector3f[] primvars:arnold:direction
+    string[] primvars:arnold:filters
+    float primvars:arnold:indirect = 1
+    int primvars:arnold:max_bounces = 999
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    vector3f[] primvars:arnold:position
+    int primvars:arnold:samples = 1
+    color3f primvars:arnold:shadow_color = (0, 0, 0)
+    float primvars:arnold:shadow_density = 1
+    float primvars:arnold:spread = 1
+    float primvars:arnold:sss = 1
+    float primvars:arnold:transmission = 0
+    float primvars:arnold:volume = 1
+    int primvars:arnold:volume_samples = 2
+}
+
+class ArnoldMeshLight "ArnoldMeshLight"
+{
+    string aov = "default"
+    bool cast_shadows = 1
+    bool cast_volumetric_shadows = 1
+    color3f color = (1, 1, 1)
+    float diffuse = 1
+    float exposure = 0
+    string[] filters
+    float indirect = 1
+    float intensity = 1
+    matrix4d[] matrix
+    int max_bounces = 999
+    string mesh = ""
+    float motion_end = 1
+    float motion_start = 0
+    bool normalize = 1
+    int samples = 1
+    color3f shadow_color = (0, 0, 0)
+    float shadow_density = 1
+    float specular = 1
+    float sss = 1
+    float volume = 1
+    int volume_samples = 2
+}
+
+class "ArnoldMeshLightAPI"
+{
+    string primvars:arnold:aov = "default"
+    bool primvars:arnold:cast_shadows = 1
+    bool primvars:arnold:cast_volumetric_shadows = 1
+    string[] primvars:arnold:filters
+    float primvars:arnold:indirect = 1
+    int primvars:arnold:max_bounces = 999
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    int primvars:arnold:samples = 1
+    color3f primvars:arnold:shadow_color = (0, 0, 0)
+    float primvars:arnold:shadow_density = 1
+    float primvars:arnold:sss = 1
+    float primvars:arnold:volume = 1
+    int primvars:arnold:volume_samples = 2
+}
+
+class ArnoldPhotometricLight "ArnoldPhotometricLight"
+{
+    string aov = "default"
+    bool cast_shadows = 1
+    bool cast_volumetric_shadows = 1
+    color3f color = (1, 1, 1)
+    float diffuse = 1
+    float exposure = 0
+    string filename = ""
+    string[] filters
+    float indirect = 1
+    float intensity = 1
+    matrix4d[] matrix
+    int max_bounces = 999
+    float motion_end = 1
+    float motion_start = 0
+    bool normalize = 1
+    float radius = 0
+    int samples = 1
+    color3f shadow_color = (0, 0, 0)
+    float shadow_density = 1
+    float specular = 1
+    float sss = 1
+    float volume = 1
+    int volume_samples = 2
+}
+
+class ArnoldDriverJpeg "ArnoldDriverJpeg"
+{
+    string color_space = "auto"
+    bool dither = 1
+    string filename = "output.jpg"
+    bool output_padded = 0
+    int quality = 100
+}
+
+class ArnoldDriverNoOp "ArnoldDriverNoOp"
+{
+}
+
+class ArnoldDriverPng "ArnoldDriverPng"
+{
+    string color_space = "auto"
+    bool dither = 1
+    string filename = "output.png"
+    token format = "int8" (
+        allowedTokens = ["int8", "int16"]
+    )
+    bool output_padded = 0
+}
+
+class ArnoldDriverTiff "ArnoldDriverTiff"
+{
+    bool append = 0
+    string color_space = "auto"
+    token compression = "lzw" (
+        allowedTokens = ["none", "lzw", "ccittrle", "zip", "packbits"]
+    )
+    bool dither = 1
+    string filename = "output.tif"
+    token format = "int8" (
+        allowedTokens = ["int8", "int16", "float32"]
+    )
+    bool output_padded = 0
+    bool skip_alpha = 0
+    bool tiled = 0
+    bool unpremult_alpha = 0
+}
+
+class ArnoldDriverDeepexr "ArnoldDriverDeepexr"
+{
+    bool alpha_half_precision = 0
+    float alpha_tolerance = 0.01
+    bool append = 0
+    string[] custom_attributes
+    bool depth_half_precision = 0
+    float depth_tolerance = 0.01
+    string filename = "deep.exr"
+    bool[] layer_enable_filtering
+    bool[] layer_half_precision
+    float[] layer_tolerance
+    bool subpixel_merge = 1
+    bool tiled = 0
+    bool use_RGB_opacity = 0
+}
+
+class ArnoldDriverExr "ArnoldDriverExr"
+{
+    bool append = 0
+    bool autocrop = 0
+    string color_space = "auto"
+    token compression = "zip" (
+        allowedTokens = ["none", "rle", "zips", "zip", "piz", "pxr24", "b44", "b44a", "dwaa", "dwab"]
+    )
+    string[] custom_attributes
+    string filename = "output.exr"
+    bool half_precision = 0
+    bool preserve_layer_name = 0
+    bool tiled = 1
+}
+
+class ArnoldBoxFilter "ArnoldBoxFilter"
+{
+}
+
+class ArnoldTriangleFilter "ArnoldTriangleFilter"
+{
+    float width = 2
+}
+
+class ArnoldCatromFilter "ArnoldCatromFilter"
+{
+}
+
+class ArnoldMitnetFilter "ArnoldMitnetFilter"
+{
+}
+
+class ArnoldGaussianFilter "ArnoldGaussianFilter"
+{
+    float width = 2
+}
+
+class ArnoldSincFilter "ArnoldSincFilter"
+{
+    float width = 6
+}
+
+class ArnoldBlackmanHarrisFilter "ArnoldBlackmanHarrisFilter"
+{
+    float width = 3
+}
+
+class ArnoldClosestFilter "ArnoldClosestFilter"
+{
+}
+
+class ArnoldFarthestFilter "ArnoldFarthestFilter"
+{
+    token domain = "first_hit" (
+        allowedTokens = ["first_hit", "all_hits"]
+    )
+}
+
+class ArnoldVarianceFilter "ArnoldVarianceFilter"
+{
+    token filter_weights = "box" (
+        allowedTokens = ["blackman_harris", "box", "catrom", "gaussian", "mitnet", "sinc", "triangle"]
+    )
+    bool scalar_mode = 0
+    float width = 2
+}
+
+class ArnoldHeatmapFilter "ArnoldHeatmapFilter"
+{
+    float maximum = 1
+    float minimum = 0
+}
+
+class ArnoldContourFilter "ArnoldContourFilter"
+{
+    float width = 1
+}
+
+class ArnoldDiffFilter "ArnoldDiffFilter"
+{
+    token filter_weights = "box" (
+        allowedTokens = ["blackman_harris", "box", "catrom", "gaussian", "mitnet", "sinc", "triangle"]
+    )
+    float width = 2
+}
+
+class ArnoldDenoiseOptixFilter "ArnoldDenoiseOptixFilter"
+{
+    float blend = 0
+}
+
+class ArnoldSphere "ArnoldSphere"
+{
+    vector3f[] center
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    float[] radius
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    float step_size = 0
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+    float volume_padding = 0
+}
+
+class "ArnoldSphereAPI"
+{
+    vector3f[] primvars:arnold:center
+    uint primvars:arnold:id = 0
+    bool primvars:arnold:invert_normals = 0
+    string[] primvars:arnold:light_group
+    bool primvars:arnold:matte = 0
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    bool primvars:arnold:opaque = 1
+    float primvars:arnold:ray_bias = 0.000001
+    bool primvars:arnold:receive_shadows = 1
+    bool primvars:arnold:self_shadows = 1
+    string[] primvars:arnold:shader
+    string[] primvars:arnold:shadow_group
+    uchar primvars:arnold:sidedness = 255
+    float primvars:arnold:step_size = 0
+    string[] primvars:arnold:trace_sets
+    token primvars:arnold:transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool primvars:arnold:use_light_group = 0
+    bool primvars:arnold:use_shadow_group = 0
+    uchar primvars:arnold:visibility = 255
+    float primvars:arnold:volume_padding = 0
+}
+
+class ArnoldCylinder "ArnoldCylinder"
+{
+    float bevel_angle = 0.5
+    float bevel_width = 0
+    vector3f bottom = (0, 0, -0.5)
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    float radius = 0.5
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    vector3f top = (0, 0, 0.5)
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+}
+
+class "ArnoldCylinderAPI"
+{
+    float primvars:arnold:bevel_angle = 0.5
+    float primvars:arnold:bevel_width = 0
+    vector3f primvars:arnold:bottom = (0, 0, -0.5)
+    uint primvars:arnold:id = 0
+    bool primvars:arnold:invert_normals = 0
+    string[] primvars:arnold:light_group
+    bool primvars:arnold:matte = 0
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    bool primvars:arnold:opaque = 1
+    float primvars:arnold:ray_bias = 0.000001
+    bool primvars:arnold:receive_shadows = 1
+    bool primvars:arnold:self_shadows = 1
+    string[] primvars:arnold:shader
+    string[] primvars:arnold:shadow_group
+    uchar primvars:arnold:sidedness = 255
+    vector3f primvars:arnold:top = (0, 0, 0.5)
+    string[] primvars:arnold:trace_sets
+    token primvars:arnold:transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool primvars:arnold:use_light_group = 0
+    bool primvars:arnold:use_shadow_group = 0
+    uchar primvars:arnold:visibility = 255
+}
+
+class ArnoldCone "ArnoldCone"
+{
+    vector3f bottom = (0, 0, -0.5)
+    float bottom_radius = 0.5
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    vector3f top = (0, 0, 0.5)
+    float top_radius = 0
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+}
+
+class "ArnoldConeAPI"
+{
+    vector3f primvars:arnold:bottom = (0, 0, -0.5)
+    uint primvars:arnold:id = 0
+    bool primvars:arnold:invert_normals = 0
+    string[] primvars:arnold:light_group
+    bool primvars:arnold:matte = 0
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    bool primvars:arnold:opaque = 1
+    float primvars:arnold:ray_bias = 0.000001
+    bool primvars:arnold:receive_shadows = 1
+    bool primvars:arnold:self_shadows = 1
+    string[] primvars:arnold:shader
+    string[] primvars:arnold:shadow_group
+    uchar primvars:arnold:sidedness = 255
+    vector3f primvars:arnold:top = (0, 0, 0.5)
+    float primvars:arnold:top_radius = 0
+    string[] primvars:arnold:trace_sets
+    token primvars:arnold:transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool primvars:arnold:use_light_group = 0
+    bool primvars:arnold:use_shadow_group = 0
+    uchar primvars:arnold:visibility = 255
+}
+
+class ArnoldDisk "ArnoldDisk"
+{
+    float bevel_angle = 0.5
+    float bevel_width = 0
+    vector3f center = (0, 0, 0)
+    float hole = 0
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    vector3f normal = (0, 0, 1)
+    bool opaque = 1
+    float radius = 0.5
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+}
+
+class ArnoldPlane "ArnoldPlane"
+{
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    vector3f normal = (0, 0, 1)
+    bool opaque = 1
+    vector3f point = (0, 0, 0)
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+}
+
+class ArnoldPolymesh "ArnoldPolymesh"
+{
+    uchar autobump_visibility = 1
+    uint[] crease_idxs
+    float[] crease_sharpness
+    bool disp_autobump = 0
+    float disp_height = 1
+    string[] disp_map
+    float disp_padding = 0
+    float disp_zero_value = 0
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    uint[] nidxs
+    vector3f[] nlist
+    uint[] nsides
+    bool opaque = 1
+    uint[] polygon_holes
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar[] shidxs
+    uchar sidedness = 255
+    bool smoothing = 0
+    float step_size = 0
+    float subdiv_adaptive_error = 0
+    token subdiv_adaptive_metric = "metric_auto" (
+        allowedTokens = ["metric_auto", "edge_length", "flatness"]
+    )
+    token subdiv_adaptive_space = "raster" (
+        allowedTokens = ["raster", "object"]
+    )
+    bool subdiv_frustum_ignore = 0
+    uchar subdiv_iterations = 1
+    bool subdiv_smooth_derivs = 0
+    token subdiv_type = "none" (
+        allowedTokens = ["none", "catclark", "linear"]
+    )
+    token subdiv_uv_smoothing = "pin_corners" (
+        allowedTokens = ["pin_corners", "pin_borders", "linear", "smooth"]
+    )
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uint[] uvidxs
+    float2[] uvlist
+    uint[] vidxs
+    uchar visibility = 255
+    vector3f[] vlist
+    float volume_padding = 0
+}
+
+class "ArnoldPolymeshAPI"
+{
+    uchar primvars:arnold:autobump_visibility = 1
+    uint[] primvars:arnold:crease_idxs
+    float[] primvars:arnold:crease_sharpness
+    bool primvars:arnold:disp_autobump = 0
+    float primvars:arnold:disp_height = 1
+    string[] primvars:arnold:disp_map
+    float primvars:arnold:disp_padding = 0
+    float primvars:arnold:disp_zero_value = 0
+    uint primvars:arnold:id = 0
+    bool primvars:arnold:invert_normals = 0
+    string[] primvars:arnold:light_group
+    bool primvars:arnold:matte = 0
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    vector3f[] primvars:arnold:nlist
+    bool primvars:arnold:opaque = 1
+    float primvars:arnold:ray_bias = 0.000001
+    bool primvars:arnold:receive_shadows = 1
+    bool primvars:arnold:self_shadows = 1
+    string[] primvars:arnold:shader
+    string[] primvars:arnold:shadow_group
+    uchar[] primvars:arnold:shidxs
+    uchar primvars:arnold:sidedness = 255
+    bool primvars:arnold:smoothing = 0
+    float primvars:arnold:step_size = 0
+    float primvars:arnold:subdiv_adaptive_error = 0
+    token primvars:arnold:subdiv_adaptive_metric = "metric_auto" (
+        allowedTokens = ["metric_auto", "edge_length", "flatness"]
+    )
+    token primvars:arnold:subdiv_adaptive_space = "raster" (
+        allowedTokens = ["raster", "object"]
+    )
+    bool primvars:arnold:subdiv_frustum_ignore = 0
+    uchar primvars:arnold:subdiv_iterations = 1
+    bool primvars:arnold:subdiv_smooth_derivs = 0
+    token primvars:arnold:subdiv_type = "none" (
+        allowedTokens = ["none", "catclark", "linear"]
+    )
+    token primvars:arnold:subdiv_uv_smoothing = "pin_corners" (
+        allowedTokens = ["pin_corners", "pin_borders", "linear", "smooth"]
+    )
+    string[] primvars:arnold:trace_sets
+    token primvars:arnold:transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool primvars:arnold:use_light_group = 0
+    bool primvars:arnold:use_shadow_group = 0
+    uint[] primvars:arnold:uvidxs
+    float2[] primvars:arnold:uvlist
+    uchar primvars:arnold:visibility = 255
+    vector3f[] primvars:arnold:vlist
+    float primvars:arnold:volume_padding = 0
+}
+
+class ArnoldNurbs "ArnoldNurbs"
+{
+    uchar autobump_visibility = 1
+    float[] cvs
+    int degree_u = 3
+    int degree_v = 3
+    bool disp_autobump = 0
+    float disp_height = 0
+    string disp_map = ""
+    float disp_padding = 0
+    float disp_zero_value = 0
+    uint id = 0
+    bool invert_normals = 0
+    float[] knots_u
+    float[] knots_v
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    bool smoothing = 1
+    float step_size = 0
+    int tesselate_u = 5
+    int tesselate_v = 5
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+    float volume_padding = 0
+}
+
+class ArnoldBox "ArnoldBox"
+{
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    vector3f max = (0.5, 0.5, 0.5)
+    vector3f min = (-0.5, -0.5, -0.5)
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    float step_size = 0
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+    float volume_padding = 0
+}
+
+class "ArnoldBoxAPI"
+{
+    uint primvars:arnold:id = 0
+    bool primvars:arnold:invert_normals = 0
+    string[] primvars:arnold:light_group
+    bool primvars:arnold:matte = 0
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    bool primvars:arnold:opaque = 1
+    float primvars:arnold:ray_bias = 0.000001
+    bool primvars:arnold:receive_shadows = 1
+    bool primvars:arnold:self_shadows = 1
+    string[] primvars:arnold:shader
+    string[] primvars:arnold:shadow_group
+    uchar primvars:arnold:sidedness = 255
+    float primvars:arnold:step_size = 0
+    string[] primvars:arnold:trace_sets
+    token primvars:arnold:transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool primvars:arnold:use_light_group = 0
+    bool primvars:arnold:use_shadow_group = 0
+    uchar primvars:arnold:visibility = 255
+    float primvars:arnold:volume_padding = 0
+}
+
+class ArnoldCurves "ArnoldCurves"
+{
+    token basis = "bezier" (
+        allowedTokens = ["bezier", "b-spline", "catmull-rom", "linear"]
+    )
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float min_pixel_width = 0
+    token mode = "ribbon" (
+        allowedTokens = ["ribbon", "thick", "oriented"]
+    )
+    float motion_end = 1
+    float motion_start = 0
+    uint[] num_points
+    bool opaque = 1
+    vector3f[] orientations
+    vector3f[] points
+    float[] radius
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar[] shidxs
+    uchar sidedness = 255
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    float2[] uvs
+    uchar visibility = 255
+}
+
+class "ArnoldCurvesAPI"
+{
+    token primvars:arnold:basis = "bezier" (
+        allowedTokens = ["bezier", "b-spline", "catmull-rom", "linear"]
+    )
+    uint primvars:arnold:id = 0
+    bool primvars:arnold:invert_normals = 0
+    string[] primvars:arnold:light_group
+    bool primvars:arnold:matte = 0
+    float primvars:arnold:min_pixel_width = 0
+    token primvars:arnold:mode = "ribbon" (
+        allowedTokens = ["ribbon", "thick", "oriented"]
+    )
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    bool primvars:arnold:opaque = 1
+    vector3f[] primvars:arnold:orientations
+    float primvars:arnold:ray_bias = 0.000001
+    bool primvars:arnold:receive_shadows = 1
+    bool primvars:arnold:self_shadows = 1
+    string[] primvars:arnold:shader
+    string[] primvars:arnold:shadow_group
+    uchar[] primvars:arnold:shidxs
+    uchar primvars:arnold:sidedness = 255
+    string[] primvars:arnold:trace_sets
+    token primvars:arnold:transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool primvars:arnold:use_light_group = 0
+    bool primvars:arnold:use_shadow_group = 0
+    float2[] primvars:arnold:uvs
+    uchar primvars:arnold:visibility = 255
+}
+
+class ArnoldPoints "ArnoldPoints"
+{
+    float[] aspect
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float min_pixel_width = 0
+    token mode = "disk" (
+        allowedTokens = ["disk", "sphere", "quad"]
+    )
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    vector3f[] points
+    float[] radius
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    float[] rotation
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    float step_size = 0
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+    float volume_padding = 0
+}
+
+class "ArnoldPointsAPI"
+{
+    float[] primvars:arnold:aspect
+    uint primvars:arnold:id = 0
+    bool primvars:arnold:invert_normals = 0
+    string[] primvars:arnold:light_group
+    bool primvars:arnold:matte = 0
+    float primvars:arnold:min_pixel_width = 0
+    token primvars:arnold:mode = "disk" (
+        allowedTokens = ["disk", "sphere", "quad"]
+    )
+    float primvars:arnold:motion_end = 1
+    float primvars:arnold:motion_start = 0
+    bool primvars:arnold:opaque = 1
+    float primvars:arnold:ray_bias = 0.000001
+    bool primvars:arnold:receive_shadows = 1
+    float[] primvars:arnold:rotation
+    bool primvars:arnold:self_shadows = 1
+    string[] primvars:arnold:shader
+    string[] primvars:arnold:shadow_group
+    uchar primvars:arnold:sidedness = 255
+    float primvars:arnold:step_size = 0
+    string[] primvars:arnold:trace_sets
+    token primvars:arnold:transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool primvars:arnold:use_light_group = 0
+    bool primvars:arnold:use_shadow_group = 0
+    uchar primvars:arnold:visibility = 255
+    float primvars:arnold:volume_padding = 0
+}
+
+class ArnoldImplicit "ArnoldImplicit"
+{
+    string field = ""
+    string field_channel = "field"
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    vector3f max = (0, 0, 0)
+    vector3f min = (0, 0, 0)
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    uint samples = 10
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    token solver = "uniform" (
+        allowedTokens = ["uniform", "levelset"]
+    )
+    float step_size = 0
+    float threshold = 0
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+}
+
+class ArnoldGinstance "ArnoldGinstance"
+{
+    uint id = 0
+    bool inherit_xform = 1
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    string node = ""
+    bool opaque = 1
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    float step_size = 0
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+}
+
+class ArnoldProcedural "ArnoldProcedural"
+{
+    string arnold:namespace = ""
+    string arnold:operator = ""
+    bool auto_instancing = 1
+    string data = ""
+    string filename = ""
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    bool override_nodes = 0
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+}
+
+class ArnoldListAggregate "ArnoldListAggregate"
+{
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+}
+
+class ArnoldVolume "ArnoldVolume"
+{
+    bool compress = 1
+    uchar[] filedata
+    string filename = ""
+    string[] grids
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    float step_scale = 1
+    float step_size = 0
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    float velocity_fps = 24
+    string[] velocity_grids
+    float velocity_outlier_threshold = 0.001
+    float velocity_scale = 1
+    uchar visibility = 255
+    float volume_padding = 0
+}
+
+class ArnoldVolumeImplicit "ArnoldVolumeImplicit"
+{
+    bool compress = 1
+    string field = ""
+    string field_channel = "field"
+    uchar[] filedata
+    string filename = ""
+    string[] grids
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    vector3f max = (0, 0, 0)
+    vector3f min = (0, 0, 0)
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    uint samples = 10
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    token solver = "uniform" (
+        allowedTokens = ["uniform", "levelset"]
+    )
+    float step_scale = 1
+    float step_size = 0
+    float threshold = 0
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    float velocity_fps = 24
+    string[] velocity_grids
+    float velocity_outlier_threshold = 0.001
+    float velocity_scale = 1
+    uchar visibility = 255
+}
+
+class ArnoldInstancer "ArnoldInstancer"
+{
+    string arnold:namespace = ""
+    string arnold:operator = ""
+    uint id = 0
+    matrix4d[] instance_matrix
+    string[] instance_shader
+    uchar[] instance_visibility
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    uint[] node_idxs
+    string[] nodes
+    bool opaque = 1
+    bool override_nodes = 0
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+}
+
+class ArnoldColorManagerOcio "ArnoldColorManagerOcio"
+{
+    string color_space_linear = ""
+    string color_space_narrow = ""
+    string config = ""
+    float[] linear_chromaticities
+}
+
+class ArnoldMaterialx "ArnoldMaterialx"
+{
+    bool assign_materials = 1
+    bool assign_properties = 1
+    token assign_type = "look" (
+        allowedTokens = ["look", "material"]
+    )
+    bool assign_visibilities = 1
+    bool enable = 1
+    string filename = ""
+    string[] inputs
+    string look = ""
+    string selection = ""
+}
+
+class ArnoldMerge "ArnoldMerge"
+{
+    bool enable = 1
+    string[] inputs
+}
+
+class ArnoldSetParameter "ArnoldSetParameter"
+{
+    string[] assignment
+    bool enable = 1
+    bool[] enable_assignment
+    string[] inputs
+    string selection = ""
+}
+
+class ArnoldDisable "ArnoldDisable"
+{
+    bool enable = 1
+    string[] inputs
+    bool lights = 1
+    token mode = "disable" (
+        allowedTokens = ["disable", "enable"]
+    )
+    bool operators = 1
+    string selection = ""
+    bool shaders = 1
+    bool shapes = 1
+}
+
+class ArnoldSwitchOperator "ArnoldSwitchOperator"
+{
+    bool enable = 1
+    int index = 0
+    string[] inputs
+}
+
+class ArnoldSetTransform "ArnoldSetTransform"
+{
+    bool enable = 1
+    string[] inputs
+    token mode = "append" (
+        allowedTokens = ["append", "replace"]
+    )
+    vector3f rotate = (0, 0, 0)
+    token rotate_order = "xyz" (
+        allowedTokens = ["xyz", "xzy", "yxz", "yzx", "zxy", "zyx"]
+    )
+    vector3f scale = (1, 1, 1)
+    string selection = ""
+    token transform_order = "srt" (
+        allowedTokens = ["srt", "str", "tsr", "trs", "rst", "rts"]
+    )
+    vector3f translate = (0, 0, 0)
+}
+
+class ArnoldCollection "ArnoldCollection"
+{
+    string collection = ""
+    bool enable = 1
+    string[] inputs
+    string selection = ""
+}
+
+class ArnoldIncludeGraph "ArnoldIncludeGraph"
+{
+    bool enable = 1
+    string filename = ""
+    string[] inputs
+    string target = ""
+}
+
+class ArnoldStringReplace "ArnoldStringReplace"
+{
+    bool enable = 1
+    string[] inputs
+    string match = ""
+    token os = "any" (
+        allowedTokens = ["any", "os_linux", "windows", "mac"]
+    )
+    string replace = ""
+    string selection = ""
+}
+
+class ArnoldAlembic "ArnoldAlembic"
+{
+    string arnold:namespace = ""
+    string arnold:operator = ""
+    bool exclude_xform = 0
+    bool expand_hidden = 0
+    string filename = ""
+    bool flip_v = 0
+    float fps = 24
+    float frame = 0
+    uint id = 0
+    bool invert_normals = 0
+    string[] layers
+    string[] light_group
+    bool make_instance = 0
+    string material_attribute = ""
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    string nameprefix = ""
+    string objectpath = ""
+    bool opaque = 1
+    bool override_nodes = 0
+    bool pull_user_params = 0
+    string radius_attribute = ""
+    float radius_default = 0.02
+    float radius_scale = 1
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    string scene_camera = ""
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    float shutter_end = 0
+    float shutter_start = 0
+    uchar sidedness = 255
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_instance_cache = 1
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    bool velocity_ignore = 0
+    float velocity_scale = 1
+    uchar visibility = 255
+    bool visibility_ignore = 0
+}
+
+class ArnoldCryptomatteFilter "ArnoldCryptomatteFilter"
+{
+    token filter = "gaussian" (
+        allowedTokens = ["gaussian", "blackman_harris", "triangle", "box", "disk", "cone"]
+    )
+    bool noop = 0
+    int rank = -1
+    float width = 2
+}
+
+class ArnoldCryptomatteManifestDriver "ArnoldCryptomatteManifestDriver"
+{
+    string filename = "dummy.json"
+}
+
+class ArnoldUsd "ArnoldUsd"
+{
+    string arnold:namespace = ""
+    string arnold:operator = ""
+    bool debug = 0
+    string filename = ""
+    float frame = 0
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    string object_path = ""
+    bool opaque = 1
+    bool override_nodes = 0
+    string[] overrides
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    int threads = 1
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+}
+
+class ArnoldProceduralCustom "ArnoldProceduralCustom"
+{
+    string arnold:namespace = ""
+    string arnold:operator = ""
+    uint id = 0
+    bool invert_normals = 0
+    string[] light_group
+    matrix4d[] matrix
+    bool matte = 0
+    float motion_end = 1
+    float motion_start = 0
+    bool opaque = 1
+    bool override_nodes = 0
+    float ray_bias = 0.000001
+    bool receive_shadows = 1
+    bool self_shadows = 1
+    string[] shader
+    string[] shadow_group
+    uchar sidedness = 255
+    string[] trace_sets
+    token transform_type = "rotate_about_center" (
+        allowedTokens = ["linear", "rotate_about_origin", "rotate_about_center"]
+    )
+    bool use_light_group = 0
+    bool use_shadow_group = 0
+    uchar visibility = 255
+}
+

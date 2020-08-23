@@ -54,7 +54,7 @@ endif()
 add_library(Alembic::Alembic SHARED IMPORTED)
 
 set_target_properties(Alembic::Alembic PROPERTIES
-  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;D:/dev/usd/build/USD/include/OpenEXR"
+  INTERFACE_INCLUDE_DIRECTORIES "${_IMPORT_PREFIX}/include;D:/dev/artellapipe/artellapipe-libs-usd/usd/build/USD/include/OpenEXR"
 )
 
 # Load information for each installed configuration.

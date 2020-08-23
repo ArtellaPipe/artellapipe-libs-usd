@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:/dev/usd/USD/pxr/usdImaging/usdviewq/attributeValueEditorUI.ui'
+# Form implementation generated from reading ui file 'D:/dev/artellapipe/artellapipe-libs-usd/usd/USD/pxr/usdImaging/usdviewq/attributeValueEditorUI.ui'
 #
-# Created: Tue Apr 14 17:29:03 2020
+# Created: Sat Aug 22 05:13:15 2020
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!

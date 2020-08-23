@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:/dev/usd/USD/pxr/usdImaging/usdviewq/adjustClippingUI.ui'
+# Form implementation generated from reading ui file 'D:/dev/artellapipe/artellapipe-libs-usd/usd/USD/pxr/usdImaging/usdviewq/adjustClippingUI.ui'
 #
-# Created: Tue Apr 14 17:29:02 2020
+# Created: Sat Aug 22 05:13:14 2020
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,7 +12,7 @@ from PySide import QtCore, QtGui
 class Ui_AdjustClipping(object):
     def setupUi(self, AdjustClipping):
         AdjustClipping.setObjectName("AdjustClipping")
-        AdjustClipping.resize(331, 81)
+        AdjustClipping.resize(331, 86)
         self.verticalLayout = QtGui.QVBoxLayout(AdjustClipping)
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout = QtGui.QHBoxLayout()
@@ -31,9 +31,19 @@ class Ui_AdjustClipping(object):
         self.verticalLayout_3 = QtGui.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.nearEdit = QtGui.QLineEdit(AdjustClipping)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.nearEdit.sizePolicy().hasHeightForWidth())
+        self.nearEdit.setSizePolicy(sizePolicy)
         self.nearEdit.setObjectName("nearEdit")
         self.verticalLayout_3.addWidget(self.nearEdit)
         self.farEdit = QtGui.QLineEdit(AdjustClipping)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.farEdit.sizePolicy().hasHeightForWidth())
+        self.farEdit.setSizePolicy(sizePolicy)
         self.farEdit.setObjectName("farEdit")
         self.verticalLayout_3.addWidget(self.farEdit)
         self.horizontalLayout.addLayout(self.verticalLayout_3)

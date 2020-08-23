@@ -3,11 +3,11 @@
         {
             "Info": {
                 "ShaderResources": "shaders",
-                "Types": {                                                                  
+                "Types": {
                     "Glf_StbImage" : {
                         "bases": ["GlfImage"],
                         "imageTypes": ["bmp", "jpg", "jpeg", "png", "tga", "hdr"],
-                        "precedence": -1 
+                        "precedence": 2
                     },
                     "GlfPtexTexture" : {
                         "bases": ["GlfTexture"],
@@ -19,10 +19,10 @@
                         "textureTypes": ["*"],
                         "precedence": 0
                     },
-                    "GlfVdbTexture" : {
-                        "bases": ["GlfBaseTexture"],
-                        "textureTypes": ["vdb"],
-                        "precedence": 0
+                    "GlfBaseTexture" : {
+                        "bases": ["GlfTexture"],
+                        "textureTypes": [],
+                        "precedence": 3
                     }
                 }
             },

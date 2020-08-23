@@ -1,0 +1,1210 @@
+#usda 1.0
+(
+"This file describes the Arnold USD schemas."
+    subLayers = [
+        @usd/schema.usda@,
+        @usdGeom/schema.usda@,
+        @usdShade/schema.usda@,
+        @usdLux/schema.usda@
+    ]
+)
+over "GLOBAL" (
+    customData = {
+        string libraryName = "usdArnold"
+        string libraryPath = "./"
+        string libraryPrefix = "Usd"
+        string tokensPrefix = "UsdArnold"
+    }
+) {
+}
+class "ArnoldColorManager"(
+    inherits = [</Typed>]
+) {
+    string config = "" (customData = {string apiName = "Config"})
+    string color_space_narrow = "" (customData = {string apiName = "ColorSpaceNarrow"})
+    string color_space_linear = "" (customData = {string apiName = "ColorSpaceLinear"})
+    float[] linear_chromaticities (customData = {string apiName = "LinearChromaticities"})
+}
+class "ArnoldLight"(
+    inherits = [</Typed>]
+) {
+    matrix4d[] matrix (customData = {string apiName = "Matrix"})
+    color3f color = (1.0,1.0,1.0) (customData = {string apiName = "Color"})
+    float intensity = 1.0 (customData = {string apiName = "Intensity"})
+    float exposure = 0.0 (customData = {string apiName = "Exposure"})
+    bool cast_shadows = true (customData = {string apiName = "CastShadows"})
+    bool cast_volumetric_shadows = true (customData = {string apiName = "CastVolumetricShadows"})
+    float shadow_density = 1.0 (customData = {string apiName = "ShadowDensity"})
+    color3f shadow_color = (0.0,0.0,0.0) (customData = {string apiName = "ShadowColor"})
+    int samples = 1 (customData = {string apiName = "Samples"})
+    bool normalize = true (customData = {string apiName = "Normalize"})
+    float diffuse = 1.0 (customData = {string apiName = "Diffuse"})
+    float specular = 1.0 (customData = {string apiName = "Specular"})
+    float sss = 1.0 (customData = {string apiName = "Sss"})
+    float indirect = 1.0 (customData = {string apiName = "Indirect"})
+    int max_bounces = 999 (customData = {string apiName = "MaxBounces"})
+    string[] filters (customData = {string apiName = "Filters"})
+    float motion_start = 0.0 (customData = {string apiName = "MotionStart"})
+    float motion_end = 1.0 (customData = {string apiName = "MotionEnd"})
+    int volume_samples = 2 (customData = {string apiName = "VolumeSamples"})
+    float volume = 1.0 (customData = {string apiName = "Volume"})
+    string aov = "default" (customData = {string apiName = "Aov"})
+}
+class "ArnoldLightAPI"(
+    inherits = [</APISchemaBase>]
+) {
+    bool primvars:arnold:cast_shadows = true (customData = {string apiName = "CastShadows"})
+    bool primvars:arnold:cast_volumetric_shadows = true (customData = {string apiName = "CastVolumetricShadows"})
+    float primvars:arnold:shadow_density = 1.0 (customData = {string apiName = "ShadowDensity"})
+    color3f primvars:arnold:shadow_color = (0.0,0.0,0.0) (customData = {string apiName = "ShadowColor"})
+    int primvars:arnold:samples = 1 (customData = {string apiName = "Samples"})
+    float primvars:arnold:sss = 1.0 (customData = {string apiName = "Sss"})
+    float primvars:arnold:indirect = 1.0 (customData = {string apiName = "Indirect"})
+    int primvars:arnold:max_bounces = 999 (customData = {string apiName = "MaxBounces"})
+    string[] primvars:arnold:filters (customData = {string apiName = "Filters"})
+    float primvars:arnold:motion_start = 0.0 (customData = {string apiName = "MotionStart"})
+    float primvars:arnold:motion_end = 1.0 (customData = {string apiName = "MotionEnd"})
+    int primvars:arnold:volume_samples = 2 (customData = {string apiName = "VolumeSamples"})
+    float primvars:arnold:volume = 1.0 (customData = {string apiName = "Volume"})
+    string primvars:arnold:aov = "default" (customData = {string apiName = "Aov"})
+}
+class "ArnoldDriver"(
+    inherits = [</Typed>]
+) {
+}
+class "ArnoldFilter"(
+    inherits = [</Typed>]
+) {
+}
+class "ArnoldOperator"(
+    inherits = [</Typed>]
+) {
+    bool enable = true (customData = {string apiName = "Enable"})
+    string[] inputs (customData = {string apiName = "Inputs"})
+}
+class "ArnoldShape"(
+    inherits = [</Typed>]
+) {
+    uchar visibility = 255 (customData = {string apiName = "Visibility"})
+    uchar sidedness = 255 (customData = {string apiName = "Sidedness"})
+    bool receive_shadows = true (customData = {string apiName = "ReceiveShadows"})
+    bool self_shadows = true (customData = {string apiName = "SelfShadows"})
+    bool invert_normals = false (customData = {string apiName = "InvertNormals"})
+    float ray_bias = 9.99999997475e-07 (customData = {string apiName = "RayBias"})
+    matrix4d[] matrix (customData = {string apiName = "Matrix"})
+    token transform_type = "rotate_about_center" (
+        customData = {string apiName = "TransformType"}
+        allowedTokens = ["linear","rotate_about_origin","rotate_about_center"]
+        )
+    string[] shader (customData = {string apiName = "Shader"})
+    bool opaque = true (customData = {string apiName = "Opaque"})
+    bool matte = false (customData = {string apiName = "Matte"})
+    bool use_light_group = false (customData = {string apiName = "UseLightGroup"})
+    string[] light_group (customData = {string apiName = "LightGroup"})
+    bool use_shadow_group = false (customData = {string apiName = "UseShadowGroup"})
+    string[] shadow_group (customData = {string apiName = "ShadowGroup"})
+    string[] trace_sets (customData = {string apiName = "TraceSets"})
+    float motion_start = 0.0 (customData = {string apiName = "MotionStart"})
+    float motion_end = 1.0 (customData = {string apiName = "MotionEnd"})
+    uint id = 0 (customData = {string apiName = "Id"})
+}
+class "ArnoldShapeAPI"(
+    inherits = [</APISchemaBase>]
+) {
+    uchar primvars:arnold:visibility = 255 (customData = {string apiName = "Visibility"})
+    uchar primvars:arnold:sidedness = 255 (customData = {string apiName = "Sidedness"})
+    bool primvars:arnold:receive_shadows = true (customData = {string apiName = "ReceiveShadows"})
+    bool primvars:arnold:self_shadows = true (customData = {string apiName = "SelfShadows"})
+    bool primvars:arnold:invert_normals = false (customData = {string apiName = "InvertNormals"})
+    float primvars:arnold:ray_bias = 9.99999997475e-07 (customData = {string apiName = "RayBias"})
+    token primvars:arnold:transform_type = "rotate_about_center" (
+        customData = {string apiName = "TransformType"}
+        allowedTokens = ["linear","rotate_about_origin","rotate_about_center"]
+        )
+    string[] primvars:arnold:shader (customData = {string apiName = "Shader"})
+    bool primvars:arnold:opaque = true (customData = {string apiName = "Opaque"})
+    bool primvars:arnold:matte = false (customData = {string apiName = "Matte"})
+    bool primvars:arnold:use_light_group = false (customData = {string apiName = "UseLightGroup"})
+    string[] primvars:arnold:light_group (customData = {string apiName = "LightGroup"})
+    bool primvars:arnold:use_shadow_group = false (customData = {string apiName = "UseShadowGroup"})
+    string[] primvars:arnold:shadow_group (customData = {string apiName = "ShadowGroup"})
+    string[] primvars:arnold:trace_sets (customData = {string apiName = "TraceSets"})
+    float primvars:arnold:motion_start = 0.0 (customData = {string apiName = "MotionStart"})
+    float primvars:arnold:motion_end = 1.0 (customData = {string apiName = "MotionEnd"})
+    uint primvars:arnold:id = 0 (customData = {string apiName = "Id"})
+}
+class "ArnoldCamera"(
+    inherits = [</Typed>]
+) {
+    vector3f[] position (customData = {string apiName = "Position"})
+    vector3f[] look_at (customData = {string apiName = "LookAt"})
+    vector3f[] up (customData = {string apiName = "Up"})
+    matrix4d[] matrix (customData = {string apiName = "Matrix"})
+    token handedness = "right" (
+        customData = {string apiName = "Handedness"}
+        allowedTokens = ["right","left"]
+        )
+    float near_clip = 9.99999974738e-05 (customData = {string apiName = "NearClip"})
+    float far_clip = 1.00000001505e+30 (customData = {string apiName = "FarClip"})
+    float2[] screen_window_min (customData = {string apiName = "ScreenWindowMin"})
+    float2[] screen_window_max (customData = {string apiName = "ScreenWindowMax"})
+    float shutter_start = 0.0 (customData = {string apiName = "ShutterStart"})
+    float shutter_end = 0.0 (customData = {string apiName = "ShutterEnd"})
+    token shutter_type = "box" (
+        customData = {string apiName = "ShutterType"}
+        allowedTokens = ["box","triangle","curve"]
+        )
+    float2[] shutter_curve (customData = {string apiName = "ShutterCurve"})
+    token rolling_shutter = "off" (
+        customData = {string apiName = "RollingShutter"}
+        allowedTokens = ["off","top","bottom","left","right"]
+        )
+    float rolling_shutter_duration = 0.0 (customData = {string apiName = "RollingShutterDuration"})
+    float motion_start = 0.0 (customData = {string apiName = "MotionStart"})
+    float motion_end = 1.0 (customData = {string apiName = "MotionEnd"})
+    float exposure = 0.0 (customData = {string apiName = "Exposure"})
+    string filtermap = "" (customData = {string apiName = "Filtermap"})
+}
+class "ArnoldCameraAPI"(
+    inherits = [</APISchemaBase>]
+) {
+    vector3f[] primvars:arnold:position (customData = {string apiName = "Position"})
+    vector3f[] primvars:arnold:look_at (customData = {string apiName = "LookAt"})
+    vector3f[] primvars:arnold:up (customData = {string apiName = "Up"})
+    token primvars:arnold:handedness = "right" (
+        customData = {string apiName = "Handedness"}
+        allowedTokens = ["right","left"]
+        )
+    float2[] primvars:arnold:screen_window_min (customData = {string apiName = "ScreenWindowMin"})
+    float2[] primvars:arnold:screen_window_max (customData = {string apiName = "ScreenWindowMax"})
+    token primvars:arnold:shutter_type = "box" (
+        customData = {string apiName = "ShutterType"}
+        allowedTokens = ["box","triangle","curve"]
+        )
+    float2[] primvars:arnold:shutter_curve (customData = {string apiName = "ShutterCurve"})
+    token primvars:arnold:rolling_shutter = "off" (
+        customData = {string apiName = "RollingShutter"}
+        allowedTokens = ["off","top","bottom","left","right"]
+        )
+    float primvars:arnold:rolling_shutter_duration = 0.0 (customData = {string apiName = "RollingShutterDuration"})
+    float primvars:arnold:motion_start = 0.0 (customData = {string apiName = "MotionStart"})
+    float primvars:arnold:motion_end = 1.0 (customData = {string apiName = "MotionEnd"})
+    float primvars:arnold:exposure = 0.0 (customData = {string apiName = "Exposure"})
+    string primvars:arnold:filtermap = "" (customData = {string apiName = "Filtermap"})
+}
+class "ArnoldOptions"(
+    inherits = [</Typed>]
+) {
+    int AA_samples = 1 (customData = {string apiName = "AaSamples"})
+    int AA_seed = 1 (customData = {string apiName = "AaSeed"})
+    float AA_sample_clamp = 1.00000001505e+30 (customData = {string apiName = "AaSampleClamp"})
+    float indirect_sample_clamp = 10.0 (customData = {string apiName = "IndirectSampleClamp"})
+    bool AA_sample_clamp_affects_aovs = false (customData = {string apiName = "AaSampleClampAffectsAovs"})
+    int AA_samples_max = 20 (customData = {string apiName = "AaSamplesMax"})
+    float AA_adaptive_threshold = 0.0149999996647 (customData = {string apiName = "AaAdaptiveThreshold"})
+    int threads = 0 (customData = {string apiName = "Threads"})
+    token thread_priority = "normal" (
+        customData = {string apiName = "ThreadPriority"}
+        allowedTokens = ["lowest","low","normal","high"]
+        )
+    token pin_threads = "metric_auto" (
+        customData = {string apiName = "PinThreads"}
+        allowedTokens = ["off","on","metric_auto"]
+        )
+    bool abort_on_error = true (customData = {string apiName = "AbortOnError"})
+    bool abort_on_license_fail = false (customData = {string apiName = "AbortOnLicenseFail"})
+    bool skip_license_check = false (customData = {string apiName = "SkipLicenseCheck"})
+    color3f error_color_bad_texture = (1.0,0.0,0.0) (customData = {string apiName = "ErrorColorBadTexture"})
+    color3f error_color_bad_pixel = (0.0,0.0,1.0) (customData = {string apiName = "ErrorColorBadPixel"})
+    color3f error_color_bad_shader = (1.0,0.0,1.0) (customData = {string apiName = "ErrorColorBadShader"})
+    string[] outputs (customData = {string apiName = "Outputs"})
+    string[] light_path_expressions (customData = {string apiName = "LightPathExpressions"})
+    string[] aov_shaders (customData = {string apiName = "AovShaders"})
+    int xres = 320 (customData = {string apiName = "Xres"})
+    int yres = 240 (customData = {string apiName = "Yres"})
+    int region_min_x = -2147483648 (customData = {string apiName = "RegionMinX"})
+    int region_min_y = -2147483648 (customData = {string apiName = "RegionMinY"})
+    int region_max_x = -2147483648 (customData = {string apiName = "RegionMaxX"})
+    int region_max_y = -2147483648 (customData = {string apiName = "RegionMaxY"})
+    float pixel_aspect_ratio = 1.0 (customData = {string apiName = "PixelAspectRatio"})
+    token fis_filter = "none" (
+        customData = {string apiName = "FisFilter"}
+        allowedTokens = ["none","triangle","blackman_harris","gaussian"]
+        )
+    float fis_filter_width = 3.0 (customData = {string apiName = "FisFilterWidth"})
+    int bucket_size = 64 (customData = {string apiName = "BucketSize"})
+    token bucket_scanning = "spiral" (
+        customData = {string apiName = "BucketScanning"}
+        allowedTokens = ["top","left","random","spiral","hilbert","list"]
+        )
+    float2[] buckets (customData = {string apiName = "Buckets"})
+    bool ignore_textures = false (customData = {string apiName = "IgnoreTextures"})
+    bool ignore_shaders = false (customData = {string apiName = "IgnoreShaders"})
+    bool ignore_atmosphere = false (customData = {string apiName = "IgnoreAtmosphere"})
+    bool ignore_lights = false (customData = {string apiName = "IgnoreLights"})
+    bool ignore_shadows = false (customData = {string apiName = "IgnoreShadows"})
+    bool ignore_subdivision = false (customData = {string apiName = "IgnoreSubdivision"})
+    bool ignore_displacement = false (customData = {string apiName = "IgnoreDisplacement"})
+    bool ignore_bump = false (customData = {string apiName = "IgnoreBump"})
+    bool ignore_motion = false (customData = {string apiName = "IgnoreMotion"})
+    bool ignore_motion_blur = false (customData = {string apiName = "IgnoreMotionBlur"})
+    bool ignore_dof = false (customData = {string apiName = "IgnoreDof"})
+    bool ignore_smoothing = false (customData = {string apiName = "IgnoreSmoothing"})
+    bool ignore_sss = false (customData = {string apiName = "IgnoreSss"})
+    bool ignore_operators = false (customData = {string apiName = "IgnoreOperators"})
+    string[] ignore_list (customData = {string apiName = "IgnoreList"})
+    int auto_transparency_depth = 10 (customData = {string apiName = "AutoTransparencyDepth"})
+    int texture_max_open_files = 0 (customData = {string apiName = "TextureMaxOpenFiles"})
+    float texture_max_memory_MB = 4096.0 (customData = {string apiName = "TextureMaxMemoryMb"})
+    bool texture_per_file_stats = false (customData = {string apiName = "TexturePerFileStats"})
+    string texture_searchpath = "" (customData = {string apiName = "TextureSearchpath"})
+    bool texture_automip = true (customData = {string apiName = "TextureAutomip"})
+    int texture_autotile = 0 (customData = {string apiName = "TextureAutotile"})
+    bool texture_accept_untiled = true (customData = {string apiName = "TextureAcceptUntiled"})
+    bool texture_accept_unmipped = true (customData = {string apiName = "TextureAcceptUnmipped"})
+    int texture_failure_retries = 0 (customData = {string apiName = "TextureFailureRetries"})
+    bool texture_conservative_lookups = true (customData = {string apiName = "TextureConservativeLookups"})
+    float texture_max_sharpen = 1.5 (customData = {string apiName = "TextureMaxSharpen"})
+    string camera = "" (customData = {string apiName = "Camera"})
+    string subdiv_dicing_camera = "" (customData = {string apiName = "SubdivDicingCamera"})
+    bool subdiv_frustum_culling = false (customData = {string apiName = "SubdivFrustumCulling"})
+    float subdiv_frustum_padding = 0.0 (customData = {string apiName = "SubdivFrustumPadding"})
+    string background = "" (customData = {string apiName = "Background"})
+    uchar background_visibility = 255 (customData = {string apiName = "BackgroundVisibility"})
+    string atmosphere = "" (customData = {string apiName = "Atmosphere"})
+    string shader_override = "" (customData = {string apiName = "ShaderOverride"})
+    string color_manager = "" (customData = {string apiName = "ColorManager"})
+    string arnold:operator = "" (customData = {string apiName = "Operator"})
+    float scene_units_in_meters = 1.0 (customData = {string apiName = "SceneUnitsInMeters"})
+    string scene_units_name = "" (customData = {string apiName = "SceneUnitsName"})
+    float indirect_specular_blur = 1.0 (customData = {string apiName = "IndirectSpecularBlur"})
+    float luminaire_bias = 9.99999997475e-07 (customData = {string apiName = "LuminaireBias"})
+    float low_light_threshold = 0.0010000000475 (customData = {string apiName = "LowLightThreshold"})
+    bool skip_background_atmosphere = false (customData = {string apiName = "SkipBackgroundAtmosphere"})
+    bool sss_use_autobump = false (customData = {string apiName = "SssUseAutobump"})
+    uchar max_subdivisions = 255 (customData = {string apiName = "MaxSubdivisions"})
+    int curves_rr_start_depth = 0 (customData = {string apiName = "CurvesRrStartDepth"})
+    bool curves_rr_aggressive = true (customData = {string apiName = "CurvesRrAggressive"})
+    float reference_time = 0.0 (customData = {string apiName = "ReferenceTime"})
+    float frame = 0.0 (customData = {string apiName = "Frame"})
+    float fps = 24.0 (customData = {string apiName = "Fps"})
+    string osl_includepath = "" (customData = {string apiName = "OslIncludepath"})
+    string procedural_searchpath = "" (customData = {string apiName = "ProceduralSearchpath"})
+    string plugin_searchpath = "" (customData = {string apiName = "PluginSearchpath"})
+    bool procedural_auto_instancing = true (customData = {string apiName = "ProceduralAutoInstancing"})
+    bool enable_procedural_cache = true (customData = {string apiName = "EnableProceduralCache"})
+    bool parallel_node_init = true (customData = {string apiName = "ParallelNodeInit"})
+    bool enable_new_quad_light_sampler = true (customData = {string apiName = "EnableNewQuadLightSampler"})
+    bool enable_new_point_light_sampler = true (customData = {string apiName = "EnableNewPointLightSampler"})
+    bool enable_progressive_render = false (customData = {string apiName = "EnableProgressiveRender"})
+    bool enable_adaptive_sampling = false (customData = {string apiName = "EnableAdaptiveSampling"})
+    bool enable_dependency_graph = false (customData = {string apiName = "EnableDependencyGraph"})
+    bool enable_microfacet_multiscatter = true (customData = {string apiName = "EnableMicrofacetMultiscatter"})
+    int GI_diffuse_depth = 0 (customData = {string apiName = "GiDiffuseDepth"})
+    int GI_specular_depth = 0 (customData = {string apiName = "GiSpecularDepth"})
+    int GI_transmission_depth = 2 (customData = {string apiName = "GiTransmissionDepth"})
+    int GI_volume_depth = 0 (customData = {string apiName = "GiVolumeDepth"})
+    int GI_total_depth = 10 (customData = {string apiName = "GiTotalDepth"})
+    int GI_diffuse_samples = 2 (customData = {string apiName = "GiDiffuseSamples"})
+    int GI_specular_samples = 2 (customData = {string apiName = "GiSpecularSamples"})
+    int GI_transmission_samples = 2 (customData = {string apiName = "GiTransmissionSamples"})
+    int GI_sss_samples = 2 (customData = {string apiName = "GiSssSamples"})
+    int GI_volume_samples = 2 (customData = {string apiName = "GiVolumeSamples"})
+    token render_device = "CPU" (
+        customData = {string apiName = "RenderDevice"}
+        allowedTokens = ["CPU","GPU"]
+        )
+    token render_device_fallback = "error" (
+        customData = {string apiName = "RenderDeviceFallback"}
+        allowedTokens = ["error","CPU"]
+        )
+    string gpu_default_names = "*" (customData = {string apiName = "GpuDefaultNames"})
+    int gpu_default_min_memory_MB = 512 (customData = {string apiName = "GpuDefaultMinMemoryMb"})
+    int gpu_max_texture_resolution = 0 (customData = {string apiName = "GpuMaxTextureResolution"})
+    token gpu_sparse_textures = "disabled" (
+        customData = {string apiName = "GpuSparseTextures"}
+        allowedTokens = ["disabled","software","native"]
+        )
+    int min_optix_denoiser_sample = 0 (customData = {string apiName = "MinOptixDenoiserSample"})
+}
+class ArnoldPerspCamera "ArnoldPerspCamera"(
+    inherits = [</ArnoldCamera>]
+) {
+    float[] fov (customData = {string apiName = "Fov"})
+    bool plane_distance = true (customData = {string apiName = "PlaneDistance"})
+    float[] focus_distance (customData = {string apiName = "FocusDistance"})
+    bool flat_field_focus = true (customData = {string apiName = "FlatFieldFocus"})
+    float[] aperture_size (customData = {string apiName = "ApertureSize"})
+    int aperture_blades = 0 (customData = {string apiName = "ApertureBlades"})
+    float aperture_rotation = 0.0 (customData = {string apiName = "ApertureRotation"})
+    float aperture_blade_curvature = 0.0 (customData = {string apiName = "ApertureBladeCurvature"})
+    float aperture_aspect_ratio = 1.0 (customData = {string apiName = "ApertureAspectRatio"})
+    color4f uv_remap = (0.0,0.0,0.0,0.0) (customData = {string apiName = "UvRemap"})
+    float radial_distortion = 0.0 (customData = {string apiName = "RadialDistortion"})
+    float2[] lens_tilt_angle (customData = {string apiName = "LensTiltAngle"})
+    float2[] lens_shift (customData = {string apiName = "LensShift"})
+    token radial_distortion_type = "cubic" (
+        customData = {string apiName = "RadialDistortionType"}
+        allowedTokens = ["cubic","cubic_inverse"]
+        )
+}
+class "ArnoldPerspCameraAPI"(
+    inherits = [</ArnoldCameraAPI>]
+) {
+    float[] primvars:arnold:fov (customData = {string apiName = "Fov"})
+    bool primvars:arnold:plane_distance = true (customData = {string apiName = "PlaneDistance"})
+    bool primvars:arnold:flat_field_focus = true (customData = {string apiName = "FlatFieldFocus"})
+    float[] primvars:arnold:aperture_size (customData = {string apiName = "ApertureSize"})
+    int primvars:arnold:aperture_blades = 0 (customData = {string apiName = "ApertureBlades"})
+    float primvars:arnold:aperture_rotation = 0.0 (customData = {string apiName = "ApertureRotation"})
+    float primvars:arnold:aperture_blade_curvature = 0.0 (customData = {string apiName = "ApertureBladeCurvature"})
+    float primvars:arnold:aperture_aspect_ratio = 1.0 (customData = {string apiName = "ApertureAspectRatio"})
+    color4f primvars:arnold:uv_remap = (0.0,0.0,0.0,0.0) (customData = {string apiName = "UvRemap"})
+    float primvars:arnold:radial_distortion = 0.0 (customData = {string apiName = "RadialDistortion"})
+    float2[] primvars:arnold:lens_tilt_angle (customData = {string apiName = "LensTiltAngle"})
+    float2[] primvars:arnold:lens_shift (customData = {string apiName = "LensShift"})
+    token primvars:arnold:radial_distortion_type = "cubic" (
+        customData = {string apiName = "RadialDistortionType"}
+        allowedTokens = ["cubic","cubic_inverse"]
+        )
+}
+class ArnoldOrthoCamera "ArnoldOrthoCamera"(
+    inherits = [</ArnoldCamera>]
+) {
+}
+class ArnoldFisheyeCamera "ArnoldFisheyeCamera"(
+    inherits = [</ArnoldCamera>]
+) {
+    float[] fov (customData = {string apiName = "Fov"})
+    bool autocrop = false (customData = {string apiName = "Autocrop"})
+    float[] focus_distance (customData = {string apiName = "FocusDistance"})
+    float[] aperture_size (customData = {string apiName = "ApertureSize"})
+    int aperture_blades = 0 (customData = {string apiName = "ApertureBlades"})
+    float aperture_rotation = 0.0 (customData = {string apiName = "ApertureRotation"})
+    float aperture_blade_curvature = 0.0 (customData = {string apiName = "ApertureBladeCurvature"})
+    float aperture_aspect_ratio = 1.0 (customData = {string apiName = "ApertureAspectRatio"})
+}
+class ArnoldCylCamera "ArnoldCylCamera"(
+    inherits = [</ArnoldCamera>]
+) {
+    float[] horizontal_fov (customData = {string apiName = "HorizontalFov"})
+    float[] vertical_fov (customData = {string apiName = "VerticalFov"})
+    bool projective = true (customData = {string apiName = "Projective"})
+}
+class ArnoldSphericalCamera "ArnoldSphericalCamera"(
+    inherits = [</ArnoldCamera>]
+) {
+}
+class ArnoldVrCamera "ArnoldVrCamera"(
+    inherits = [</ArnoldCamera>]
+) {
+    token mode = "side_by_side" (
+        customData = {string apiName = "Mode"}
+        allowedTokens = ["side_by_side","over_under","left_eye","right_eye"]
+        )
+    token projection = "latlong" (
+        customData = {string apiName = "Projection"}
+        allowedTokens = ["latlong","cubemap_6x1","cubemap_3x2"]
+        )
+    float eye_separation = 0.649999976158 (customData = {string apiName = "EyeSeparation"})
+    float eye_to_neck = 0.0 (customData = {string apiName = "EyeToNeck"})
+    token top_merge_mode = "cosine" (
+        customData = {string apiName = "TopMergeMode"}
+        allowedTokens = ["none","cosine","shader"]
+        )
+    float top_merge_angle = 90.0 (customData = {string apiName = "TopMergeAngle"})
+    token bottom_merge_mode = "cosine" (
+        customData = {string apiName = "BottomMergeMode"}
+        allowedTokens = ["none","cosine","shader"]
+        )
+    float bottom_merge_angle = 90.0 (customData = {string apiName = "BottomMergeAngle"})
+    float merge_shader = 0.0 (customData = {string apiName = "MergeShader"})
+}
+class ArnoldUvCamera "ArnoldUvCamera"(
+    inherits = [</ArnoldCamera>]
+) {
+    string mesh = "" (customData = {string apiName = "Mesh"})
+    float offset = 0.10000000149 (customData = {string apiName = "Offset"})
+    int grid_size = 16 (customData = {string apiName = "GridSize"})
+    float u_offset = 0.0 (customData = {string apiName = "UOffset"})
+    float v_offset = 0.0 (customData = {string apiName = "VOffset"})
+    string uv_set = "" (customData = {string apiName = "UvSet"})
+    float u_scale = 1.0 (customData = {string apiName = "UScale"})
+    float v_scale = 1.0 (customData = {string apiName = "VScale"})
+    bool extend_edges = true (customData = {string apiName = "ExtendEdges"})
+    vector3f ray_origin = (0.0,0.0,0.0) (customData = {string apiName = "RayOrigin"})
+    vector3f ray_direction = (0.0,0.0,0.0) (customData = {string apiName = "RayDirection"})
+    string post_bake = "" (customData = {string apiName = "PostBake"})
+}
+class ArnoldPointLight "ArnoldPointLight"(
+    inherits = [</ArnoldLight>]
+) {
+    float camera = 0.0 (customData = {string apiName = "Camera"})
+    float transmission = 0.0 (customData = {string apiName = "Transmission"})
+    vector3f[] position (customData = {string apiName = "Position"})
+    float radius = 0.0 (customData = {string apiName = "Radius"})
+}
+class ArnoldDistantLight "ArnoldDistantLight"(
+    inherits = [</ArnoldLight>]
+) {
+    vector3f[] direction (customData = {string apiName = "Direction"})
+    float angle = 0.0 (customData = {string apiName = "Angle"})
+}
+class "ArnoldDistantLightAPI"(
+    inherits = [</ArnoldLightAPI>]
+) {
+    vector3f[] primvars:arnold:direction (customData = {string apiName = "Direction"})
+}
+class ArnoldQuadLight "ArnoldQuadLight"(
+    inherits = [</ArnoldLight>]
+) {
+    float camera = 0.0 (customData = {string apiName = "Camera"})
+    float transmission = 0.0 (customData = {string apiName = "Transmission"})
+    vector3f[] vertices (customData = {string apiName = "Vertices"})
+    int resolution = 512 (customData = {string apiName = "Resolution"})
+    float roundness = 0.0 (customData = {string apiName = "Roundness"})
+    float soft_edge = 0.0 (customData = {string apiName = "SoftEdge"})
+    float spread = 1.0 (customData = {string apiName = "Spread"})
+    bool portal = false (customData = {string apiName = "Portal"})
+}
+class "ArnoldQuadLightAPI"(
+    inherits = [</ArnoldLightAPI>]
+) {
+    float primvars:arnold:camera = 0.0 (customData = {string apiName = "Camera"})
+    float primvars:arnold:transmission = 0.0 (customData = {string apiName = "Transmission"})
+    int primvars:arnold:resolution = 512 (customData = {string apiName = "Resolution"})
+    float primvars:arnold:roundness = 0.0 (customData = {string apiName = "Roundness"})
+    float primvars:arnold:soft_edge = 0.0 (customData = {string apiName = "SoftEdge"})
+    float primvars:arnold:spread = 1.0 (customData = {string apiName = "Spread"})
+    bool primvars:arnold:portal = false (customData = {string apiName = "Portal"})
+}
+class ArnoldSpotLight "ArnoldSpotLight"(
+    inherits = [</ArnoldLight>]
+) {
+    vector3f[] position (customData = {string apiName = "Position"})
+    vector3f[] look_at (customData = {string apiName = "LookAt"})
+    vector3f[] up (customData = {string apiName = "Up"})
+    float radius = 0.0 (customData = {string apiName = "Radius"})
+    float lens_radius = 0.0 (customData = {string apiName = "LensRadius"})
+    float cone_angle = 65.0 (customData = {string apiName = "ConeAngle"})
+    float penumbra_angle = 0.0 (customData = {string apiName = "PenumbraAngle"})
+    float cosine_power = 0.0 (customData = {string apiName = "CosinePower"})
+    float aspect_ratio = 1.0 (customData = {string apiName = "AspectRatio"})
+    float roundness = 1.0 (customData = {string apiName = "Roundness"})
+}
+class ArnoldSkydomeLight "ArnoldSkydomeLight"(
+    inherits = [</ArnoldLight>]
+) {
+    float camera = 1.0 (customData = {string apiName = "Camera"})
+    float transmission = 1.0 (customData = {string apiName = "Transmission"})
+    string shader = "" (customData = {string apiName = "Shader"})
+    int resolution = 1000 (customData = {string apiName = "Resolution"})
+    token format = "angular" (
+        customData = {string apiName = "Format"}
+        allowedTokens = ["mirrored_ball","angular","latlong"]
+        )
+    token portal_mode = "interior_only" (
+        customData = {string apiName = "PortalMode"}
+        allowedTokens = ["off","interior_only","interior_exterior"]
+        )
+    bool aov_indirect = false (customData = {string apiName = "AovIndirect"})
+}
+class "ArnoldSkydomeLightAPI"(
+    inherits = [</ArnoldLightAPI>]
+) {
+    float primvars:arnold:camera = 1.0 (customData = {string apiName = "Camera"})
+    float primvars:arnold:transmission = 1.0 (customData = {string apiName = "Transmission"})
+    string primvars:arnold:shader = "" (customData = {string apiName = "Shader"})
+    int primvars:arnold:resolution = 1000 (customData = {string apiName = "Resolution"})
+    token primvars:arnold:portal_mode = "interior_only" (
+        customData = {string apiName = "PortalMode"}
+        allowedTokens = ["off","interior_only","interior_exterior"]
+        )
+    bool primvars:arnold:aov_indirect = false (customData = {string apiName = "AovIndirect"})
+}
+class ArnoldCylinderLight "ArnoldCylinderLight"(
+    inherits = [</ArnoldLight>]
+) {
+    float camera = 0.0 (customData = {string apiName = "Camera"})
+    float transmission = 0.0 (customData = {string apiName = "Transmission"})
+    vector3f[] bottom (customData = {string apiName = "Bottom"})
+    vector3f[] top (customData = {string apiName = "Top"})
+    float radius = 1.0 (customData = {string apiName = "Radius"})
+}
+class ArnoldDiskLight "ArnoldDiskLight"(
+    inherits = [</ArnoldLight>]
+) {
+    float camera = 0.0 (customData = {string apiName = "Camera"})
+    float transmission = 0.0 (customData = {string apiName = "Transmission"})
+    vector3f[] position (customData = {string apiName = "Position"})
+    vector3f[] direction (customData = {string apiName = "Direction"})
+    float radius = 0.5 (customData = {string apiName = "Radius"})
+    float spread = 1.0 (customData = {string apiName = "Spread"})
+}
+class "ArnoldDiskLightAPI"(
+    inherits = [</ArnoldLightAPI>]
+) {
+    float primvars:arnold:camera = 0.0 (customData = {string apiName = "Camera"})
+    float primvars:arnold:transmission = 0.0 (customData = {string apiName = "Transmission"})
+    vector3f[] primvars:arnold:position (customData = {string apiName = "Position"})
+    vector3f[] primvars:arnold:direction (customData = {string apiName = "Direction"})
+    float primvars:arnold:spread = 1.0 (customData = {string apiName = "Spread"})
+}
+class ArnoldMeshLight "ArnoldMeshLight"(
+    inherits = [</ArnoldLight>]
+) {
+    string mesh = "" (customData = {string apiName = "Mesh"})
+}
+class "ArnoldMeshLightAPI"(
+    inherits = [</ArnoldLightAPI>]
+) {
+}
+class ArnoldPhotometricLight "ArnoldPhotometricLight"(
+    inherits = [</ArnoldLight>]
+) {
+    string filename = "" (customData = {string apiName = "Filename"})
+    float radius = 0.0 (customData = {string apiName = "Radius"})
+}
+class ArnoldDriverJpeg "ArnoldDriverJpeg"(
+    inherits = [</ArnoldDriver>]
+) {
+    string filename = "output.jpg" (customData = {string apiName = "Filename"})
+    int quality = 100 (customData = {string apiName = "Quality"})
+    bool output_padded = false (customData = {string apiName = "OutputPadded"})
+    string color_space = "auto" (customData = {string apiName = "ColorSpace"})
+    bool dither = true (customData = {string apiName = "Dither"})
+}
+class ArnoldDriverNoOp "ArnoldDriverNoOp"(
+    inherits = [</ArnoldDriver>]
+) {
+}
+class ArnoldDriverPng "ArnoldDriverPng"(
+    inherits = [</ArnoldDriver>]
+) {
+    string filename = "output.png" (customData = {string apiName = "Filename"})
+    token format = "int8" (
+        customData = {string apiName = "Format"}
+        allowedTokens = ["int8","int16"]
+        )
+    bool output_padded = false (customData = {string apiName = "OutputPadded"})
+    string color_space = "auto" (customData = {string apiName = "ColorSpace"})
+    bool dither = true (customData = {string apiName = "Dither"})
+}
+class ArnoldDriverTiff "ArnoldDriverTiff"(
+    inherits = [</ArnoldDriver>]
+) {
+    string filename = "output.tif" (customData = {string apiName = "Filename"})
+    token compression = "lzw" (
+        customData = {string apiName = "Compression"}
+        allowedTokens = ["none","lzw","ccittrle","zip","packbits"]
+        )
+    token format = "int8" (
+        customData = {string apiName = "Format"}
+        allowedTokens = ["int8","int16","float32"]
+        )
+    bool tiled = false (customData = {string apiName = "Tiled"})
+    bool output_padded = false (customData = {string apiName = "OutputPadded"})
+    string color_space = "auto" (customData = {string apiName = "ColorSpace"})
+    bool dither = true (customData = {string apiName = "Dither"})
+    bool unpremult_alpha = false (customData = {string apiName = "UnpremultAlpha"})
+    bool skip_alpha = false (customData = {string apiName = "SkipAlpha"})
+    bool append = false (customData = {string apiName = "Append"})
+}
+class ArnoldDriverDeepexr "ArnoldDriverDeepexr"(
+    inherits = [</ArnoldDriver>]
+) {
+    string filename = "deep.exr" (customData = {string apiName = "Filename"})
+    bool tiled = false (customData = {string apiName = "Tiled"})
+    bool append = false (customData = {string apiName = "Append"})
+    bool subpixel_merge = true (customData = {string apiName = "SubpixelMerge"})
+    bool use_RGB_opacity = false (customData = {string apiName = "UseRgbOpacity"})
+    float alpha_tolerance = 0.00999999977648 (customData = {string apiName = "AlphaTolerance"})
+    float depth_tolerance = 0.00999999977648 (customData = {string apiName = "DepthTolerance"})
+    bool alpha_half_precision = false (customData = {string apiName = "AlphaHalfPrecision"})
+    bool depth_half_precision = false (customData = {string apiName = "DepthHalfPrecision"})
+    float[] layer_tolerance (customData = {string apiName = "LayerTolerance"})
+    bool[] layer_enable_filtering (customData = {string apiName = "LayerEnableFiltering"})
+    bool[] layer_half_precision (customData = {string apiName = "LayerHalfPrecision"})
+    string[] custom_attributes (customData = {string apiName = "CustomAttributes"})
+}
+class ArnoldDriverExr "ArnoldDriverExr"(
+    inherits = [</ArnoldDriver>]
+) {
+    string filename = "output.exr" (customData = {string apiName = "Filename"})
+    token compression = "zip" (
+        customData = {string apiName = "Compression"}
+        allowedTokens = ["none","rle","zips","zip","piz","pxr24","b44","b44a","dwaa","dwab"]
+        )
+    bool half_precision = false (customData = {string apiName = "HalfPrecision"})
+    bool tiled = true (customData = {string apiName = "Tiled"})
+    string color_space = "auto" (customData = {string apiName = "ColorSpace"})
+    bool preserve_layer_name = false (customData = {string apiName = "PreserveLayerName"})
+    bool autocrop = false (customData = {string apiName = "Autocrop"})
+    bool append = false (customData = {string apiName = "Append"})
+    string[] custom_attributes (customData = {string apiName = "CustomAttributes"})
+}
+class ArnoldBoxFilter "ArnoldBoxFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+}
+class ArnoldTriangleFilter "ArnoldTriangleFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+    float width = 2.0 (customData = {string apiName = "Width"})
+}
+class ArnoldCatromFilter "ArnoldCatromFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+}
+class ArnoldMitnetFilter "ArnoldMitnetFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+}
+class ArnoldGaussianFilter "ArnoldGaussianFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+    float width = 2.0 (customData = {string apiName = "Width"})
+}
+class ArnoldSincFilter "ArnoldSincFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+    float width = 6.0 (customData = {string apiName = "Width"})
+}
+class ArnoldBlackmanHarrisFilter "ArnoldBlackmanHarrisFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+    float width = 3.0 (customData = {string apiName = "Width"})
+}
+class ArnoldClosestFilter "ArnoldClosestFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+}
+class ArnoldFarthestFilter "ArnoldFarthestFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+    token domain = "first_hit" (
+        customData = {string apiName = "Domain"}
+        allowedTokens = ["first_hit","all_hits"]
+        )
+}
+class ArnoldVarianceFilter "ArnoldVarianceFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+    float width = 2.0 (customData = {string apiName = "Width"})
+    bool scalar_mode = false (customData = {string apiName = "ScalarMode"})
+    token filter_weights = "box" (
+        customData = {string apiName = "FilterWeights"}
+        allowedTokens = ["blackman_harris","box","catrom","gaussian","mitnet","sinc","triangle"]
+        )
+}
+class ArnoldHeatmapFilter "ArnoldHeatmapFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+    float minimum = 0.0 (customData = {string apiName = "Minimum"})
+    float maximum = 1.0 (customData = {string apiName = "Maximum"})
+}
+class ArnoldContourFilter "ArnoldContourFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+    float width = 1.0 (customData = {string apiName = "Width"})
+}
+class ArnoldDiffFilter "ArnoldDiffFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+    float width = 2.0 (customData = {string apiName = "Width"})
+    token filter_weights = "box" (
+        customData = {string apiName = "FilterWeights"}
+        allowedTokens = ["blackman_harris","box","catrom","gaussian","mitnet","sinc","triangle"]
+        )
+}
+class ArnoldDenoiseOptixFilter "ArnoldDenoiseOptixFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+    float blend = 0.0 (customData = {string apiName = "Blend"})
+}
+class ArnoldSphere "ArnoldSphere"(
+    inherits = [</ArnoldShape>]
+) {
+    vector3f[] center (customData = {string apiName = "Center"})
+    float[] radius (customData = {string apiName = "Radius"})
+    float step_size = 0.0 (customData = {string apiName = "StepSize"})
+    float volume_padding = 0.0 (customData = {string apiName = "VolumePadding"})
+}
+class "ArnoldSphereAPI"(
+    inherits = [</ArnoldShapeAPI>]
+) {
+    vector3f[] primvars:arnold:center (customData = {string apiName = "Center"})
+    float primvars:arnold:step_size = 0.0 (customData = {string apiName = "StepSize"})
+    float primvars:arnold:volume_padding = 0.0 (customData = {string apiName = "VolumePadding"})
+}
+class ArnoldCylinder "ArnoldCylinder"(
+    inherits = [</ArnoldShape>]
+) {
+    vector3f bottom = (0.0,0.0,-0.5) (customData = {string apiName = "Bottom"})
+    vector3f top = (0.0,0.0,0.5) (customData = {string apiName = "Top"})
+    float radius = 0.5 (customData = {string apiName = "Radius"})
+    float bevel_width = 0.0 (customData = {string apiName = "BevelWidth"})
+    float bevel_angle = 0.5 (customData = {string apiName = "BevelAngle"})
+}
+class "ArnoldCylinderAPI"(
+    inherits = [</ArnoldShapeAPI>]
+) {
+    vector3f primvars:arnold:bottom = (0.0,0.0,-0.5) (customData = {string apiName = "Bottom"})
+    vector3f primvars:arnold:top = (0.0,0.0,0.5) (customData = {string apiName = "Top"})
+    float primvars:arnold:bevel_width = 0.0 (customData = {string apiName = "BevelWidth"})
+    float primvars:arnold:bevel_angle = 0.5 (customData = {string apiName = "BevelAngle"})
+}
+class ArnoldCone "ArnoldCone"(
+    inherits = [</ArnoldShape>]
+) {
+    vector3f bottom = (0.0,0.0,-0.5) (customData = {string apiName = "Bottom"})
+    vector3f top = (0.0,0.0,0.5) (customData = {string apiName = "Top"})
+    float bottom_radius = 0.5 (customData = {string apiName = "BottomRadius"})
+    float top_radius = 0.0 (customData = {string apiName = "TopRadius"})
+}
+class "ArnoldConeAPI"(
+    inherits = [</ArnoldShapeAPI>]
+) {
+    vector3f primvars:arnold:bottom = (0.0,0.0,-0.5) (customData = {string apiName = "Bottom"})
+    vector3f primvars:arnold:top = (0.0,0.0,0.5) (customData = {string apiName = "Top"})
+    float primvars:arnold:top_radius = 0.0 (customData = {string apiName = "TopRadius"})
+}
+class ArnoldDisk "ArnoldDisk"(
+    inherits = [</ArnoldShape>]
+) {
+    vector3f center = (0.0,0.0,0.0) (customData = {string apiName = "Center"})
+    vector3f normal = (0.0,0.0,1.0) (customData = {string apiName = "Normal"})
+    float radius = 0.5 (customData = {string apiName = "Radius"})
+    float hole = 0.0 (customData = {string apiName = "Hole"})
+    float bevel_width = 0.0 (customData = {string apiName = "BevelWidth"})
+    float bevel_angle = 0.5 (customData = {string apiName = "BevelAngle"})
+}
+class ArnoldPlane "ArnoldPlane"(
+    inherits = [</ArnoldShape>]
+) {
+    vector3f point = (0.0,0.0,0.0) (customData = {string apiName = "Point"})
+    vector3f normal = (0.0,0.0,1.0) (customData = {string apiName = "Normal"})
+}
+class ArnoldPolymesh "ArnoldPolymesh"(
+    inherits = [</ArnoldShape>]
+) {
+    uint[] nsides (customData = {string apiName = "Nsides"})
+    uint[] vidxs (customData = {string apiName = "Vidxs"})
+    uint[] polygon_holes (customData = {string apiName = "PolygonHoles"})
+    uint[] nidxs (customData = {string apiName = "Nidxs"})
+    uint[] uvidxs (customData = {string apiName = "Uvidxs"})
+    uint[] crease_idxs (customData = {string apiName = "CreaseIdxs"})
+    float[] crease_sharpness (customData = {string apiName = "CreaseSharpness"})
+    uchar[] shidxs (customData = {string apiName = "Shidxs"})
+    vector3f[] vlist (customData = {string apiName = "Vlist"})
+    vector3f[] nlist (customData = {string apiName = "Nlist"})
+    float2[] uvlist (customData = {string apiName = "Uvlist"})
+    bool smoothing = false (customData = {string apiName = "Smoothing"})
+    token subdiv_type = "none" (
+        customData = {string apiName = "SubdivType"}
+        allowedTokens = ["none","catclark","linear"]
+        )
+    uchar subdiv_iterations = 1 (customData = {string apiName = "SubdivIterations"})
+    float subdiv_adaptive_error = 0.0 (customData = {string apiName = "SubdivAdaptiveError"})
+    token subdiv_adaptive_metric = "metric_auto" (
+        customData = {string apiName = "SubdivAdaptiveMetric"}
+        allowedTokens = ["metric_auto","edge_length","flatness"]
+        )
+    token subdiv_adaptive_space = "raster" (
+        customData = {string apiName = "SubdivAdaptiveSpace"}
+        allowedTokens = ["raster","object"]
+        )
+    bool subdiv_frustum_ignore = false (customData = {string apiName = "SubdivFrustumIgnore"})
+    token subdiv_uv_smoothing = "pin_corners" (
+        customData = {string apiName = "SubdivUvSmoothing"}
+        allowedTokens = ["pin_corners","pin_borders","linear","smooth"]
+        )
+    bool subdiv_smooth_derivs = false (customData = {string apiName = "SubdivSmoothDerivs"})
+    string[] disp_map (customData = {string apiName = "DispMap"})
+    float disp_padding = 0.0 (customData = {string apiName = "DispPadding"})
+    float disp_height = 1.0 (customData = {string apiName = "DispHeight"})
+    float disp_zero_value = 0.0 (customData = {string apiName = "DispZeroValue"})
+    bool disp_autobump = false (customData = {string apiName = "DispAutobump"})
+    uchar autobump_visibility = 1 (customData = {string apiName = "AutobumpVisibility"})
+    float step_size = 0.0 (customData = {string apiName = "StepSize"})
+    float volume_padding = 0.0 (customData = {string apiName = "VolumePadding"})
+}
+class "ArnoldPolymeshAPI"(
+    inherits = [</ArnoldShapeAPI>]
+) {
+    uint[] primvars:arnold:uvidxs (customData = {string apiName = "Uvidxs"})
+    uint[] primvars:arnold:crease_idxs (customData = {string apiName = "CreaseIdxs"})
+    float[] primvars:arnold:crease_sharpness (customData = {string apiName = "CreaseSharpness"})
+    uchar[] primvars:arnold:shidxs (customData = {string apiName = "Shidxs"})
+    vector3f[] primvars:arnold:vlist (customData = {string apiName = "Vlist"})
+    vector3f[] primvars:arnold:nlist (customData = {string apiName = "Nlist"})
+    float2[] primvars:arnold:uvlist (customData = {string apiName = "Uvlist"})
+    bool primvars:arnold:smoothing = false (customData = {string apiName = "Smoothing"})
+    token primvars:arnold:subdiv_type = "none" (
+        customData = {string apiName = "SubdivType"}
+        allowedTokens = ["none","catclark","linear"]
+        )
+    uchar primvars:arnold:subdiv_iterations = 1 (customData = {string apiName = "SubdivIterations"})
+    float primvars:arnold:subdiv_adaptive_error = 0.0 (customData = {string apiName = "SubdivAdaptiveError"})
+    token primvars:arnold:subdiv_adaptive_metric = "metric_auto" (
+        customData = {string apiName = "SubdivAdaptiveMetric"}
+        allowedTokens = ["metric_auto","edge_length","flatness"]
+        )
+    token primvars:arnold:subdiv_adaptive_space = "raster" (
+        customData = {string apiName = "SubdivAdaptiveSpace"}
+        allowedTokens = ["raster","object"]
+        )
+    bool primvars:arnold:subdiv_frustum_ignore = false (customData = {string apiName = "SubdivFrustumIgnore"})
+    token primvars:arnold:subdiv_uv_smoothing = "pin_corners" (
+        customData = {string apiName = "SubdivUvSmoothing"}
+        allowedTokens = ["pin_corners","pin_borders","linear","smooth"]
+        )
+    bool primvars:arnold:subdiv_smooth_derivs = false (customData = {string apiName = "SubdivSmoothDerivs"})
+    string[] primvars:arnold:disp_map (customData = {string apiName = "DispMap"})
+    float primvars:arnold:disp_padding = 0.0 (customData = {string apiName = "DispPadding"})
+    float primvars:arnold:disp_height = 1.0 (customData = {string apiName = "DispHeight"})
+    float primvars:arnold:disp_zero_value = 0.0 (customData = {string apiName = "DispZeroValue"})
+    bool primvars:arnold:disp_autobump = false (customData = {string apiName = "DispAutobump"})
+    uchar primvars:arnold:autobump_visibility = 1 (customData = {string apiName = "AutobumpVisibility"})
+    float primvars:arnold:step_size = 0.0 (customData = {string apiName = "StepSize"})
+    float primvars:arnold:volume_padding = 0.0 (customData = {string apiName = "VolumePadding"})
+}
+class ArnoldNurbs "ArnoldNurbs"(
+    inherits = [</ArnoldShape>]
+) {
+    int degree_u = 3 (customData = {string apiName = "DegreeU"})
+    int degree_v = 3 (customData = {string apiName = "DegreeV"})
+    float[] knots_u (customData = {string apiName = "KnotsU"})
+    float[] knots_v (customData = {string apiName = "KnotsV"})
+    float[] cvs (customData = {string apiName = "Cvs"})
+    int tesselate_u = 5 (customData = {string apiName = "TesselateU"})
+    int tesselate_v = 5 (customData = {string apiName = "TesselateV"})
+    string disp_map = "" (customData = {string apiName = "DispMap"})
+    float disp_padding = 0.0 (customData = {string apiName = "DispPadding"})
+    float disp_height = 0.0 (customData = {string apiName = "DispHeight"})
+    float disp_zero_value = 0.0 (customData = {string apiName = "DispZeroValue"})
+    bool disp_autobump = false (customData = {string apiName = "DispAutobump"})
+    uchar autobump_visibility = 1 (customData = {string apiName = "AutobumpVisibility"})
+    float step_size = 0.0 (customData = {string apiName = "StepSize"})
+    float volume_padding = 0.0 (customData = {string apiName = "VolumePadding"})
+    bool smoothing = true (customData = {string apiName = "Smoothing"})
+}
+class ArnoldBox "ArnoldBox"(
+    inherits = [</ArnoldShape>]
+) {
+    vector3f min = (-0.5,-0.5,-0.5) (customData = {string apiName = "Min"})
+    vector3f max = (0.5,0.5,0.5) (customData = {string apiName = "Max"})
+    float step_size = 0.0 (customData = {string apiName = "StepSize"})
+    float volume_padding = 0.0 (customData = {string apiName = "VolumePadding"})
+}
+class "ArnoldBoxAPI"(
+    inherits = [</ArnoldShapeAPI>]
+) {
+    float primvars:arnold:step_size = 0.0 (customData = {string apiName = "StepSize"})
+    float primvars:arnold:volume_padding = 0.0 (customData = {string apiName = "VolumePadding"})
+}
+class ArnoldCurves "ArnoldCurves"(
+    inherits = [</ArnoldShape>]
+) {
+    uint[] num_points (customData = {string apiName = "NumPoints"})
+    vector3f[] points (customData = {string apiName = "Points"})
+    float[] radius (customData = {string apiName = "Radius"})
+    vector3f[] orientations (customData = {string apiName = "Orientations"})
+    token basis = "bezier" (
+        customData = {string apiName = "Basis"}
+        allowedTokens = ["bezier","b-spline","catmull-rom","linear"]
+        )
+    token mode = "ribbon" (
+        customData = {string apiName = "Mode"}
+        allowedTokens = ["ribbon","thick","oriented"]
+        )
+    float min_pixel_width = 0.0 (customData = {string apiName = "MinPixelWidth"})
+    uchar[] shidxs (customData = {string apiName = "Shidxs"})
+    float2[] uvs (customData = {string apiName = "Uvs"})
+}
+class "ArnoldCurvesAPI"(
+    inherits = [</ArnoldShapeAPI>]
+) {
+    vector3f[] primvars:arnold:orientations (customData = {string apiName = "Orientations"})
+    token primvars:arnold:basis = "bezier" (
+        customData = {string apiName = "Basis"}
+        allowedTokens = ["bezier","b-spline","catmull-rom","linear"]
+        )
+    token primvars:arnold:mode = "ribbon" (
+        customData = {string apiName = "Mode"}
+        allowedTokens = ["ribbon","thick","oriented"]
+        )
+    float primvars:arnold:min_pixel_width = 0.0 (customData = {string apiName = "MinPixelWidth"})
+    uchar[] primvars:arnold:shidxs (customData = {string apiName = "Shidxs"})
+    float2[] primvars:arnold:uvs (customData = {string apiName = "Uvs"})
+}
+class ArnoldPoints "ArnoldPoints"(
+    inherits = [</ArnoldShape>]
+) {
+    vector3f[] points (customData = {string apiName = "Points"})
+    float[] radius (customData = {string apiName = "Radius"})
+    float[] aspect (customData = {string apiName = "Aspect"})
+    float[] rotation (customData = {string apiName = "Rotation"})
+    token mode = "disk" (
+        customData = {string apiName = "Mode"}
+        allowedTokens = ["disk","sphere","quad"]
+        )
+    float min_pixel_width = 0.0 (customData = {string apiName = "MinPixelWidth"})
+    float step_size = 0.0 (customData = {string apiName = "StepSize"})
+    float volume_padding = 0.0 (customData = {string apiName = "VolumePadding"})
+}
+class "ArnoldPointsAPI"(
+    inherits = [</ArnoldShapeAPI>]
+) {
+    float[] primvars:arnold:aspect (customData = {string apiName = "Aspect"})
+    float[] primvars:arnold:rotation (customData = {string apiName = "Rotation"})
+    token primvars:arnold:mode = "disk" (
+        customData = {string apiName = "Mode"}
+        allowedTokens = ["disk","sphere","quad"]
+        )
+    float primvars:arnold:min_pixel_width = 0.0 (customData = {string apiName = "MinPixelWidth"})
+    float primvars:arnold:step_size = 0.0 (customData = {string apiName = "StepSize"})
+    float primvars:arnold:volume_padding = 0.0 (customData = {string apiName = "VolumePadding"})
+}
+class ArnoldImplicit "ArnoldImplicit"(
+    inherits = [</ArnoldShape>]
+) {
+    string field = "" (customData = {string apiName = "Field"})
+    float threshold = 0.0 (customData = {string apiName = "Threshold"})
+    uint samples = 10 (customData = {string apiName = "Samples"})
+    token solver = "uniform" (
+        customData = {string apiName = "Solver"}
+        allowedTokens = ["uniform","levelset"]
+        )
+    vector3f min = (0.0,0.0,0.0) (customData = {string apiName = "Min"})
+    vector3f max = (0.0,0.0,0.0) (customData = {string apiName = "Max"})
+    float step_size = 0.0 (customData = {string apiName = "StepSize"})
+    string field_channel = "field" (customData = {string apiName = "FieldChannel"})
+}
+class ArnoldGinstance "ArnoldGinstance"(
+    inherits = [</ArnoldShape>]
+) {
+    string node = "" (customData = {string apiName = "Node"})
+    bool inherit_xform = true (customData = {string apiName = "InheritXform"})
+    float step_size = 0.0 (customData = {string apiName = "StepSize"})
+}
+class ArnoldProcedural "ArnoldProcedural"(
+    inherits = [</ArnoldShape>]
+) {
+    bool override_nodes = false (customData = {string apiName = "OverrideNodes"})
+    string arnold:namespace = "" (customData = {string apiName = "Namespace"})
+    string arnold:operator = "" (customData = {string apiName = "Operator"})
+    string filename = "" (customData = {string apiName = "Filename"})
+    string data = "" (customData = {string apiName = "Data"})
+    bool auto_instancing = true (customData = {string apiName = "AutoInstancing"})
+}
+class ArnoldListAggregate "ArnoldListAggregate"(
+    inherits = [</ArnoldShape>]
+) {
+}
+class ArnoldVolume "ArnoldVolume"(
+    inherits = [</ArnoldShape>]
+) {
+    float volume_padding = 0.0 (customData = {string apiName = "VolumePadding"})
+    float step_size = 0.0 (customData = {string apiName = "StepSize"})
+    string filename = "" (customData = {string apiName = "Filename"})
+    uchar[] filedata (customData = {string apiName = "Filedata"})
+    float step_scale = 1.0 (customData = {string apiName = "StepScale"})
+    bool compress = true (customData = {string apiName = "Compress"})
+    string[] grids (customData = {string apiName = "Grids"})
+    string[] velocity_grids (customData = {string apiName = "VelocityGrids"})
+    float velocity_scale = 1.0 (customData = {string apiName = "VelocityScale"})
+    float velocity_fps = 24.0 (customData = {string apiName = "VelocityFps"})
+    float velocity_outlier_threshold = 0.0010000000475 (customData = {string apiName = "VelocityOutlierThreshold"})
+}
+class ArnoldVolumeImplicit "ArnoldVolumeImplicit"(
+    inherits = [</ArnoldShape>]
+) {
+    string field = "" (customData = {string apiName = "Field"})
+    float threshold = 0.0 (customData = {string apiName = "Threshold"})
+    uint samples = 10 (customData = {string apiName = "Samples"})
+    token solver = "uniform" (
+        customData = {string apiName = "Solver"}
+        allowedTokens = ["uniform","levelset"]
+        )
+    vector3f min = (0.0,0.0,0.0) (customData = {string apiName = "Min"})
+    vector3f max = (0.0,0.0,0.0) (customData = {string apiName = "Max"})
+    float step_size = 0.0 (customData = {string apiName = "StepSize"})
+    string field_channel = "field" (customData = {string apiName = "FieldChannel"})
+    string filename = "" (customData = {string apiName = "Filename"})
+    uchar[] filedata (customData = {string apiName = "Filedata"})
+    float step_scale = 1.0 (customData = {string apiName = "StepScale"})
+    bool compress = true (customData = {string apiName = "Compress"})
+    string[] grids (customData = {string apiName = "Grids"})
+    string[] velocity_grids (customData = {string apiName = "VelocityGrids"})
+    float velocity_scale = 1.0 (customData = {string apiName = "VelocityScale"})
+    float velocity_fps = 24.0 (customData = {string apiName = "VelocityFps"})
+    float velocity_outlier_threshold = 0.0010000000475 (customData = {string apiName = "VelocityOutlierThreshold"})
+}
+class ArnoldInstancer "ArnoldInstancer"(
+    inherits = [</ArnoldShape>]
+) {
+    bool override_nodes = false (customData = {string apiName = "OverrideNodes"})
+    string arnold:namespace = "" (customData = {string apiName = "Namespace"})
+    string arnold:operator = "" (customData = {string apiName = "Operator"})
+    string[] nodes (customData = {string apiName = "Nodes"})
+    uint[] node_idxs (customData = {string apiName = "NodeIdxs"})
+    matrix4d[] instance_matrix (customData = {string apiName = "InstanceMatrix"})
+    uchar[] instance_visibility (customData = {string apiName = "InstanceVisibility"})
+    string[] instance_shader (customData = {string apiName = "InstanceShader"})
+}
+class ArnoldColorManagerOcio "ArnoldColorManagerOcio"(
+    inherits = [</ArnoldColorManager>]
+) {
+}
+class ArnoldMaterialx "ArnoldMaterialx"(
+    inherits = [</ArnoldOperator>]
+) {
+    string selection = "" (customData = {string apiName = "Selection"})
+    string filename = "" (customData = {string apiName = "Filename"})
+    string look = "" (customData = {string apiName = "Look"})
+    token assign_type = "look" (
+        customData = {string apiName = "AssignType"}
+        allowedTokens = ["look","material"]
+        )
+    bool assign_materials = true (customData = {string apiName = "AssignMaterials"})
+    bool assign_properties = true (customData = {string apiName = "AssignProperties"})
+    bool assign_visibilities = true (customData = {string apiName = "AssignVisibilities"})
+}
+class ArnoldMerge "ArnoldMerge"(
+    inherits = [</ArnoldOperator>]
+) {
+}
+class ArnoldSetParameter "ArnoldSetParameter"(
+    inherits = [</ArnoldOperator>]
+) {
+    string selection = "" (customData = {string apiName = "Selection"})
+    string[] assignment (customData = {string apiName = "Assignment"})
+    bool[] enable_assignment (customData = {string apiName = "EnableAssignment"})
+}
+class ArnoldDisable "ArnoldDisable"(
+    inherits = [</ArnoldOperator>]
+) {
+    string selection = "" (customData = {string apiName = "Selection"})
+    token mode = "disable" (
+        customData = {string apiName = "Mode"}
+        allowedTokens = ["disable","enable"]
+        )
+    bool shapes = true (customData = {string apiName = "Shapes"})
+    bool lights = true (customData = {string apiName = "Lights"})
+    bool shaders = true (customData = {string apiName = "Shaders"})
+    bool operators = true (customData = {string apiName = "Operators"})
+}
+class ArnoldSwitchOperator "ArnoldSwitchOperator"(
+    inherits = [</ArnoldOperator>]
+) {
+    int index = 0 (customData = {string apiName = "Index"})
+}
+class ArnoldSetTransform "ArnoldSetTransform"(
+    inherits = [</ArnoldOperator>]
+) {
+    string selection = "" (customData = {string apiName = "Selection"})
+    vector3f translate = (0.0,0.0,0.0) (customData = {string apiName = "Translate"})
+    vector3f rotate = (0.0,0.0,0.0) (customData = {string apiName = "Rotate"})
+    vector3f scale = (1.0,1.0,1.0) (customData = {string apiName = "Scale"})
+    token transform_order = "srt" (
+        customData = {string apiName = "TransformOrder"}
+        allowedTokens = ["srt","str","tsr","trs","rst","rts"]
+        )
+    token rotate_order = "xyz" (
+        customData = {string apiName = "RotateOrder"}
+        allowedTokens = ["xyz","xzy","yxz","yzx","zxy","zyx"]
+        )
+    token mode = "append" (
+        customData = {string apiName = "Mode"}
+        allowedTokens = ["append","replace"]
+        )
+}
+class ArnoldCollection "ArnoldCollection"(
+    inherits = [</ArnoldOperator>]
+) {
+    string selection = "" (customData = {string apiName = "Selection"})
+    string collection = "" (customData = {string apiName = "Collection"})
+}
+class ArnoldIncludeGraph "ArnoldIncludeGraph"(
+    inherits = [</ArnoldOperator>]
+) {
+    string filename = "" (customData = {string apiName = "Filename"})
+    string target = "" (customData = {string apiName = "Target"})
+}
+class ArnoldStringReplace "ArnoldStringReplace"(
+    inherits = [</ArnoldOperator>]
+) {
+    string selection = "" (customData = {string apiName = "Selection"})
+    string match = "" (customData = {string apiName = "Match"})
+    string replace = "" (customData = {string apiName = "Replace"})
+    token os = "any" (
+        customData = {string apiName = "Os"}
+        allowedTokens = ["any","os_linux","windows","mac"]
+        )
+}
+class ArnoldAlembic "ArnoldAlembic"(
+    inherits = [</ArnoldShape>]
+) {
+    bool override_nodes = false (customData = {string apiName = "OverrideNodes"})
+    string arnold:namespace = "" (customData = {string apiName = "Namespace"})
+    string arnold:operator = "" (customData = {string apiName = "Operator"})
+    string filename = "" (customData = {string apiName = "Filename"})
+    string[] layers (customData = {string apiName = "Layers"})
+    string nameprefix = "" (customData = {string apiName = "Nameprefix"})
+    string objectpath = "" (customData = {string apiName = "Objectpath"})
+    float frame = 0.0 (customData = {string apiName = "Frame"})
+    float fps = 24.0 (customData = {string apiName = "Fps"})
+    float shutter_start = 0.0 (customData = {string apiName = "ShutterStart"})
+    float shutter_end = 0.0 (customData = {string apiName = "ShutterEnd"})
+    bool exclude_xform = false (customData = {string apiName = "ExcludeXform"})
+    bool make_instance = false (customData = {string apiName = "MakeInstance"})
+    bool flip_v = false (customData = {string apiName = "FlipV"})
+    string scene_camera = "" (customData = {string apiName = "SceneCamera"})
+    bool pull_user_params = false (customData = {string apiName = "PullUserParams"})
+    string material_attribute = "" (customData = {string apiName = "MaterialAttribute"})
+    bool use_instance_cache = true (customData = {string apiName = "UseInstanceCache"})
+    bool velocity_ignore = false (customData = {string apiName = "VelocityIgnore"})
+    float velocity_scale = 1.0 (customData = {string apiName = "VelocityScale"})
+    bool visibility_ignore = false (customData = {string apiName = "VisibilityIgnore"})
+    bool expand_hidden = false (customData = {string apiName = "ExpandHidden"})
+    string radius_attribute = "" (customData = {string apiName = "RadiusAttribute"})
+    float radius_default = 0.019999999553 (customData = {string apiName = "RadiusDefault"})
+    float radius_scale = 1.0 (customData = {string apiName = "RadiusScale"})
+}
+class ArnoldCryptomatteFilter "ArnoldCryptomatteFilter"(
+    inherits = [</ArnoldFilter>]
+) {
+    float width = 2.0 (customData = {string apiName = "Width"})
+    int rank = -1 (customData = {string apiName = "Rank"})
+    token filter = "gaussian" (
+        customData = {string apiName = "Filter"}
+        allowedTokens = ["gaussian","blackman_harris","triangle","box","disk","cone"]
+        )
+    bool noop = false (customData = {string apiName = "Noop"})
+}
+class ArnoldCryptomatteManifestDriver "ArnoldCryptomatteManifestDriver"(
+    inherits = [</ArnoldDriver>]
+) {
+    string filename = "dummy.json" (customData = {string apiName = "Filename"})
+}
+class ArnoldUsd "ArnoldUsd"(
+    inherits = [</ArnoldShape>]
+) {
+    bool override_nodes = false (customData = {string apiName = "OverrideNodes"})
+    string arnold:namespace = "" (customData = {string apiName = "Namespace"})
+    string arnold:operator = "" (customData = {string apiName = "Operator"})
+    string filename = "" (customData = {string apiName = "Filename"})
+    string object_path = "" (customData = {string apiName = "ObjectPath"})
+    float frame = 0.0 (customData = {string apiName = "Frame"})
+    bool debug = false (customData = {string apiName = "Debug"})
+    int threads = 1 (customData = {string apiName = "Threads"})
+    string[] overrides (customData = {string apiName = "Overrides"})
+}
+class ArnoldProceduralCustom "ArnoldProceduralCustom"(
+    inherits = [</ArnoldShape>]
+) {
+    bool override_nodes = false (customData = {string apiName = "OverrideNodes"})
+    string arnold:namespace = "" (customData = {string apiName = "Namespace"})
+    string arnold:operator = "" (customData = {string apiName = "Operator"})
+}

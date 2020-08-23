@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'D:/dev/usd/USD/pxr/usdImaging/usdviewq/primLegendUI.ui'
+# Form implementation generated from reading ui file 'D:/dev/artellapipe/artellapipe-libs-usd/usd/USD/pxr/usdImaging/usdviewq/primLegendUI.ui'
 #
-# Created: Tue Apr 14 17:29:04 2020
+# Created: Sat Aug 22 05:13:17 2020
 #      by: pyside-uic 0.2.15 running on PySide 1.2.4
 #
 # WARNING! All changes made in this file will be lost!
@@ -12,12 +12,12 @@ from PySide import QtCore, QtGui
 class Ui_PrimLegend(object):
     def setupUi(self, PrimLegend):
         PrimLegend.setObjectName("PrimLegend")
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        PrimLegend.resize(438, 131)
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(PrimLegend.sizePolicy().hasHeightForWidth())
         PrimLegend.setSizePolicy(sizePolicy)
-        PrimLegend.setMaximumSize(QtCore.QSize(420, 0))
         self.primLegendLayoutContainer = QtGui.QVBoxLayout(PrimLegend)
         self.primLegendLayoutContainer.setObjectName("primLegendLayoutContainer")
         self.primLegendLayout = QtGui.QGridLayout()
@@ -28,8 +28,6 @@ class Ui_PrimLegend(object):
         self.primLegendLayout.addWidget(self.primLegendColorHasArcs, 0, 0, 1, 1)
         self.primLegendLabelHasArcs = QtGui.QLabel(PrimLegend)
         font = QtGui.QFont()
-        font.setFamily("Gotham Rounded")
-        font.setPointSize(9)
         font.setWeight(50)
         font.setItalic(False)
         font.setBold(False)
@@ -42,8 +40,6 @@ class Ui_PrimLegend(object):
         self.primLegendLayout.addWidget(self.primLegendColorInstance, 0, 2, 1, 1)
         self.primLegendLabelInstance = QtGui.QLabel(PrimLegend)
         font = QtGui.QFont()
-        font.setFamily("Gotham Rounded")
-        font.setPointSize(9)
         font.setWeight(50)
         font.setItalic(False)
         font.setBold(False)
@@ -56,8 +52,6 @@ class Ui_PrimLegend(object):
         self.primLegendLayout.addWidget(self.primLegendColorMaster, 0, 4, 1, 1)
         self.primLegendLabelMaster = QtGui.QLabel(PrimLegend)
         font = QtGui.QFont()
-        font.setFamily("Gotham Rounded")
-        font.setPointSize(9)
         font.setWeight(50)
         font.setItalic(False)
         font.setBold(False)
@@ -70,8 +64,6 @@ class Ui_PrimLegend(object):
         self.primLegendLayout.addWidget(self.primLegendColorNormal, 0, 6, 1, 1)
         self.primLegendLabelNormal = QtGui.QLabel(PrimLegend)
         font = QtGui.QFont()
-        font.setFamily("Gotham Rounded")
-        font.setPointSize(9)
         font.setWeight(50)
         font.setItalic(False)
         font.setBold(False)
@@ -96,6 +88,7 @@ class Ui_PrimLegend(object):
         self.primLegendLayoutContainer.addLayout(self.primLegendLabelContainer)
 
         self.retranslateUi(PrimLegend)
+        QtCore.QMetaObject.connectSlotsByName(PrimLegend)
 
     def retranslateUi(self, PrimLegend):
         PrimLegend.setProperty("comment", QtGui.QApplication.translate("PrimLegend", "\n"

@@ -121,6 +121,54 @@ global proc mayaUsdTranslatorExport_AnimationRangeCB() {
     intFieldGrp -e -v1 $startTime -v2 $endTime framRangeFields;
 }
 
+// Known shading modes, in triplets with the nice name and the annotation:
+proc string[] mayaUsdTranslatorExport_shadingModeData() {
+    string $shadingModeData[] = {
+        "useRegistry",
+        "USD Preview Surface",
+        "Exports the bound shader as a USD preview surface UsdShade network.",
+
+        "displayColor",
+        "Display Colors",
+        "Exports the diffuse color of the bound shader as a displayColor primvar on the USD mesh.",
+        
+        "none",
+        "None",
+        "No material data gets exported.",
+        
+        "pxrRis",
+        "RfM Shaders",
+        ""
+    };
+    return $shadingModeData;
+}
+
+proc string[] mayaUsdTranslatorExport_shadingModeInfo(string $shadingMode) {
+    string $shadingModeData[] = mayaUsdTranslatorExport_shadingModeData();
+    int $index = stringArrayFind($shadingMode, 0, $shadingModeData);
+    if ($index != -1) {
+        return { $shadingModeData[$index + 1], $shadingModeData[$index + 2] };
+    } else {
+        return { $shadingMode, "" };
+    }
+}
+
+proc mayaUsdTranslatorExport_SetMaterialOptionMenu(string $shadingMode, string $widget) {
+    string $info[] = mayaUsdTranslatorExport_shadingModeInfo($shadingMode);
+    optionMenuGrp -e -value $info[0] $widget;
+}
+
+proc string mayaUsdTranslatorExport_AppendFromMaterialPopup(string $currentOptions, string $arg, string $widget) {
+    string $value = `optionMenuGrp -q -value $widget`;
+    string $shadingModeData[] = mayaUsdTranslatorExport_shadingModeData();
+    int $index = stringArrayFind($value, 1, $shadingModeData);
+    if ($index != -1) {
+        return $currentOptions + ";" + $arg + "=" + $shadingModeData[$index - 1];
+    } else {
+        return $currentOptions + ";" + $arg + "=" + $value;
+    }
+}
+
 global proc int mayaUsdTranslatorExport (string $parent,
                                      string $action,
                                      string $initialSettings,
@@ -157,6 +205,7 @@ global proc int mayaUsdTranslatorExport (string $parent,
         string $parentScopAnn = "Name of the USD scope that is the parent of the exported data.";
         string $colorSetsAnn = "Exports Maya Color Sets as USD primvars.";
         string $uvSetsAnn = "Exports Maya UV Sets as USD primvars.";
+        string $materialsAnn = "Controls whether shading data is exported from the Maya scene and how it is created in USD.";
         string $animDataAnn = "Exports Maya animation data as USD time samples.";
         string $frameStepAnn = "Specifies the increment between USD time sample frames during animation export";
         string $eulerFilterAnn = "Exports the euler angle filtering that was performed in Maya.";
@@ -166,12 +215,20 @@ global proc int mayaUsdTranslatorExport (string $parent,
         string $instancesAnn = "Exports Maya instances as USD instanceable references.";
         string $subdMethodAnn = "Exports the selected subdivision method as a USD uniform attribute.";
         string $frameSamplesAnn = "Specifies the value(s) used to multi-sample time frames during animation export. Multiple values separated by a space (-0.1 0.2) are supported.";
+        string $defaultFormatAnn = "Select whether the .usd file is written out in binary or ASCII";
+        string $defaultFormatStatus = "Select whether the .usd file is written out in binary or ASCII. You can save a file in .usdc (binary), or .usda (ASCII) format. Manually entering a file name with an extension overrides the selection in this drop-down menu.";
 
         setParent $parent;
 
         columnLayout -adj true usdOptsCol;
 
         frameLayout -label "Output" -collapsable true -collapse false;
+            separator -style "none";
+
+            optionMenuGrp -l ".usd File Format:" -annotation $defaultFormatAnn -statusBarMessage $defaultFormatStatus defaultUSDFormatPopup;
+                menuItem -l "Binary" -ann "usdc";
+                menuItem -l "ASCII" -ann "usda";
+
             separator -style "none";
 
             textFieldGrp -l "Create USD Parent Scope:" -placeholderText "USD Prim Name" 
@@ -191,7 +248,22 @@ global proc int mayaUsdTranslatorExport (string $parent,
             checkBoxGrp -l "Color Sets:" -annotation $colorSetsAnn exportColorSetsCheckBox;
 
             checkBoxGrp -l "UV Sets:" -annotation $uvSetsAnn exportUVsCheckBox;
-            
+
+            optionMenuGrp -l "Materials:" -ann $materialsAnn shadingModePopup;
+            string $commonExporters[] = {"useRegistry", "displayColor", "none"};
+            for ($modeName in $commonExporters) {
+                string $info[] = mayaUsdTranslatorExport_shadingModeInfo($modeName);
+                menuItem -l $info[0] -ann $info[1];
+            }
+            string $exporters[] = `mayaUSDListShadingModes -export`;
+            for ($modeName in $exporters) {
+                if (stringArrayFind($modeName, 0, $commonExporters) != -1) {
+                    continue;
+                }
+                string $info[] = mayaUsdTranslatorExport_shadingModeInfo($modeName);
+                menuItem -l $info[0] -ann $info[1];
+            }
+
             separator -style "none";
         setParent ..;
         
@@ -249,6 +321,8 @@ global proc int mayaUsdTranslatorExport (string $parent,
                     mayaUsdTranslatorExport_SetCheckbox($optionBreakDown[1], "exportColorSetsCheckBox");
                 } else if ($optionBreakDown[0] == "defaultMeshScheme") {
                     mayaUsdTranslatorExport_SetOptionMenuByAnnotation($optionBreakDown[1], "defaultMeshSchemePopup");
+                } else if ($optionBreakDown[0] == "defaultUSDFormat") {
+                    mayaUsdTranslatorExport_SetOptionMenuByAnnotation($optionBreakDown[1], "defaultUSDFormatPopup");                    
                 } else if ($optionBreakDown[0] == "animation") {
                     mayaUsdTranslatorExport_SetCheckbox($optionBreakDown[1], "animationCheckBox");
                 } else if ($optionBreakDown[0] == "eulerFilter") {
@@ -266,6 +340,8 @@ global proc int mayaUsdTranslatorExport (string $parent,
                     mayaUsdTranslatorExport_SetTextField($optionBreakDown[1], "frameSampleField");
                 } else if ($optionBreakDown[0] == "parentScope") {
                     mayaUsdTranslatorExport_SetTextField($optionBreakDown[1], "parentScopeField");
+                } else if ($optionBreakDown[0] == "shadingMode") {
+                    mayaUsdTranslatorExport_SetMaterialOptionMenu($optionBreakDown[1], "shadingModePopup");
                 } else if ($optionBreakDown[0] == "exportInstances") {
                     mayaUsdTranslatorExport_SetOptionMenuByBool($optionBreakDown[1], "exportInstancesPopup");
                 } else if ($optionBreakDown[0] == "exportVisibility") {
@@ -286,12 +362,14 @@ global proc int mayaUsdTranslatorExport (string $parent,
         $currentOptions = mayaUsdTranslatorExport_AppendFromCheckbox($currentOptions, "exportUVs", "exportUVsCheckBox");
         $currentOptions = mayaUsdTranslatorExport_AppendFromCheckbox($currentOptions, "exportColorSets", "exportColorSetsCheckBox");
         $currentOptions = mayaUsdTranslatorExport_AppendFromPopup($currentOptions, "defaultMeshScheme", "defaultMeshSchemePopup");
+        $currentOptions = mayaUsdTranslatorExport_AppendFromPopup($currentOptions, "defaultUSDFormat", "defaultUSDFormatPopup");
         $currentOptions = mayaUsdTranslatorExport_AppendFromCheckbox($currentOptions, "animation", "animationCheckBox");
         $currentOptions = mayaUsdTranslatorExport_AppendFromCheckbox($currentOptions, "eulerFilter", "eulerFilterCheckBox");
         $currentOptions = mayaUsdTranslatorExport_AppendFrameRange($currentOptions);
         $currentOptions = mayaUsdTranslatorExport_AppendFromFloatField($currentOptions, "frameStride", "frameStrideField");
         $currentOptions = mayaUsdTranslatorExport_AppendFromTextField($currentOptions, "frameSample", "frameSampleField");
         $currentOptions = mayaUsdTranslatorExport_AppendFromTextField($currentOptions, "parentScope", "parentScopeField");
+        $currentOptions = mayaUsdTranslatorExport_AppendFromMaterialPopup($currentOptions, "shadingMode", "shadingModePopup");
         $currentOptions = mayaUsdTranslatorExport_AppendFromBoolPopup($currentOptions, "exportInstances", "exportInstancesPopup");
         $currentOptions = mayaUsdTranslatorExport_AppendFromCheckbox($currentOptions, "exportVisibility", "exportVisibilityCheckBox");
         $currentOptions = mayaUsdTranslatorExport_AppendFromCheckbox($currentOptions, "mergeTransformAndShape", "mergeTransformAndShapeCheckBox");
