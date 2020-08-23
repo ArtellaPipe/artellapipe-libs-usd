@@ -13,7 +13,7 @@ install:
 - python setup.py install
 script:
 - find . -name \*.py -exec pycodestyle --exclude */externals/*,./usd/* --max-line-length=120 --ignore=E402 {} +
-- pytest --cov=artellapipe
+- pytest ./tests --cov=artellapipe
 - sphinx-apidoc -f -e -o docs/sphinx artellapipe
 - sphinx-build -M html ./docs/sphinx ./
 after_success:
