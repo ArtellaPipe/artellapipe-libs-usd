@@ -1,1 +1,4 @@
-Pixar USD: 20.02
+Pixar USD: 20.08
+Autodesk Maya USD: 0.0.3
+Autodesk Arnold USD: 6.0.4.0
+Luma Usd Qt: latest dev commit
