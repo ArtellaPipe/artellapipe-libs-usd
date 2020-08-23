@@ -3,11 +3,19 @@
 # ==============================================================================
 
 # NOTE: For now, we are using Python 2.7.15 [MSC v.1500 64 bit (AMD64)]
+# NOTE2: This guide was tested with the following versions:
+	- USD: 20.0.8
+	- USD Maya: 0.0.3
+	- Arnold USD 6.0.0.4
+	- Usd Qt: latest dev branch commit
 
 # 1. Launch VS2015 x64 Native Tools Command Prompt (this will come with vcvars already
 # setup. So, build_usd.py will be able to find the compiler to use for building.
 
 # ------------------------------------------------------------------------------
+
+BOOST_LIB_NAME='boost_%s27-vc140-mt-x64-1_70'
+
 
 # 2. Setup Virtual Environment
 
@@ -36,12 +44,50 @@ python USD/build_scripts/build_usd.py --alembic --materialx ./build/USD --build-
 # Autodesk Maya USD
 # ==============================================================================
 
-python maya-usd/build.py --maya-location "C:\Program Files\Autodesk\Maya2019" --pxrusd-location "D:\dev\usd\build\USD" --devkit-location "D:\dev\sdks\maya\2019\devkitBase" .\build\maya-usd
+python maya-usd/build.py --maya-location "C:\Program Files\Autodesk\Maya2020" --pxrusd-location "D:\dev\usd\build\USD" --devkit-location "D:\dev\sdks\maya\2020\devkitBase" --build-args="-DBUILD_STRICT_MODE=OFF" .\build\maya-usd_2020
 
 # ==============================================================================
 # Autodesk Arnold USD
 # ==============================================================================
 
+# 1. Create custom.py file with the following code in the root of arnold-usd repo:
+
+ARNOLD_PATH='D:/dev/sdks/arnold/6.0.4.0'
+USD_PATH='D:/dev/artellapipe/artellapipe-libs-usd/usd/build/USD'
+USD_BUILD_MODE='shared_libs'
+BOOST_INCLUDE='D:/dev/artellapipe/artellapipe-libs-usd/usd/build/USD/src/boost_1_70_0'
+PYTHON_INCLUDE='C:/Python27/include'
+PYTHON_LIB='C:/Python27/libs'
+PYTHON_LIB_NAME='python27'
+PREFIX='D:/dev/artellapipe/artellapipe-libs-usd/usd/build/arnold-usd'
+GOOGLETEST_PATH='D:/dev/artellapipe/artellapipe-libs-usd/usd/build/maya-usd/build/RelWithDebInfo/googletest-install'
+USD_LIB_PREFIX=''
+BOOST_LIB_NAME='boost_%s-vc140-mt-x64-1_70'
+
+# ------------------------------------------------------------------------------
+
+#2. Build project using abuild
+
+cd D:/dev/artellapipe/artellapipe-libs-usd/usd/venv_usd\Scripts
+D:
+activate
+cd D:\dev\artellapipe\artellapipe-libs-usd\usd\arnold-usd
+
+# For USD 20.0.8 you need to duplicate and rename these files located in D:\dev\artellapipe\artellapipe-libs-usd\usd\build\USD\lib:
+	1. boost_python27-vc140-mt-x64-1_70.dll >> boost_python27-vc142-mt-x64-1_70.dll 
+	2. boost_python27-vc140-mt-x64-1_70.lib >> boost_python28-vc142-mt-x64-1_70.lib
+
+
+abuild -j 8 install
+
 # ==============================================================================
 # Luma Qt USD
 # ==============================================================================
+
+# For USD 20.0.8 you need to duplicate and rename these files located in D:\dev\artellapipe\artellapipe-libs-usd\usd\build\USD\lib:
+	1. boost_python27-vc140-mt-x64-1_70.dll >> boost_python-vc140-mt-x64-1_70.dll 
+	2. boost_python27-vc140-mt-x64-1_70.lib >> boost_python-vc140-mt-x64-1_70.lib
+
+Launch build_usd_qt.bat file.
+
+NOTE: Make sure that all paths inside .bat file are updated.
