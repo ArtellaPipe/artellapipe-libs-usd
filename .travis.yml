@@ -32,6 +32,7 @@ deploy:
     user: tpoveda
     password:
       secure: HUnDGflXw3B0CoM4dQOaW54ktevY3jsOnC6eusyEymYOfA2qsj4EsGr5fXHm7v++C+h1KIznskbNxaf3Y+YRplxMx1llD4KcmxYbzvqjJ3/D534fTJQKcW/WGtK+JK5EHX3E5OxITd4SxTDJykrt/bHr8IAB6xM/J/fxt9WhdaGuTNhLcbG82hA0K8AQaT/IDOTP8DdXt6TXiR3BKIlxZCiM5FggIfLAYUO+B0LmEjz1WLvCLeN57QY4NjHLiusoPTcMfAeOISvOti+jZ9khPh5he2CugStZ9kFMZqhFT4m8/eJbhWVmRss5frKrP1O+hnggqp1MYmttOTknZ/5G1NRH/inhX9t9ylUIFV6ZrnnN+QFupgMndZVSJHhhOaSlAwQ3c2lFJkwjk3kAc4wQnHdOgr3wjXprcAkSjWG6MfXOoL7wl2ORQ7ggqurduGdJL5B+RYqaxbfqXEBYwyNGJN8CuuU+USnb4iTWVeNrSIQzSRcR1qjKRl1AHTYXaf7fYYvRbQWEBhqXJ8UMwkuoJH+Ql0qvvRDI+jHrFuttuszavqi4qF+ORhncKVFjDeD9PjeXkOUCi1s6fyMkABweZGMKCUC+GAh22mmPtcK4bA0lHNQ6eW9TDmTFvtcy5HjPmwvQHWvS8vc18JEky9zjHCANYCKrwszLNCP10kf5NPs=
+    distributions: "sdist bdist_wheel"
     on:
       branch: master
       tags: true
