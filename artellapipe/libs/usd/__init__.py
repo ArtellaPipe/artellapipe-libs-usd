@@ -92,7 +92,7 @@ def update_al_usd_environment():
 
     usd_dcc_root_path = usdpaths.get_usd_dcc_path()
     if not usd_dcc_root_path or not os.path.isdir(usd_dcc_root_path):
-        LOGGER.warning('Impossible to setup Maya USD environment. Maya USD is not available!')
+        LOGGER.warning('Impossible to setup AL USD environment. Maya USD is not available!')
         return
 
     maya_usd_plugins = path.clean_path(os.path.join(usd_dcc_root_path, 'plugin'))
@@ -125,7 +125,7 @@ def update_pixar_maya_usd_environment():
 
     usd_dcc_root_path = usdpaths.get_usd_dcc_path()
     if not usd_dcc_root_path or not os.path.isdir(usd_dcc_root_path):
-        LOGGER.warning('Impossible to setup Maya USD environment. Maya USD is not available!')
+        LOGGER.warning('Impossible to setup Pixar USD environment. Maya USD is not available!')
         return
 
     maya_usd_plugins = path.clean_path(os.path.join(usd_dcc_root_path, 'plugin'))
@@ -231,6 +231,8 @@ def update_arnold_usd_environment():
         add_to_env('DYLD_LIBRARY_PATH', arnold_usd_bin)
         add_to_env('DYLD_LIBRARY_PATH', arnold_libs_path)
 
+    return True
+
 
 def update_hydra_usd_environment():
     """
@@ -265,9 +267,9 @@ def update_usd_environments(load_plugins=True):
     valid_maya_pixar = update_pixar_maya_usd_environment()
     valid_usd_maya = update_maya_usd_environment()
     valid_usd_al = update_al_usd_environment()
-    update_qt_usd_environment()
+    valid_qt = update_qt_usd_environment()
     valid_hydra = update_hydra_usd_environment()
-    update_arnold_usd_environment()
+    valid_arnold = update_arnold_usd_environment()
 
     # We must import pixar usd the last, otherwise we will have problems due to Python import orders
     valid_pixar_usd = update_pixar_usd_environment()
@@ -286,7 +288,7 @@ def update_usd_environments(load_plugins=True):
 def init(*args, **kwargs):
     LOGGER.info('Initializing USD libraries ...')
     try:
-        update_usd_environments()
+        update_usd_environments(load_plugins=True)
 
         from artellapipe.libs.usd.core import usdpxr
         artellapipe.register.register_class('UsdPixar', usdpxr.AbstractUsdPixar)
